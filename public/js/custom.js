@@ -9,20 +9,3 @@ script.setAttribute("src","https://myhkw.cn/api/player/1690736841113");
 script.setAttribute("key","1690736841113");
 script.setAttribute("m","1");
 document.documentElement.appendChild(script);
-
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-
-export default function MyApp({ Component, pageProps }) {
-  const router = useRouter()
-
-  useEffect(() => {
-    const { redirect } = router.query
-
-    if (redirect === 'www.joyb.cc') {
-      window.location.href = 'https://www.joyb.cc/'
-    }
-  }, [router.query])
-
-  return <Component {...pageProps} />
-}
