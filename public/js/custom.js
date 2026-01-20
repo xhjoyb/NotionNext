@@ -9,13 +9,3 @@ script.setAttribute("src","https://myhkw.cn/api/player/1690736841113");
 script.setAttribute("key","1690736841113");
 script.setAttribute("m","1");
 document.documentElement.appendChild(script);
-
-/*跳转https://www.joyb.cc/en?redirect=www.joyb.cc*/
-(function () {
-    const params = new URLSearchParams(window.location.search);
-    const redirect = params.get('redirect');
-
-    if (redirect === 'www.joyb.cc') {
-        window.location.href = 'https://www.joyb.cc/';
-    }
-})();
