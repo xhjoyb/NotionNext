@@ -46,8 +46,8 @@ module.exports = {
     {
       name: '出生点只剩我女版',
       artist: '灵心小窝-blog.mcpq.cc--ZaoQingFeng',
-      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E5%A5%B3%E7%89%88.mp3?Expires=1769662791&OSSAccessKeyId=TMP.3KnSKgnPSk8HRZihpbZ6YPGSRxBVM6JmueF1iL2YmbEiD9upHj9nmkc2a1QNekacpUdDWgsJeqPSMKFvXwJFzdbTMtk3Ky&Signature=hdx2HtbEVLDOO4eMeRnLIqyMX8s%3D',
-      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91-%E5%A5%B3%E7%89%88.lrc?Expires=1769664238&OSSAccessKeyId=TMP.3KnSKgnPSk8HRZihpbZ6YPGSRxBVM6JmueF1iL2YmbEiD9upHj9nmkc2a1QNekacpUdDWgsJeqPSMKFvXwJFzdbTMtk3Ky&Signature=nY6EO%2Bxn5n1B6CS%2FJhU%2BDA0%2F5T4%3D',
+      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E5%A5%B3%E7%89%88.mp3',
+      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91-%E5%A5%B3%E7%89%88.lrc',
       cover:
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     }
