@@ -44,6 +44,14 @@ module.exports = {
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     },
     {
+      name: '最后一次保存',
+      artist: '灵心小窝-ZaoQingFeng',
+      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.mp3',
+      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.lrc',
+      cover:
+        'https://bad.joyb.cc/file/1769612992392_logo.png'
+    },
+    {
       name: '出生点只剩我女版',
       artist: '灵心小窝-ZaoQingFeng',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E5%A5%B3%E7%89%88.mp3',
