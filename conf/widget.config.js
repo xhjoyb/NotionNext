@@ -55,7 +55,8 @@ module.exports = {
     {
       name: '出生点只剩我男版',
       artist: '灵心小窝-ZaoQingFeng',
-      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91.mp3',
+      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E7%94%B7%E7%89%88.mp3',
+      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E7%94%B7%E7%89%88.lrc',
       cover:
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     },
