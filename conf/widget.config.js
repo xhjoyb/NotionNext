@@ -37,7 +37,7 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '最后一次保存',
+      name: '404的旧名字',
       artist: '灵心小窝-Zqf-本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.mp3',
       lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.lrc',
