@@ -38,15 +38,23 @@ module.exports = {
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
       name: '404的旧名字',
-      artist: '灵心小窝-Zqf-本站专属音乐-其它任何地方听不到',
+      artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.mp3',
       lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%BF%9D%E5%AD%98.lrc',
       cover:
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     },
     {
+      name: '战桥',
+      artist: '本站专属音乐-其它任何地方听不到',
+      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%88%98%E6%A1%A5.mp3',
+      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%A0%88%E6%A1%A5.lrc',
+      cover:
+        'https://bad.joyb.cc/file/1769612992392_logo.png'
+    },
+    {
       name: '出生点只剩我RP版',
-      artist: '灵心小窝-Zqf-本站专属音乐-其它任何地方听不到',
+      artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91rp.mp3',
       lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91rp.lrc',
       cover:
@@ -54,7 +62,7 @@ module.exports = {
     },
     {
       name: '出生点只剩我男版',
-      artist: '灵心小窝-Zqf-本站专属音乐-其它任何地方听不到',
+      artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E7%94%B7%E7%89%88.mp3',
       lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E7%94%B7%E7%89%88.lrc',
       cover:
@@ -62,7 +70,7 @@ module.exports = {
     },
     {
       name: '出生点只剩我女版',
-      artist: '灵心小窝-Zqf-本站专属音乐-其它任何地方听不到',
+      artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91%E5%A5%B3%E7%89%88.mp3',
       lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91-%E5%A5%B3%E7%89%88.lrc',
       cover:
