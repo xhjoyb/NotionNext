@@ -53,14 +53,6 @@ module.exports = {
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     },
     {
-      name: '一句话的愿望',
-      artist: '本站专属音乐-其它任何地方听不到',
-      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%9A%84%E6%84%BF%E6%9C%9B.mp3',
-      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%9A%84%E6%84%BF%E6%9C%9B.lrc',
-      cover:
-        'https://bad.joyb.cc/file/1769612992392_logo.png'
-    },
-    {
       name: '出生点只剩我RP版',
       artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E5%87%BA%E7%94%9F%E7%82%B9%E5%8F%AA%E5%89%A9%E6%88%91rp.mp3',
