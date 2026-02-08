@@ -45,6 +45,14 @@ module.exports = {
         'https://bad.joyb.cc/file/1769612992392_logo.png'
     },
     {
+      name: '一句话的愿望',
+      artist: '本站专属音乐-其它任何地方听不到',
+      url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%9A%84%E6%84%BF%E6%9C%9B.mp3',
+      lrc: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%9A%84%E6%84%BF%E6%9C%9B.lrc',
+      cover:
+        'https://bad.joyb.cc/file/1769612992392_logo.png'
+    },
+    {
       name: '战桥',
       artist: '本站专属音乐-其它任何地方听不到',
       url: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/%E6%88%98%E6%A1%A5.mp3',
