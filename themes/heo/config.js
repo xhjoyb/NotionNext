@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '分享折腾',
   HEO_HERO_TITLE_3: 'https://blog.mcpq.cc',
   HEO_HERO_TITLE_4: '记录日常',
-  HEO_HERO_TITLE_5: '不同于主站，这里只放慢慢打磨的文字',
+  HEO_HERO_TITLE_5: '希望有一天，我能够平静',
   HEO_HERO_TITLE_LINK: 'https://blog.mcpq.cc',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
