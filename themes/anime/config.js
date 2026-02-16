@@ -166,6 +166,47 @@ export const THEME_CONFIG = {
   },
   // [春节装饰] 结束
 
+  // 萌化返回顶部按钮配置
+  BACK_TO_TOP: {
+    // 是否启用
+    ENABLE: true,
+    // 滚动多少像素后显示按钮
+    SHOW_THRESHOLD: 300,
+    // 按钮类型: rocket | cat | star
+    BUTTON_TYPE: 'rocket',
+    // 是否显示点击粒子效果
+    SHOW_PARTICLES: true,
+  },
+
+  // 弹幕评论配置
+  DANMAKU: {
+    // 是否启用弹幕
+    ENABLE: true,
+    // 是否显示开关按钮
+    SHOW_TOGGLE: true,
+    // 弹幕速度 (秒数，越小越快)
+    SPEED: 10,
+    // 弹幕密度 (1-10)，建议 1-3
+    DENSITY: 2,
+    // 最大同时显示弹幕数，建议 5-8
+    MAX_COMMENTS: 6,
+    // 弹幕列表 - 使用国内二次元文化梗
+    COMMENTS: [
+      { text: '新年快乐！🎉', author: '二次元住民' },
+      { text: '这个主题太可爱了~', author: '萌豚' },
+      { text: '马年大吉！', author: '宅宅' },
+      { text: '除夕快乐呀', author: '阿宅' },
+      { text: '萌化了我的心', author: '萝莉控' },
+      { text: 'awsl', author: '打call人' },
+      { text: '祝大家万事如意', author: '追番人' },
+      { text: '🐴 马到成功', author: '嗑糖人' },
+      { text: '这也太萌了吧', author: '萌妹子' },
+      { text: '我好了', author: '绅士' },
+      { text: 'prpr', author: '颜控' },
+      { text: '可爱即正义', author: '萌系控' },
+    ],
+  },
+
   // 推荐文章配置
   RECOMMEND: {
     // 推荐文章标签

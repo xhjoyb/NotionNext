@@ -20,6 +20,7 @@ import Footer from './components/Footer'
 import Gallery from './components/Gallery'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import KawaiiBackToTop from './components/KawaiiBackToTop'
 import KawaiiLoader from './components/KawaiiLoader'
 import Live2DCubism3 from './components/Live2DCubism3'
 import LyricsDisplay from './components/LyricsDisplay'
@@ -31,6 +32,7 @@ import SideRight from './components/SideRight'
 import CONFIG, { getThemeConfig } from './config'
 import { Style } from './style'
 import CardConnectionLine from './components/CardConnectionLine'
+import DanmakuComments from './components/DanmakuComments'
 import { useRef } from 'react'
 
 const ThemeGlobalAnime = createContext()
@@ -118,6 +120,12 @@ const LayoutBase = props => {
 
         {/* Live2D Cubism 3 看板娘 */}
         <Live2DCubism3 />
+
+        {/* 萌化返回顶部按钮 */}
+        <KawaiiBackToTop />
+
+        {/* 弹幕评论 */}
+        <DanmakuComments />
 
         {siteConfig('ANIME_SAKURA_EFFECT', true, CONFIG) && <SakuraEffect />}
       </div>

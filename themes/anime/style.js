@@ -488,14 +488,127 @@ const Style = () => {
       }
       /* [春节装饰] 结束 */
 
+      /* 萌化返回顶部按钮点击弹跳动画 */
+      @keyframes bounce-click {
+        0% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(0.85);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+        70% {
+          transform: scale(0.95);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .animate-bounce-click {
+        animation: bounce-click 0.6s ease-out;
+      }
+
+      /* 粒子爆发动画 */
+      @keyframes particle-burst {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx, 30px), var(--ty, -30px)) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* 弹幕飘动动画 */
+      @keyframes danmaku-float {
+        0% {
+          transform: translateX(0) scale(var(--scale, 1));
+        }
+        100% {
+          transform: translateX(calc(-100vw - 100%)) scale(var(--scale, 1));
+        }
+      }
+
+      /* 猫咪眨眼动画 */
+      @keyframes blink {
+        0%, 90%, 100% {
+          transform: scaleY(1);
+        }
+        95% {
+          transform: scaleY(0.1);
+        }
+      }
+
+      .animate-blink {
+        animation: blink 3s ease-in-out infinite;
+        transform-origin: center;
+      }
+
+      /* 睡觉 Zzz 浮动动画 */
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0) translateX(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-4px) translateX(2px);
+          opacity: 0.7;
+        }
+      }
+
+      .animate-float {
+        animation: float 2s ease-in-out infinite;
+      }
+
+      /* 猫耳朵摆动动画 */
+      @keyframes ear-left {
+        0%, 100% {
+          transform: rotate(-12deg);
+        }
+        50% {
+          transform: rotate(-18deg);
+        }
+      }
+
+      @keyframes ear-right {
+        0%, 100% {
+          transform: rotate(12deg);
+        }
+        50% {
+          transform: rotate(18deg);
+        }
+      }
+
+      .animate-ear-left {
+        animation: ear-left 2s ease-in-out infinite;
+        transform-origin: bottom center;
+      }
+
+      .animate-ear-right {
+        animation: ear-right 2s ease-in-out infinite;
+        animation-delay: 0.3s;
+        transform-origin: bottom center;
+      }
+
       /* 尊重用户减少动画偏好 */
       @media (prefers-reduced-motion: reduce) {
         .animate-kawaii-bounce,
         .animate-tag-pop,
         .animate-kawaii-heartbeat,
         .animate-memphis-spin,
-        .animate-swing {
+        .animate-swing,
+        .animate-bounce-click {
           animation: none;
+        }
+
+        /* 弹幕在减少动画模式下禁用 */
+        [style*="animation: danmaku-float"] {
+          animation: none !important;
+          opacity: 0 !important;
         }
       }
 

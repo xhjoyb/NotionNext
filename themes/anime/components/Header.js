@@ -11,6 +11,7 @@ import CONFIG, { getThemeConfig } from '../config'
 // 组件位置: ./NewYearDecoration.js
 // 相关配置: config.js 中的 NEW_YEAR 配置项
 import NewYearDecoration from './NewYearDecoration'
+import DanmakuToggle from './DanmakuToggle'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu } = props
@@ -103,8 +104,12 @@ const Header = props => {
                     <span className='text-lg'>🌸</span>
                   )}
                 </div>
-                <div className='absolute -top-0.5 -left-0.5 w-2 h-2 bg-pink-400 rounded-full animate-pulse'></div>
-                <div className='absolute -top-0.5 -right-0.5 w-2 h-2 bg-pink-400 rounded-full animate-pulse' style={{ animationDelay: '0.5s' }}></div>
+                {/* 二次元猫耳朵装饰 */}
+                <div className='absolute -top-1.5 left-0.5 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[10px] border-l-transparent border-r-transparent border-b-pink-400 dark:border-b-pink-300 transform -rotate-12 animate-ear-left'></div>
+                <div className='absolute -top-1.5 right-0.5 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[10px] border-l-transparent border-r-transparent border-b-pink-400 dark:border-b-pink-300 transform rotate-12 animate-ear-right'></div>
+                {/* 耳朵内部 */}
+                <div className='absolute -top-1 left-1.5 w-0 h-0 border-l-[3px] border-r-[3px] border-b-[5px] border-l-transparent border-r-transparent border-b-pink-200 dark:border-b-pink-200 transform -rotate-12'></div>
+                <div className='absolute -top-1 right-1.5 w-0 h-0 border-l-[3px] border-r-[3px] border-b-[5px] border-l-transparent border-r-transparent border-b-pink-200 dark:border-b-pink-200 transform rotate-12'></div>
               </div>
               <span className='text-base font-bold anime-gradient-text hidden sm:block'>
                 {siteInfo?.title}
@@ -164,6 +169,9 @@ const Header = props => {
               {/* TODO: [春节装饰] 2026马年春节临时装饰，年后移除 */}
               {/* 移除方法: 删除下面这行 <NewYearDecoration /> 和对应的 import */}
               <NewYearDecoration />
+
+              {/* 弹幕开关 */}
+              <DanmakuToggle />
 
               <button
                 onClick={toggleDarkMode}
