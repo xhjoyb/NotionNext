@@ -62,7 +62,14 @@ const MusicPlayer = ({
       }
     })
 
+    // 使用 requestAnimationFrame 节流 timeupdate
+    let lastUpdateTime = 0
+    const updateInterval = 250 // 每 250ms 更新一次
     audioElement.addEventListener('timeupdate', () => {
+      const now = Date.now()
+      if (now - lastUpdateTime < updateInterval) return
+      lastUpdateTime = now
+
       setCurrentTime(audioElement.currentTime)
       setProgress((audioElement.currentTime / audioElement.duration) * 100)
       // 通知父组件时间更新

@@ -61,10 +61,15 @@ const CardConnectionLine = ({ containerRef }) => {
     const ctx = canvas.getContext('2d')
 
     // 设置 canvas 尺寸
+    let resizeTimeout = null
     const resizeCanvas = () => {
-      const rect = container.getBoundingClientRect()
-      canvas.width = rect.width
-      canvas.height = rect.height
+      if (resizeTimeout) return
+      resizeTimeout = setTimeout(() => {
+        resizeTimeout = null
+        const rect = container.getBoundingClientRect()
+        canvas.width = rect.width
+        canvas.height = rect.height
+      }, 200)
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
@@ -327,12 +332,15 @@ const CardConnectionLine = ({ containerRef }) => {
     container.addEventListener('mousemove', handleMouseMove)
 
     // 使用 IntersectionObserver 只在可见时运行动画
-    let isVisible = true
+    let isVisible = false
     const observer = new IntersectionObserver(
       (entries) => {
         isVisible = entries[0]?.isIntersecting
         if (isVisible && !animationRef.current) {
           animationRef.current = requestAnimationFrame(animate)
+        } else if (!isVisible && animationRef.current) {
+          cancelAnimationFrame(animationRef.current)
+          animationRef.current = null
         }
       },
       { threshold: 0 }
@@ -342,9 +350,11 @@ const CardConnectionLine = ({ containerRef }) => {
     // 页面不可见时暂停动画
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        isVisible = false
-      } else if (canvas.getBoundingClientRect().top < window.innerHeight) {
-        isVisible = true
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current)
+          animationRef.current = null
+        }
+      } else if (isVisible) {
         if (!animationRef.current) {
           animationRef.current = requestAnimationFrame(animate)
         }
@@ -352,9 +362,8 @@ const CardConnectionLine = ({ containerRef }) => {
     }
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
-    animationRef.current = requestAnimationFrame(animate)
-
     return () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout)
       window.removeEventListener('resize', resizeCanvas)
       container.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('visibilitychange', handleVisibilityChange)

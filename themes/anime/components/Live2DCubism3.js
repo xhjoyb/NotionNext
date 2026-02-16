@@ -57,6 +57,7 @@ const Live2DCubism3 = () => {
   // 拖拽位置状态（初始为 null，在 useEffect 中从 localStorage 加载）
   const [dragPosition, setDragPosition] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
+  const dragPositionRef = useRef(null)
 
   // 在客户端加载保存的位置
   useEffect(() => {
@@ -161,11 +162,12 @@ const Live2DCubism3 = () => {
         }
 
         // 视线跟随
+        let onGlobalMouseMove = null
         if (enableEyeTracking) {
           // 使用内部模型的 focusController
           const focusController = model.internalModel?.focusController
           
-          const onGlobalMouseMove = (e) => {
+          onGlobalMouseMove = (e) => {
             if (!model || !focusController) return
             
             const rect = canvas.getBoundingClientRect()
@@ -348,6 +350,7 @@ const Live2DCubism3 = () => {
           if (expressionTimer) clearInterval(expressionTimer)
           if (chatTimer) clearInterval(chatTimer)
           if (scheduledTimer) clearInterval(scheduledTimer)
+          if (onGlobalMouseMove) window.removeEventListener('mousemove', onGlobalMouseMove)
         }
       } catch (err) {
         setError(err.message || '初始化失败')
@@ -413,7 +416,7 @@ const Live2DCubism3 = () => {
     // 获取当前元素位置
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
-    
+
     setIsDragging(true)
     // 计算鼠标相对于元素左上角的偏移
     const offsetX = e.clientX - rect.left
@@ -423,13 +426,28 @@ const Live2DCubism3 = () => {
       // 计算新位置（相对于视口）
       const newX = e.clientX - offsetX
       const newY = e.clientY - offsetY
-      setDragPosition({ x: newX, y: newY })
+      dragPositionRef.current = { x: newX, y: newY }
+      // 使用 requestAnimationFrame 减少重渲染频率
+      if (!containerRef.current._rafId) {
+        containerRef.current._rafId = requestAnimationFrame(() => {
+          setDragPosition({ ...dragPositionRef.current })
+          containerRef.current._rafId = null
+        })
+      }
     }
 
     const handleMouseUp = () => {
       setIsDragging(false)
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
+      if (containerRef.current?._rafId) {
+        cancelAnimationFrame(containerRef.current._rafId)
+        containerRef.current._rafId = null
+      }
+      // 保存最终位置
+      if (dragPositionRef.current) {
+        setDragPosition(dragPositionRef.current)
+      }
     }
 
     document.addEventListener('mousemove', handleMouseMove)

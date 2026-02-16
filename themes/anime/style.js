@@ -222,7 +222,6 @@ const Style = () => {
       .anime-float {
         animation: float 4s ease-in-out infinite;
         will-change: transform;
-        transform: translateZ(0);
       }
 
       @keyframes sparkle {
