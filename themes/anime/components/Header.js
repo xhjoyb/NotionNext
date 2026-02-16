@@ -4,7 +4,7 @@ import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
-import CONFIG from '../config'
+import CONFIG, { getThemeConfig } from '../config'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu } = props
@@ -14,6 +14,9 @@ const Header = props => {
   const [openSubMenu, setOpenSubMenu] = useState(null)
   const [iconError, setIconError] = useState(false)
   const headerRef = useRef(null)
+
+  // 获取默认 Logo 配置
+  const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
 
   // 点击外部关闭子菜单
   useEffect(() => {
@@ -77,7 +80,13 @@ const Header = props => {
               className='flex items-center space-x-3 group cursor-pointer'>
               <div className='relative'>
                 <div className='w-8 h-8 rounded-full overflow-hidden anime-glow bg-gradient-to-br from-pink-100 to-purple-100 dark:from-purple-800 dark:to-pink-800 flex items-center justify-center'>
-                  {siteInfo?.icon && !iconError ? (
+                  {defaultLogo ? (
+                    <img
+                      src={defaultLogo}
+                      alt={siteInfo?.title}
+                      className='w-full h-full object-cover'
+                    />
+                  ) : siteInfo?.icon && !iconError ? (
                     <img
                       src={siteInfo.icon}
                       alt={siteInfo?.title}

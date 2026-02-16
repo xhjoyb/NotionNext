@@ -8,6 +8,8 @@ export const THEME_CONFIG = {
   NAV: {
     // 是否使用 Notion 图标
     NOTION_ICON: true,
+    // 默认 Logo 图片地址（当 Notion 图标未设置或加载失败时使用）
+    DEFAULT_LOGO: 'https://bad.joyb.cc/file/1771203602002_blog-logo.jpg',
     // 随机文章按钮
     RANDOM_POST: true,
     // 搜索按钮
