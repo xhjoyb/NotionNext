@@ -215,6 +215,22 @@ export const THEME_CONFIG = {
     SORT_BY_UPDATE_TIME: true,
   },
 
+  // 萌化文章时间轴配置
+  ARTICLE_TIMELINE: {
+    // 是否启用
+    ENABLE: true,
+    // 指定标签（在 Notion 中为文章设置此标签即可显示）
+    TAG: '必看精选',
+    // 最大显示文章数
+    MAX_POSTS: 6,
+    // 是否显示分类
+    SHOW_CATEGORY: false,
+    // 是否交替显示标题和摘要（true: 封面图和文字信息交替显示在时间轴左右两侧，false: 所有内容都在卡片内）
+    ALTERNATE_SUMMARY: true,
+    // 是否只在首页显示
+    ONLY_ON_INDEX: true,
+  },
+
   // 联系卡片配置
   CONTACT: {
     // 是否显示
