@@ -139,6 +139,33 @@ export const THEME_CONFIG = {
     ENABLE_SIZE_VARIATION: true,
   },
 
+  // 萌化加载动画配置
+  LOADER: {
+    // 是否启用
+    ENABLE: true,
+    // 默认加载动画类型: star | heart | geo | avatar
+    DEFAULT_TYPE: 'star',
+    // 是否显示加载文字
+    ENABLE_TEXT: false,
+  },
+
+  // TODO: [春节装饰] 2026马年春节临时配置，年后移除
+  // 添加时间: 2026-02-16 (除夕)
+  // 移除时间: 2026-03-05 (元宵节后)
+  // 移除方法: 删除整个 NEW_YEAR 配置块
+  // 除夕春节装饰配置
+  NEW_YEAR: {
+    // 是否启用
+    ENABLE: true,
+    // 显示萌化小马
+    SHOW_HORSE: true,
+    // 显示灯笼
+    SHOW_LANTERN: true,
+    // 祝福语
+    GREETING: '除夕快乐',
+  },
+  // [春节装饰] 结束
+
   // 推荐文章配置
   RECOMMEND: {
     // 推荐文章标签

@@ -20,6 +20,7 @@ import Footer from './components/Footer'
 import Gallery from './components/Gallery'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import KawaiiLoader from './components/KawaiiLoader'
 import Live2DCubism3 from './components/Live2DCubism3'
 import LyricsDisplay from './components/LyricsDisplay'
 import MusicPlayer from './components/MusicPlayer'
@@ -84,6 +85,9 @@ const LayoutBase = props => {
         )}
         
         <Header {...props} />
+
+        {/* 萌化加载动画 */}
+        {onLoading && <KawaiiLoader fullscreen text="正在加载魔法世界..." />}
 
         <main className='relative'>
           {showHero && <Hero {...props} />}

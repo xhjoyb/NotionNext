@@ -5,6 +5,12 @@ import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import CONFIG, { getThemeConfig } from '../config'
+// TODO: [春节装饰] 2026马年春节临时装饰组件，年后移除
+// 添加时间: 2026-02-16 (除夕)
+// 移除时间: 2026-03-05 (元宵节后)
+// 组件位置: ./NewYearDecoration.js
+// 相关配置: config.js 中的 NEW_YEAR 配置项
+import NewYearDecoration from './NewYearDecoration'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu } = props
@@ -155,6 +161,10 @@ const Header = props => {
             </nav>
 
             <div className='flex items-center space-x-2'>
+              {/* TODO: [春节装饰] 2026马年春节临时装饰，年后移除 */}
+              {/* 移除方法: 删除下面这行 <NewYearDecoration /> 和对应的 import */}
+              <NewYearDecoration />
+
               <button
                 onClick={toggleDarkMode}
                 className='p-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 animate-breathe'

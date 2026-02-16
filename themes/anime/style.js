@@ -427,10 +427,74 @@ const Style = () => {
         animation: tag-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       }
 
+      /* 萌化加载动画 - 心跳效果 */
+      @keyframes kawaii-heartbeat {
+        0%, 100% {
+          transform: scale(1);
+        }
+        10% {
+          transform: scale(1.1);
+        }
+        20% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(1.15);
+        }
+        40% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        60% {
+          transform: scale(1);
+        }
+      }
+
+      .animate-kawaii-heartbeat {
+        animation: kawaii-heartbeat 1.5s ease-in-out infinite;
+      }
+
+      /* Memphis 风格旋转 */
+      @keyframes memphis-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .animate-memphis-spin {
+        animation: memphis-spin 2s linear infinite;
+      }
+
+      /* TODO: [春节装饰] 2026马年春节临时动画，年后移除 */
+      /* 春节灯笼摇摆动画 */
+      /* 移除方法: 删除 swing keyframes 和 .animate-swing 类 */
+      @keyframes swing {
+        0%, 100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+
+      .animate-swing {
+        animation: swing 2s ease-in-out infinite;
+        transform-origin: top center;
+      }
+      /* [春节装饰] 结束 */
+
       /* 尊重用户减少动画偏好 */
       @media (prefers-reduced-motion: reduce) {
         .animate-kawaii-bounce,
-        .animate-tag-pop {
+        .animate-tag-pop,
+        .animate-kawaii-heartbeat,
+        .animate-memphis-spin,
+        .animate-swing {
           animation: none;
         }
       }
