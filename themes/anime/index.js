@@ -46,12 +46,42 @@ const LayoutBase = props => {
 
   const showHero = router.route === '/' && siteConfig('ANIME_HOME_BANNER_ENABLE', true, CONFIG)
 
+  // 背景图配置
+  const bgEnabled = getThemeConfig('BACKGROUND.ENABLE', true)
+  const bgImageUrl = getThemeConfig('BACKGROUND.IMAGE_URL', '')
+  const bgOpacity = getThemeConfig('BACKGROUND.OPACITY', 0.6)
+  const bgDarkOpacity = getThemeConfig('BACKGROUND.DARK_OPACITY', 0.4)
+
   return (
     <ThemeGlobalAnime.Provider value={{}}>
       <div
         id='theme-anime'
         className={`${siteConfig('FONT_STYLE')} min-h-screen scroll-smooth`}>
         <Style />
+        
+        {/* 动态背景图样式 */}
+        {bgEnabled && bgImageUrl && (
+          <style jsx global>{`
+            body::before {
+              content: '';
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-image: url('${bgImageUrl}');
+              background-repeat: repeat;
+              background-size: auto;
+              background-position: center top;
+              pointer-events: none;
+              z-index: 0;
+              opacity: ${bgOpacity};
+            }
+            .dark body::before {
+              opacity: ${bgDarkOpacity};
+            }
+          `}</style>
+        )}
         
         <Header {...props} />
 
