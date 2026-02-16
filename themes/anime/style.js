@@ -336,6 +336,23 @@ const Style = () => {
         will-change: transform, opacity;
       }
 
+      /* 推荐阅读区域专用动画 - 更大的偏移量 */
+      @keyframes hero-card-enter {
+        0% {
+          opacity: 0;
+          transform: translateY(60px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .anime-hero-card {
+        animation: hero-card-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        will-change: transform, opacity;
+      }
+
       /* 淡入动画 */
       @keyframes fade-in {
         0% {

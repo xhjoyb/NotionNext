@@ -97,7 +97,7 @@ const Hero = props => {
             </div>
           </div>
 
-          <div className='hidden lg:block relative anime-slide-up' style={{animationDelay: '0.2s'}}>
+          <div className='hidden lg:block relative anime-hero-card'>
             <div className='absolute inset-0 anime-gradient-bg rounded-3xl blur-3xl opacity-20 animate-pulse'></div>
             <div className='relative anime-glass rounded-3xl p-6 overflow-hidden'>
               <div className='absolute top-4 right-4 flex gap-2'>
