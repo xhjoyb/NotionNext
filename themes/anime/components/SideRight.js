@@ -1,10 +1,12 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
+import SmartLink from '@/components/SmartLink'
 import ContactCard from './ContactCard'
 import Catalog from './Catalog'
+import AnimeQuoteCard from './AnimeQuoteCard'
+import KawaiiTagCloud from './KawaiiTagCloud'
 import CONFIG, { getThemeConfig } from '../config'
 
 const SideRight = props => {
@@ -34,6 +36,9 @@ const SideRight = props => {
           </p>
         </div>
       </div>
+
+      {/* 动漫角色引用卡片 */}
+      <AnimeQuoteCard />
 
       {isArticlePage ? (
         /* 文章页面：粘性区域包含目录和最新文章 */
@@ -101,24 +106,8 @@ const SideRight = props => {
             </div>
           )}
 
-          {tags && tags.length > 0 && (
-            <div className='anime-glass rounded-2xl p-6 anime-card'>
-              <h3 className='font-bold text-gray-800 dark:text-white mb-4 flex items-center'>
-                <i className='fas fa-tags text-pink-400 mr-2'></i>
-                {locale.COMMON.TAGS}
-              </h3>
-              <div className='flex flex-wrap gap-2'>
-                {tags.slice(0, 15).map((tag, index) => (
-                  <SmartLink
-                    key={index}
-                    href={`/tag/${encodeURIComponent(tag.name)}`}
-                    className='anime-tag cursor-pointer'>
-                    {tag.name}
-                  </SmartLink>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* 萌化标签云 */}
+          {tags && tags.length > 0 && <KawaiiTagCloud tags={tags} />}
 
           {latestPosts && latestPosts.length > 0 && (
             <div className='anime-glass rounded-2xl p-6 anime-card'>

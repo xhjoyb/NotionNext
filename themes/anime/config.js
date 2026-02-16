@@ -74,6 +74,71 @@ export const THEME_CONFIG = {
     REVERSE: false,
   },
 
+  // 动漫角色引用卡片配置
+  ANIME_QUOTE: {
+    // 是否启用
+    ENABLE: true,
+    // 是否自动轮播
+    AUTO_ROTATE: true,
+    // 轮播间隔（毫秒）
+    ROTATE_INTERVAL: 10000,
+    // 是否显示角色名
+    SHOW_CHARACTER: true,
+    // 是否显示作品名
+    SHOW_ANIME: true,
+    // 台词列表（在此添加你喜欢的台词）
+    QUOTES: [
+      {
+        text: '我命由我不由天，是魔是仙，我自己说了算！',
+        character: '哪吒',
+        anime: '哪吒之魔童降世',
+        color: '#DC143C'
+      },
+      {
+        text: '这短短的一生，我们最终都会失去。不妨大胆一些，爱一个人，攀一座山，追一个梦。',
+        character: '椿',
+        anime: '大鱼海棠',
+        color: '#FF69B4'
+      },
+      {
+        text: '三十年河东，三十年河西，莫欺少年穷！',
+        character: '萧炎',
+        anime: '斗破苍穹',
+        color: '#8B4513'
+      },
+      {
+        text: '我今天就要带她走，我看谁敢拦我！',
+        character: '伍六七',
+        anime: '刺客伍六七',
+        color: '#FF6347'
+      },
+      {
+        text: '为你明灯三千，为你花开满城。',
+        character: '谢怜',
+        anime: '天官赐福',
+        color: '#FFD700'
+      },
+      {
+        text: '无论过去，不问将来。',
+        character: '陆光',
+        anime: '时光代理人',
+        color: '#9370DB'
+      }
+    ],
+  },
+
+  // 萌化标签云配置
+  TAG_CLOUD: {
+    // 是否启用
+    ENABLE: true,
+    // 最大显示标签数
+    MAX_TAGS: 20,
+    // 是否启用弹跳动画
+    ENABLE_BOUNCE: true,
+    // 是否启用大小区分（根据文章数量）
+    ENABLE_SIZE_VARIATION: true,
+  },
+
   // 推荐文章配置
   RECOMMEND: {
     // 推荐文章标签

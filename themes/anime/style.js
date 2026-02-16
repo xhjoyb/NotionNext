@@ -382,6 +382,59 @@ const Style = () => {
         animation: fade-in-up 0.3s ease-out forwards;
       }
 
+      /* 萌化标签云弹跳动画 - 更弹性的效果 */
+      @keyframes kawaii-bounce {
+        0% {
+          transform: translateY(0) scale(1);
+        }
+        20% {
+          transform: translateY(-6px) scale(1.08);
+        }
+        40% {
+          transform: translateY(-10px) scale(1.12);
+        }
+        60% {
+          transform: translateY(-4px) scale(1.06);
+        }
+        80% {
+          transform: translateY(-2px) scale(1.02);
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .animate-kawaii-bounce {
+        animation: kawaii-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      /* 标签入场动画 */
+      @keyframes tag-pop-in {
+        0% {
+          opacity: 0;
+          transform: scale(0.5) translateY(10px);
+        }
+        70% {
+          transform: scale(1.1) translateY(-2px);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .animate-tag-pop {
+        animation: tag-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      /* 尊重用户减少动画偏好 */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-kawaii-bounce,
+        .animate-tag-pop {
+          animation: none;
+        }
+      }
+
       .anime-content-section {
         position: relative;
         z-index: 10;

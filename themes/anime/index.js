@@ -36,7 +36,7 @@ const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
 
 const LayoutBase = props => {
-  const { children, post, tags, categories, latestPosts, siteInfo, customNav, customMenu } = props
+  const { children, post, tagOptions, categories, latestPosts, siteInfo, customNav, customMenu } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
 
@@ -97,7 +97,7 @@ const LayoutBase = props => {
               {!fullWidth && router.route !== '/404' && (
                 <SideRight
                   post={post}
-                  tags={tags}
+                  tags={tagOptions}
                   categories={categories}
                   latestPosts={latestPosts}
                   siteInfo={siteInfo}
@@ -263,7 +263,7 @@ const LayoutArchive = props => {
 }
 
 const LayoutSlug = props => {
-  const { post, recommendPosts, lock, validPassword, tags, categories, latestPosts, siteInfo } = props
+  const { post, recommendPosts, lock, validPassword, tagOptions, categories, latestPosts, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
