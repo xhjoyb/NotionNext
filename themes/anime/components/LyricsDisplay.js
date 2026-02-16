@@ -7,8 +7,9 @@ import { useEffect, useRef, useState } from 'react'
  * @param {Array} props.lyrics - 歌词数组（备用）
  * @param {number} props.currentTime - 当前播放时间（秒）
  * @param {boolean} props.isPlaying - 是否正在播放
+ * @param {boolean} props.showBackground - 是否显示背景
  */
-const LyricsDisplay = ({ lrcUrl, lyrics: embeddedLyrics, currentTime = 0, isPlaying = false }) => {
+const LyricsDisplay = ({ lrcUrl, lyrics: embeddedLyrics, currentTime = 0, isPlaying = false, showBackground = true }) => {
   const lyricsRef = useRef(null)
   const activeLineRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -113,9 +114,9 @@ const LyricsDisplay = ({ lrcUrl, lyrics: embeddedLyrics, currentTime = 0, isPlay
   }
 
   return (
-    <div 
+    <div
       ref={lyricsRef}
-      className='h-full overflow-hidden bg-gradient-to-b from-transparent via-white/30 to-transparent dark:via-black/30 rounded-2xl backdrop-blur-sm'
+      className={`h-full overflow-hidden ${showBackground ? 'bg-gradient-to-b from-transparent via-white/30 to-transparent dark:via-black/30 rounded-2xl backdrop-blur-sm' : ''}`}
       style={{ scrollBehavior: 'smooth' }}
     >
       <div className='py-[50%] px-2'>

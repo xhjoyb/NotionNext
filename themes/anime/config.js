@@ -109,6 +109,8 @@ export const THEME_CONFIG = {
     ENABLE: true,
     // 是否显示歌词
     SHOW_LYRICS: true,
+    // 是否启用歌词背景
+    LYRICS_BACKGROUND: false,
     // 歌词获取方式：'fetch' 从 URL 获取，'embedded' 内嵌
     LRC_TYPE: 'fetch',
     // 音乐列表（从 NotionNext 全局配置 MUSIC_PLAYER_AUDIO_LIST 复制）

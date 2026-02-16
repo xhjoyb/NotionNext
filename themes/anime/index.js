@@ -502,6 +502,7 @@ const LayoutMusic = props => {
   // 从主题配置获取音乐列表
   const audioList = getThemeConfig('MUSIC.LIST', [])
   const showLyrics = getThemeConfig('MUSIC.SHOW_LYRICS', true)
+  const lyricsBackground = getThemeConfig('MUSIC.LYRICS_BACKGROUND', true)
 
   // 播放状态管理
   const [currentSongIndex, setCurrentSongIndex] = useState(0)
@@ -529,6 +530,7 @@ const LayoutMusic = props => {
             lrcUrl={currentSong.lrc}
             currentTime={currentTime}
             isPlaying={isPlaying}
+            showBackground={lyricsBackground}
           />
         </div>
       )}
