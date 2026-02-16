@@ -512,10 +512,19 @@ const LayoutMusic = props => {
   const currentSong = audioList[currentSongIndex] || {}
 
   return (
-    <div className='min-h-screen anime-slide-up relative'>
-      {/* 左侧悬浮歌词 - 在内容区域外 */}
+    <>
+      {/* 左侧悬浮歌词 - 固定在视口左侧 */}
       {showLyrics && (
-        <div className='fixed left-4 top-1/2 -translate-y-1/2 w-32 h-[50vh] z-10 hidden xl:block'>
+        <div 
+          className='fixed hidden xl:flex items-center justify-center z-50 pointer-events-none'
+          style={{
+            left: '16px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: '160px',
+            height: '60vh'
+          }}
+        >
           <LyricsDisplay
             lrcUrl={currentSong.lrc}
             currentTime={currentTime}
@@ -523,6 +532,8 @@ const LayoutMusic = props => {
           />
         </div>
       )}
+      
+      <div className='min-h-screen anime-slide-up'>
 
       {/* 页面标题区域 */}
       <div className='anime-glass rounded-3xl p-8 mb-8 text-center relative overflow-hidden'>
@@ -559,6 +570,7 @@ const LayoutMusic = props => {
       </div>
 
     </div>
+    </>
   )
 }
 

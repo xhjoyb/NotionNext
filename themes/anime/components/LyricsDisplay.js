@@ -115,20 +115,20 @@ const LyricsDisplay = ({ lrcUrl, lyrics: embeddedLyrics, currentTime = 0, isPlay
   return (
     <div 
       ref={lyricsRef}
-      className='h-full overflow-hidden'
+      className='h-full overflow-hidden bg-gradient-to-b from-transparent via-white/30 to-transparent dark:via-black/30 rounded-2xl backdrop-blur-sm'
       style={{ scrollBehavior: 'smooth' }}
     >
-      <div className='py-[50%]'>
+      <div className='py-[50%] px-2'>
         {parsedLyrics.map((line, index) => (
           <div
             key={index}
             ref={index === activeIndex ? activeLineRef : null}
-            className={`py-2 text-center transition-all duration-500 ${
+            className={`py-3 text-center transition-all duration-500 whitespace-nowrap overflow-hidden text-ellipsis ${
               index === activeIndex
-                ? 'text-base font-medium text-pink-400 dark:text-pink-300 opacity-100'
+                ? 'text-lg font-bold text-pink-500 dark:text-pink-400 opacity-100 scale-105'
                 : index === activeIndex - 1 || index === activeIndex + 1
-                ? 'text-sm text-gray-400 dark:text-gray-500 opacity-50'
-                : 'text-sm text-gray-500 dark:text-gray-600 opacity-30'
+                ? 'text-sm text-gray-500 dark:text-gray-400 opacity-60'
+                : 'text-xs text-gray-400 dark:text-gray-600 opacity-40'
             }`}
           >
             {line.text}
