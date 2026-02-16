@@ -75,7 +75,7 @@ export const THEME_CONFIG = {
     // 是否显示
     ENABLE: true,
     // 联系链接
-    URL: 'https://github.com',
+    URL: 'https://t.me/xh_joyb',
     // 标题
     TITLE_1: '✨ 联系我',
     TITLE_2: '一起交流吧~',

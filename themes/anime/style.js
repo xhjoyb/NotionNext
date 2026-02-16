@@ -221,6 +221,8 @@ const Style = () => {
 
       .anime-float {
         animation: float 4s ease-in-out infinite;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
       @keyframes sparkle {
@@ -282,6 +284,7 @@ const Style = () => {
         z-index: 9999;
         animation: sakura-fall linear forwards;
         filter: drop-shadow(0 0 5px rgba(255, 113, 206, 0.5));
+        will-change: transform, opacity;
       }
 
       @keyframes gradient-shift {
@@ -314,6 +317,7 @@ const Style = () => {
 
       .anime-bounce-in {
         animation: bounce-in 0.6s var(--anime-transition);
+        will-change: transform, opacity;
       }
 
       @keyframes slide-up {
@@ -329,6 +333,7 @@ const Style = () => {
 
       .anime-slide-up {
         animation: slide-up 0.5s ease-out forwards;
+        will-change: transform, opacity;
       }
 
       /* 淡入动画 */

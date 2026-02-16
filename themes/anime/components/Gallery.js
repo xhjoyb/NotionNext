@@ -13,22 +13,30 @@ const Gallery = ({ images = [], columns = 3 }) => {
   const galleryRef = useRef(null)
   const zoomRef = useRef(null)
 
-  // 监听窗口大小变化
+  // 监听窗口大小变化 - 使用节流
   useEffect(() => {
+    let resizeTimer = null
+    
     const handleResize = () => {
-      setWindowWidth(window.innerWidth)
+      if (resizeTimer) clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        setWindowWidth(window.innerWidth)
+      }, 250) // 节流 250ms
     }
 
     // 初始化
-    handleResize()
+    setWindowWidth(window.innerWidth)
 
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (resizeTimer) clearTimeout(resizeTimer)
+    }
   }, [])
 
-  // 初始化 MediumZoom
+  // 初始化 MediumZoom - 只初始化一次
   useEffect(() => {
-    if (!isBrowser || !galleryRef.current) return
+    if (!isBrowser || !galleryRef.current || zoomRef.current) return
 
     // 创建 zoom 实例
     const zoom = mediumZoom({
@@ -40,19 +48,24 @@ const Gallery = ({ images = [], columns = 3 }) => {
 
     // 延迟 attach，确保图片已渲染
     const timer = setTimeout(() => {
-      const imgList = galleryRef.current.querySelectorAll('img[data-zoom-src]')
-      imgList.forEach((img) => {
-        zoom.attach(img)
-      })
+      if (galleryRef.current && zoomRef.current) {
+        const imgList = galleryRef.current.querySelectorAll('img[data-zoom-src]')
+        imgList.forEach((img) => {
+          if (!img.classList.contains('medium-zoom-image')) {
+            zoomRef.current.attach(img)
+          }
+        })
+      }
     }, 500)
 
     return () => {
       clearTimeout(timer)
       if (zoomRef.current) {
         zoomRef.current.detach()
+        zoomRef.current = null
       }
     }
-  }, [images, windowWidth])
+  }, []) // 只在组件挂载时初始化一次
 
   // 根据屏幕宽度计算列数
   const getColumnCount = () => {
@@ -63,12 +76,15 @@ const Gallery = ({ images = [], columns = 3 }) => {
 
   // 处理图片加载完成
   const handleImageLoad = (index) => {
-    setLoadedImages((prev) => new Set(prev).add(index))
+    setLoadedImages((prev) => {
+      if (prev.has(index)) return prev
+      return new Set(prev).add(index)
+    })
 
-    // 图片加载完成后，attach 到 zoom
+    // 图片加载完成后，attach 到 zoom（避免重复 attach）
     if (zoomRef.current && galleryRef.current) {
       const img = galleryRef.current.querySelector(`img[data-index="${index}"]`)
-      if (img) {
+      if (img && !img.classList.contains('medium-zoom-image')) {
         zoomRef.current.attach(img)
       }
     }
@@ -116,8 +132,8 @@ const Gallery = ({ images = [], columns = 3 }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className='gallery-item break-inside-avoid mb-3 md:mb-4 anime-slide-up group'
-            style={{ animationDelay: `${index * 0.05}s` }}>
+            className='gallery-item break-inside-avoid mb-3 md:mb-4 group anime-slide-up'
+            style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}>
             <div className='relative overflow-hidden rounded-xl md:rounded-2xl anime-glass anime-card cursor-zoom-in'>
               {/* 图片 - 使用原生 img 标签，支持 data-zoom-src */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -128,7 +144,6 @@ const Gallery = ({ images = [], columns = 3 }) => {
                 data-zoom-src={image.src}
                 className='w-full h-auto transition-transform duration-500 group-hover:scale-105'
                 onLoad={() => handleImageLoad(index)}
-                loading='lazy'
               />
 
               {/* 悬停遮罩 - 桌面端显示，移动端隐藏 */}
