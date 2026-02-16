@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { getThemeConfig } from '../config'
+import KawaiiMusicVisualizer from './KawaiiMusicVisualizer'
 
 /**
  * 音乐播放器组件 - 完全独立的实现
@@ -240,99 +241,102 @@ const MusicPlayer = ({
 
   return (
     <div className='anime-glass rounded-2xl overflow-hidden'>
-      {/* 当前播放信息 */}
-      <div className='px-6 py-6 bg-gradient-to-br from-pink-50/80 to-purple-50/80 dark:from-purple-900/40 dark:to-pink-900/40 border-b border-pink-100 dark:border-purple-800/50'>
-        <div className='flex flex-col md:flex-row items-center gap-6'>
-          {/* 封面 */}
+      {/* 萌化音乐可视化 - 与播放器无缝衔接 */}
+      <div className='px-6 pt-6'>
+        <KawaiiMusicVisualizer isPlaying={isPlaying} audioElement={audioRef.current} />
+      </div>
+
+      {/* 当前播放信息 - 紧凑布局 */}
+      <div className='px-5 py-4 bg-gradient-to-br from-purple-50/80 to-pink-50/80 dark:from-pink-900/40 dark:to-purple-900/40 border-b border-pink-100 dark:border-purple-800/50'>
+        <div className='flex items-center gap-4'>
+          {/* 封面 - 缩小 */}
           <div className='relative flex-shrink-0'>
             {currentSongData?.cover ? (
               <img
                 src={currentSongData.cover}
                 alt={currentSongData.name}
-                className={`w-28 h-28 md:w-32 md:h-32 rounded-2xl object-cover shadow-2xl ${isPlaying ? 'animate-spin-slow' : ''}`}
+                className={`w-16 h-16 rounded-xl object-cover shadow-lg ${isPlaying ? 'animate-spin-slow' : ''}`}
                 style={{ animationDuration: '10s' }}
               />
             ) : (
-              <div className='w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-pink-200 to-purple-200 dark:from-pink-800 dark:to-purple-800 flex items-center justify-center shadow-2xl'>
-                <svg className='w-14 h-14 text-pink-500 dark:text-pink-300' fill='currentColor' viewBox='0 0 24 24'>
+              <div className='w-16 h-16 rounded-xl bg-gradient-to-br from-pink-200 to-purple-200 dark:from-pink-800 dark:to-purple-800 flex items-center justify-center shadow-lg'>
+                <svg className='w-8 h-8 text-pink-500 dark:text-pink-300' fill='currentColor' viewBox='0 0 24 24'>
                   <path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' />
                 </svg>
               </div>
             )}
             {isLoading && (
-              <div className='absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl'>
-                <div className='w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin'></div>
+              <div className='absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl'>
+                <div className='w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
               </div>
             )}
           </div>
 
-          {/* 歌曲信息和控制 */}
-          <div className='flex-1 w-full min-w-0'>
-            {/* 歌曲信息 */}
-            <div className='text-center md:text-left mb-4'>
-              <h3 className='text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-1 truncate'>
+          {/* 歌曲信息和控制 - 垂直布局 */}
+          <div className='flex-1 min-w-0'>
+            {/* 歌曲信息 - 单行 */}
+            <div className='mb-2'>
+              <h3 className='text-base font-bold text-gray-800 dark:text-white truncate leading-tight'>
                 {currentSongData?.name || '未知歌曲'}
               </h3>
-              <p className='text-base text-gray-600 dark:text-gray-400 truncate'>
+              <p className='text-xs text-gray-500 dark:text-gray-400 truncate'>
                 {currentSongData?.artist || '未知艺术家'}
               </p>
             </div>
 
-            {/* 进度条 - 合并为一条 */}
-            <div className='flex items-center gap-3 mb-4'>
-              <span className='text-xs text-gray-500 dark:text-gray-400 w-10 text-right font-medium'>
+            {/* 进度条 - 更紧凑 */}
+            <div className='flex items-center gap-2 mb-2'>
+              <span className='text-[10px] text-gray-400 w-8 text-right'>
                 {formatTime(currentTime)}
               </span>
-              <div 
+              <div
                 ref={progressRef}
                 onClick={handleProgressClick}
-                className='flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer relative group'
+                className='flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer relative group'
               >
-                {/* 背景进度 */}
                 <div className='absolute inset-0 rounded-full overflow-hidden'>
-                  <div 
+                  <div
                     className='h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full transition-all duration-100'
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
-                {/* 悬停指示器 */}
-                <div className='absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'
-                  style={{ left: `calc(${progress}% - 6px)` }}
+                <div className='absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'
+                  style={{ left: `calc(${progress}% - 4px)` }}
                 ></div>
               </div>
-              <span className='text-xs text-gray-500 dark:text-gray-400 w-10 font-medium'>
+              <span className='text-[10px] text-gray-400 w-8'>
                 {formatTime(duration)}
               </span>
             </div>
 
-            {/* 控制按钮和音量 */}
+            {/* 控制按钮 - 水平排列 */}
             <div className='flex items-center justify-between'>
-              {/* 播放控制 - 左侧 */}
-              <div className='flex items-center gap-3'>
+              {/* 播放控制 */}
+              <div className='flex items-center gap-2'>
                 {/* 上一首 */}
                 <button
                   onClick={handlePrev}
-                  className='w-10 h-10 rounded-full bg-pink-100 dark:bg-purple-800/60 flex items-center justify-center text-pink-500 dark:text-pink-300 hover:bg-pink-200 dark:hover:bg-purple-700 transition-all hover:scale-105 active:scale-95'
+                  className='w-7 h-7 rounded-full bg-pink-100 dark:bg-purple-800/60 flex items-center justify-center text-pink-500 dark:text-pink-300 hover:bg-pink-200 dark:hover:bg-purple-700 transition-all hover:scale-105 active:scale-95'
                 >
-                  <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+                  <svg className='w-3.5 h-3.5' fill='currentColor' viewBox='0 0 24 24'>
                     <path d='M6 6h2v12H6zm3.5 6l8.5 6V6z' />
                   </svg>
                 </button>
 
-                {/* 播放/暂停 - 主按钮 */}
+                {/* 播放/暂停 */}
                 <button
                   onClick={togglePlay}
                   disabled={isLoading}
-                  className='w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='w-9 h-9 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all disabled:opacity-50'
                 >
                   {isLoading ? (
-                    <div className='w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+                    <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
                   ) : isPlaying ? (
-                    <svg className='w-7 h-7' fill='currentColor' viewBox='0 0 24 24'>
+                    <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
                       <path d='M6 19h4V5H6v14zm8-14v14h4V5h-4z' />
                     </svg>
                   ) : (
-                    <svg className='w-7 h-7 ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
+                    <svg className='w-4 h-4 ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
                       <path d='M8 5v14l11-7z' />
                     </svg>
                   )}
@@ -341,39 +345,38 @@ const MusicPlayer = ({
                 {/* 下一首 */}
                 <button
                   onClick={handleNext}
-                  className='w-10 h-10 rounded-full bg-pink-100 dark:bg-purple-800/60 flex items-center justify-center text-pink-500 dark:text-pink-300 hover:bg-pink-200 dark:hover:bg-purple-700 transition-all hover:scale-105 active:scale-95'
+                  className='w-7 h-7 rounded-full bg-pink-100 dark:bg-purple-800/60 flex items-center justify-center text-pink-500 dark:text-pink-300 hover:bg-pink-200 dark:hover:bg-purple-700 transition-all hover:scale-105 active:scale-95'
                 >
-                  <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
+                  <svg className='w-3.5 h-3.5' fill='currentColor' viewBox='0 0 24 24'>
                     <path d='M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z' />
                   </svg>
                 </button>
               </div>
 
-              {/* 音量控制 - 右侧 */}
-              <div className='flex items-center gap-2 relative'>
+              {/* 音量控制 */}
+              <div className='flex items-center gap-1.5'>
                 <button
                   onClick={toggleMute}
-                  onMouseEnter={() => setShowVolume(true)}
-                  className='w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors'
+                  className='w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors'
                 >
                   {isMuted || volume === 0 ? (
-                    <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
+                    <svg className='w-3 h-3' fill='currentColor' viewBox='0 0 24 24'>
                       <path d='M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z' />
                     </svg>
                   ) : volume < 0.5 ? (
-                    <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
+                    <svg className='w-3 h-3' fill='currentColor' viewBox='0 0 24 24'>
                       <path d='M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z' />
                     </svg>
                   ) : (
-                    <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
+                    <svg className='w-3 h-3' fill='currentColor' viewBox='0 0 24 24'>
                       <path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z' />
                     </svg>
                   )}
                 </button>
-                
+
                 {/* 音量滑块 */}
-                <div 
-                  className='w-20 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden cursor-pointer'
+                <div
+                  className='w-14 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden cursor-pointer'
                   onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect()
                     const clickX = e.clientX - rect.left
@@ -381,7 +384,7 @@ const MusicPlayer = ({
                     handleVolumeChange({ target: { value: percentage } })
                   }}
                 >
-                  <div 
+                  <div
                     className='h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full transition-all'
                     style={{ width: `${isMuted ? 0 : volume * 100}%` }}
                   ></div>
