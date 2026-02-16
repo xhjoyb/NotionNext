@@ -12,8 +12,8 @@ const Style = () => {
         --anime-coral: #FF9ECD;
         --anime-mint: #98FF98;
         --anime-lilac: #E6E6FA;
-        --anime-gradient-hero: linear-gradient(180deg, #FDF2F8 0%, #FCE7F3 30%, #FBCFE8 60%, #F9A8D4 100%);
-        --anime-gradient-hero-dark: linear-gradient(180deg, #1A1625 0%, #2D2640 30%, #3B3255 60%, #4C4267 100%);
+        --anime-gradient-hero: linear-gradient(180deg, #FDF2F8 0%, #FCE7F3 40%, #FBCFE8 70%, #FCE7F3 100%);
+        --anime-gradient-hero-dark: linear-gradient(180deg, #2D2640 0%, #3B3255 40%, #4C4267 70%, #3B3255 100%);
         --anime-gradient-card: linear-gradient(135deg, rgba(255, 113, 206, 0.1) 0%, rgba(106, 123, 180, 0.1) 100%);
         --anime-glass-bg: rgba(255, 255, 255, 0.85);
         --anime-glass-border: rgba(255, 113, 206, 0.2);
