@@ -2,12 +2,13 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useState } from 'react'
 import SocialButton from './SocialButton'
-import CONFIG from '../config'
+import CONFIG, { getThemeConfig } from '../config'
 
 const Footer = props => {
   const { siteInfo } = props
   const { locale } = useGlobal()
   const [iconError, setIconError] = useState(false)
+  const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
   const since = siteConfig('SINCE')
   const currentYear = new Date().getFullYear()
   const copyrightDate = since === currentYear ? currentYear : `${since} - ${currentYear}`
@@ -23,7 +24,13 @@ const Footer = props => {
         <div className='flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0'>
           <div className='flex items-center space-x-4'>
             <div className='w-12 h-12 rounded-full overflow-hidden anime-glow ring-2 ring-pink-200 dark:ring-purple-600 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-purple-800 dark:to-pink-800 flex items-center justify-center'>
-              {siteInfo?.icon && !iconError ? (
+              {defaultLogo ? (
+                <img
+                  src={defaultLogo}
+                  alt={siteInfo?.title}
+                  className='w-full h-full object-cover'
+                />
+              ) : siteInfo?.icon && !iconError ? (
                 <img
                   src={siteInfo.icon}
                   alt={siteInfo?.title}

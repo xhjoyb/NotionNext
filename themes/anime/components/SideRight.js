@@ -5,12 +5,13 @@ import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import ContactCard from './ContactCard'
 import Catalog from './Catalog'
-import CONFIG from '../config'
+import CONFIG, { getThemeConfig } from '../config'
 
 const SideRight = props => {
   const { post, tags, categories, latestPosts, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
+  const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
 
   const isArticlePage = post && router.route !== '/404'
 
@@ -21,7 +22,7 @@ const SideRight = props => {
         <div className='flex flex-col items-center text-center'>
           <div className='w-20 h-20 rounded-full overflow-hidden anime-glow mb-4 ring-2 ring-pink-200 dark:ring-purple-600'>
             <LazyImage
-              src={siteInfo?.icon}
+              src={defaultLogo || siteInfo?.icon}
               className='w-full h-full object-cover'
             />
           </div>
