@@ -578,21 +578,30 @@ const LayoutMusic = props => {
 
 const SakuraEffect = () => {
   useEffect(() => {
+    // 限制同时存在的樱花数量
+    let sakuraCount = 0
+    const maxSakura = 5
+
     const createSakura = () => {
+      if (sakuraCount >= maxSakura) return
+
+      sakuraCount++
       const sakura = document.createElement('div')
       sakura.className = 'sakura'
       sakura.innerHTML = ['🌸', '🎀', '💫', '✨'][Math.floor(Math.random() * 4)]
       sakura.style.left = Math.random() * 100 + 'vw'
       sakura.style.fontSize = Math.random() * 10 + 12 + 'px'
       sakura.style.animationDuration = Math.random() * 5 + 12 + 's'
+      sakura.style.willChange = 'transform'
       document.body.appendChild(sakura)
 
       setTimeout(() => {
         sakura.remove()
+        sakuraCount--
       }, 17000)
     }
 
-    const interval = setInterval(createSakura, 2500)
+    const interval = setInterval(createSakura, 3000)
     return () => clearInterval(interval)
   }, [])
 

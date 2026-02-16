@@ -456,6 +456,9 @@ const Live2DCubism3 = () => {
         top: dragPosition ? `${dragPosition.y}px` : undefined,
         width: `${width}px`,
         height: `${height}px`,
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        contain: 'layout style paint',
       }}
       onMouseDown={handleMouseDown}>
 

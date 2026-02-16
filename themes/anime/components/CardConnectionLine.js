@@ -325,11 +325,40 @@ const CardConnectionLine = ({ containerRef }) => {
     }
 
     container.addEventListener('mousemove', handleMouseMove)
+
+    // 使用 IntersectionObserver 只在可见时运行动画
+    let isVisible = true
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting
+        if (isVisible && !animationRef.current) {
+          animationRef.current = requestAnimationFrame(animate)
+        }
+      },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
+
+    // 页面不可见时暂停动画
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isVisible = false
+      } else if (canvas.getBoundingClientRect().top < window.innerHeight) {
+        isVisible = true
+        if (!animationRef.current) {
+          animationRef.current = requestAnimationFrame(animate)
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
     animationRef.current = requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
       container.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      observer.disconnect()
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }

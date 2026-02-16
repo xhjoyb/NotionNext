@@ -44,27 +44,37 @@ const Style = () => {
 
       body {
         background: var(--anime-gradient-hero);
-        background-attachment: fixed;
+        background-attachment: scroll;
         min-height: 100vh;
         transition: background 0.5s ease, color 0.5s ease;
       }
 
-      /* 夜间模式过渡效果 */
-      *, *::before, *::after {
+      /* 夜间模式过渡效果 - 只对特定元素应用 */
+      body, .anime-glass, .anime-card, .anime-btn, .anime-tag, .anime-input {
         transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       }
 
       .dark body {
         background: var(--anime-gradient-hero-dark);
-        background-attachment: fixed;
+        background-attachment: scroll;
       }
 
       .anime-glass {
         background: var(--anime-glass-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 2px solid var(--anime-glass-border);
         box-shadow: var(--anime-shadow-card);
+        will-change: transform;
+        transform: translateZ(0);
+      }
+
+      /* 减少毛玻璃效果以提升滚动性能 */
+      @media (prefers-reduced-motion: reduce) {
+        .anime-glass {
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
       }
 
       .anime-gradient-text {

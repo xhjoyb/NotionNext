@@ -182,9 +182,17 @@ function createFireworks({ config, anime }) {
     }
   })
 
+  // 节流控制，避免频繁触发
+  let lastFireworkTime = 0
+  const fireworkThrottle = 200 // 200ms 内只触发一次
+
   document.addEventListener(
     'mousedown',
     e => {
+      const now = Date.now()
+      if (now - lastFireworkTime < fireworkThrottle) return
+      lastFireworkTime = now
+
       render.play()
       updateCoords(e)
       animateParticules(pointerX, pointerY)
