@@ -54,13 +54,19 @@ const Live2DCubism3 = () => {
   const scheduledMotionInterval = getThemeConfig('LIVE2D_CUBISM3.SCHEDULED_MOTION_INTERVAL', 30000)
   const scheduledMessages = getThemeConfig('LIVE2D_CUBISM3.SCHEDULED_MESSAGES', [])
 
-  // 拖拽位置状态（必须在配置读取之后）
-  const [dragPosition, setDragPosition] = useState(() => {
-    if (!isBrowser) return null
-    const saved = localStorage.getItem('live2d-position')
-    return saved ? JSON.parse(saved) : null
-  })
+  // 拖拽位置状态（初始为 null，在 useEffect 中从 localStorage 加载）
+  const [dragPosition, setDragPosition] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
+
+  // 在客户端加载保存的位置
+  useEffect(() => {
+    if (isBrowser && rememberDragPosition) {
+      const saved = localStorage.getItem('live2d-position')
+      if (saved) {
+        setDragPosition(JSON.parse(saved))
+      }
+    }
+  }, [rememberDragPosition])
 
   useEffect(() => {
     if (!isBrowser || !enabled || !modelPath) return

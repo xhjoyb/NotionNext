@@ -61,10 +61,6 @@ const Footer = props => {
           </div>
           
           <div className='flex items-center space-x-4'>
-            <span className='flex items-center space-x-1'>
-              <i className='fas fa-code text-purple-400'></i>
-              <span>Powered by NotionNext</span>
-            </span>
             {siteConfig('BEI_AN') && (
               <a
                 href={siteConfig('BEI_AN_LINK')}

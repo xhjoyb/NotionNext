@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
-import { useRef } from 'react'
+import { decryptEmail } from '@/lib/plugins/mailEncrypt'
+import { useMemo, useRef } from 'react'
 
 const SocialButton = ({ className = '' }) => {
   const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
@@ -9,13 +9,18 @@ const SocialButton = ({ className = '' }) => {
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
-  const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
+  const rawEmail = siteConfig('CONTACT_EMAIL') || siteConfig('EMAIL')
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
   const CONTACT_BILIBILI = siteConfig('CONTACT_BILIBILI')
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
   const CONTACT_QQ = siteConfig('CONTACT_QQ')
 
   const emailIcon = useRef(null)
+
+  // 使用 useMemo 确保邮箱解密只在 rawEmail 变化时执行
+  const CONTACT_EMAIL = useMemo(() => {
+    return rawEmail ? decryptEmail(rawEmail) : ''
+  }, [rawEmail])
 
   const socialLinks = [
     CONTACT_GITHUB && {
@@ -99,10 +104,10 @@ const SocialButton = ({ className = '' }) => {
         </svg>
       )
     },
-    CONTACT_EMAIL && {
+    CONTACT_EMAIL && CONTACT_EMAIL !== '' && {
       name: 'Email',
-      href: CONTACT_EMAIL,
-      isEmail: true,
+      href: `mailto:${CONTACT_EMAIL}`,
+      isEmail: false,
       icon: (
         <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' />
