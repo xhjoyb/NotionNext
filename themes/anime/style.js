@@ -594,6 +594,40 @@ const Style = () => {
         transform-origin: bottom center;
       }
 
+      /* 联系卡片弹跳动画 */
+      @keyframes contact-bounce {
+        0%, 100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-3px) rotate(-3deg);
+        }
+        50% {
+          transform: translateY(0) rotate(0deg);
+        }
+        75% {
+          transform: translateY(-2px) rotate(3deg);
+        }
+      }
+
+      .animate-contact-bounce {
+        animation: contact-bounce 2s ease-in-out infinite;
+      }
+
+      /* 慢速旋转动画 */
+      @keyframes spin-slow {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .animate-spin-slow {
+        animation: spin-slow 8s linear infinite;
+      }
+
       /* 尊重用户减少动画偏好 */
       @media (prefers-reduced-motion: reduce) {
         .animate-kawaii-bounce,
