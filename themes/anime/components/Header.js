@@ -14,16 +14,64 @@ import NewYearDecoration from './NewYearDecoration'
 import DanmakuToggle from './DanmakuToggle'
 
 const Header = props => {
-  const { siteInfo, customNav, customMenu } = props
+  const { siteInfo, customNav, customMenu, allNavPages } = props
   const { locale, isDarkMode, toggleDarkMode } = useGlobal()
   const router = useRouter()
+
+  // 随机跳转到一篇文章
+  const handleRandomPost = () => {
+    if (allNavPages && allNavPages.length > 0) {
+      const randomIndex = Math.floor(Math.random() * allNavPages.length)
+      const randomPost = allNavPages[randomIndex]
+      if (randomPost?.slug) {
+        router.push(`/${randomPost.slug}`)
+      }
+    }
+  }
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [openSubMenu, setOpenSubMenu] = useState(null)
   const [iconError, setIconError] = useState(false)
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const headerRef = useRef(null)
 
   // 获取默认 Logo 配置
   const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
+  
+  // 获取导航栏自动隐藏配置
+  const autoHideOnScroll = getThemeConfig('NAV.AUTO_HIDE_ON_SCROLL', true)
+
+  // 滚动时隐藏/显示导航栏
+  useEffect(() => {
+    // 如果禁用了自动隐藏，始终显示导航栏
+    if (!autoHideOnScroll) {
+      setIsHeaderVisible(true)
+      return
+    }
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      // 在顶部时始终显示
+      if (currentScrollY < 100) {
+        setIsHeaderVisible(true)
+      } else {
+        // 向下滚动隐藏，向上滚动显示
+        const shouldShow = currentScrollY < lastScrollY
+        setIsHeaderVisible(shouldShow)
+        
+        // 导航栏隐藏时关闭子菜单
+        if (!shouldShow) {
+          setOpenSubMenu(null)
+        }
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY, autoHideOnScroll])
 
   // 点击外部关闭子菜单
   useEffect(() => {
@@ -78,7 +126,7 @@ const Header = props => {
     <header
       ref={headerRef}
       id='header'
-      className='fixed top-4 left-0 right-0 z-50'>
+      className={`fixed top-4 left-0 right-0 z-50 transition-transform duration-300 ${isHeaderVisible ? 'translate-y-0' : '-translate-y-[calc(100%+2rem)]'}`}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='anime-glass rounded-2xl px-4 sm:px-6 lg:px-8'>
           <div className='flex items-center justify-between h-12'>
@@ -116,14 +164,14 @@ const Header = props => {
               </span>
             </SmartLink>
 
-            <nav className='hidden md:flex items-center space-x-1'>
+            <nav className='hidden lg:flex items-center space-x-1'>
               {links.map((link, index) => (
                 <div key={index} className='relative'>
                   {link.subMenus && link.subMenus.length > 0 ? (
                     <>
                       <button
                         onClick={() => setOpenSubMenu(openSubMenu === index ? null : index)}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer flex items-center gap-1
+                        className={`px-2 lg:px-3 py-1.5 rounded-full text-xs lg:text-sm font-medium transition-all duration-300 cursor-pointer flex items-center gap-1 whitespace-nowrap
                           ${router.pathname === link.to || link.subMenus.some(sub => router.pathname === sub.to)
                             ? 'anime-gradient-bg text-white shadow-lg'
                             : 'text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-purple-900/30'
@@ -153,7 +201,7 @@ const Header = props => {
                   ) : (
                     <SmartLink
                       href={link.to}
-                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer block
+                      className={`px-2 lg:px-3 py-1.5 rounded-full text-xs lg:text-sm font-medium transition-all duration-300 cursor-pointer block whitespace-nowrap
                         ${router.pathname === link.to
                           ? 'anime-gradient-bg text-white shadow-lg'
                           : 'text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-purple-900/30'
@@ -170,6 +218,15 @@ const Header = props => {
               {/* 移除方法: 删除下面这行 <NewYearDecoration /> 和对应的 import */}
               <NewYearDecoration />
 
+              {/* 随机文章 */}
+              <button
+                onClick={handleRandomPost}
+                className='hidden sm:flex p-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 hover:bg-pink-50 dark:hover:bg-purple-900/30'
+                title='随机文章'
+                aria-label='随机文章'>
+                <i className='fas fa-dice text-pink-400'></i>
+              </button>
+
               {/* 弹幕开关 */}
               <DanmakuToggle />
 
@@ -182,14 +239,14 @@ const Header = props => {
 
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className='md:hidden p-2 rounded-full hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
+                className='lg:hidden p-2 rounded-full hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
                 <i className={`fas ${showMobileMenu ? 'fa-times' : 'fa-bars'} text-pink-500`}></i>
               </button>
             </div>
           </div>
 
           {showMobileMenu && (
-            <div className='md:hidden py-3 border-t border-pink-100 dark:border-purple-800'>
+            <div className='lg:hidden py-3 border-t border-pink-100 dark:border-purple-800'>
               <nav className='flex flex-col space-y-1'>
                 {links.map((link, index) => (
                   <div key={index}>
@@ -239,6 +296,17 @@ const Header = props => {
                     )}
                   </div>
                 ))}
+                
+                {/* 移动端随机文章 */}
+                <button
+                  onClick={() => {
+                    handleRandomPost()
+                    setShowMobileMenu(false)
+                  }}
+                  className='w-full px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-purple-900/30'>
+                  <i className='fas fa-dice text-pink-400'></i>
+                  随机文章
+                </button>
               </nav>
             </div>
           )}

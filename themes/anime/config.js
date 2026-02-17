@@ -10,16 +10,9 @@ export const THEME_CONFIG = {
     NOTION_ICON: true,
     // 默认 Logo 图片地址（当 Notion 图标未设置或加载失败时使用）
     DEFAULT_LOGO: 'https://bad.joyb.cc/file/1771203602002_blog-logo.jpg',
-    // 随机文章按钮
-    RANDOM_POST: true,
-    // 搜索按钮
-    SEARCH_BUTTON: true,
-    // 菜单项显示控制
-    CATEGORY: true,
-    TAG: true,
-    ARCHIVE: true,
-    SEARCH: true,
-    RSS: false,
+
+    // 滚动时自动隐藏导航栏（向下滚动隐藏，向上滚动显示）
+    AUTO_HIDE_ON_SCROLL: true,
   },
 
   // 首页 Hero 配置
@@ -54,6 +47,8 @@ export const THEME_CONFIG = {
     GLOW: true,
     // 圆角风格
     ROUNDED_STYLE: '2xl',
+    // 二次元萌化自定义光标
+    KAWAII_CURSOR: true,
   },
 
   // 背景图配置

@@ -256,36 +256,6 @@ const Style = () => {
         animation: pulse-glow 3s ease-in-out infinite;
       }
 
-      @keyframes sakura-fall {
-        0% {
-          transform: translateY(-10vh) rotate(0deg) translateX(0);
-          opacity: 1;
-        }
-        25% {
-          transform: translateY(22vh) rotate(180deg) translateX(20px);
-        }
-        50% {
-          transform: translateY(54vh) rotate(360deg) translateX(-20px);
-        }
-        75% {
-          transform: translateY(77vh) rotate(540deg) translateX(20px);
-        }
-        100% {
-          transform: translateY(110vh) rotate(720deg) translateX(0);
-          opacity: 0;
-        }
-      }
-
-      .sakura {
-        position: fixed;
-        top: -10vh;
-        pointer-events: none;
-        z-index: 9999;
-        animation: sakura-fall linear forwards;
-        filter: drop-shadow(0 0 5px rgba(255, 113, 206, 0.5));
-        will-change: transform, opacity;
-      }
-
       @keyframes gradient-shift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -706,8 +676,7 @@ const Style = () => {
         .anime-pulse-glow,
         .anime-gradient-animate,
         .anime-bounce-in,
-        .anime-slide-up,
-        .sakura {
+        .anime-slide-up {
           animation: none !important;
         }
         

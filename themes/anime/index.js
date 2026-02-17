@@ -27,6 +27,7 @@ import LyricsDisplay from './components/LyricsDisplay'
 import MusicPlayer from './components/MusicPlayer'
 import MyhkPlayer from './components/MyhkPlayer'
 import Pagination from './components/Pagination'
+import SakuraEffect from './components/SakuraEffect'
 import SearchInput from './components/SearchInput'
 import SideRight from './components/SideRight'
 import KawaiiArticleTimeline from './components/KawaiiArticleTimeline'
@@ -35,6 +36,7 @@ import CONFIG, { getThemeConfig } from './config'
 import { Style } from './style'
 import CardConnectionLine from './components/CardConnectionLine'
 import DanmakuComments from './components/DanmakuComments'
+import KawaiiCursor from './components/KawaiiCursor'
 import { useRef } from 'react'
 
 const ThemeGlobalAnime = createContext()
@@ -145,7 +147,10 @@ const LayoutBase = props => {
         {/* 弹幕评论 */}
         <DanmakuComments />
 
-        {siteConfig('ANIME_SAKURA_EFFECT', true, CONFIG) && <SakuraEffect />}
+        {/* 二次元萌化光标 */}
+        {siteConfig('ANIME_KAWAII_CURSOR', getThemeConfig('EFFECTS.KAWAII_CURSOR', true), CONFIG) && <KawaiiCursor />}
+
+        {siteConfig('ANIME_SAKURA_EFFECT', getThemeConfig('EFFECTS.SAKURA', true), CONFIG) && <SakuraEffect />}
       </div>
     </ThemeGlobalAnime.Provider>
   )
@@ -636,37 +641,7 @@ const LayoutMusic = props => {
   )
 }
 
-const SakuraEffect = () => {
-  useEffect(() => {
-    // 限制同时存在的樱花数量
-    let sakuraCount = 0
-    const maxSakura = 5
 
-    const createSakura = () => {
-      if (sakuraCount >= maxSakura) return
-
-      sakuraCount++
-      const sakura = document.createElement('div')
-      sakura.className = 'sakura'
-      sakura.innerHTML = ['🌸', '🎀', '💫', '✨'][Math.floor(Math.random() * 4)]
-      sakura.style.left = Math.random() * 100 + 'vw'
-      sakura.style.fontSize = Math.random() * 10 + 12 + 'px'
-      sakura.style.animationDuration = Math.random() * 5 + 12 + 's'
-      sakura.style.willChange = 'transform'
-      document.body.appendChild(sakura)
-
-      setTimeout(() => {
-        sakura.remove()
-        sakuraCount--
-      }, 17000)
-    }
-
-    const interval = setInterval(createSakura, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  return null
-}
 
 /**
  * 相册/图库页面布局
