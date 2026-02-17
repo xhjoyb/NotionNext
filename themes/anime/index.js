@@ -43,10 +43,45 @@ import { useRef } from 'react'
 const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
 
+// 导航栏高度（约 80px + 间距）
+const HEADER_HEIGHT = 96 // 24 * 4 = 96px = top-24
+const HEADER_HIDDEN_OFFSET = 16 // 导航栏隐藏时的偏移量
+
 const LayoutBase = props => {
   const { children, post, tagOptions, categories, latestPosts, siteInfo, customNav, customMenu } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
+  
+  // 导航栏显示状态
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  
+  // 获取导航栏自动隐藏配置
+  const autoHideOnScroll = getThemeConfig('NAV.AUTO_HIDE_ON_SCROLL', true)
+  
+  // 监听滚动，同步导航栏显示状态
+  useEffect(() => {
+    if (!autoHideOnScroll) {
+      setIsHeaderVisible(true)
+      return
+    }
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      if (currentScrollY < 100) {
+        setIsHeaderVisible(true)
+      } else {
+        const shouldShow = currentScrollY < lastScrollY
+        setIsHeaderVisible(shouldShow)
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY, autoHideOnScroll])
 
   useEffect(() => {
     loadWowJS()
@@ -94,9 +129,12 @@ const LayoutBase = props => {
   
   const sidebarPosition = getSidebarPosition()
   const sidebarReverse = sidebarPosition === 'left'
+  
+  // 计算 sticky 元素的 top 值
+  const stickyTop = isHeaderVisible ? HEADER_HEIGHT : HEADER_HIDDEN_OFFSET
 
   return (
-    <ThemeGlobalAnime.Provider value={{}}>
+    <ThemeGlobalAnime.Provider value={{ isHeaderVisible, stickyTop }}>
       <div
         id='theme-anime'
         className={`${siteConfig('FONT_STYLE')} min-h-screen scroll-smooth`}>

@@ -8,11 +8,13 @@ import Catalog from './Catalog'
 import AnimeQuoteCard from './AnimeQuoteCard'
 import KawaiiTagCloud from './KawaiiTagCloud'
 import CONFIG, { getThemeConfig } from '../config'
+import { useAnimeGlobal } from '../index'
 
 const SideRight = props => {
   const { post, tags, categories, latestPosts, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
+  const { stickyTop } = useAnimeGlobal() || { stickyTop: 96 }
   const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
 
   const isArticlePage = post && router.route !== '/404'
@@ -43,7 +45,7 @@ const SideRight = props => {
 
       {isArticlePage ? (
         /* 文章页面：粘性区域包含目录和最新文章 */
-        <div className='sticky top-20 space-y-6'>
+        <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
           {post?.toc && post.toc.length > 0 && (
             <Catalog toc={post.toc} />
           )}
@@ -82,7 +84,7 @@ const SideRight = props => {
         </div>
       ) : (
         /* 非文章页面：粘性区域包含联系卡片、分类、标签、最新文章 */
-        <div className='sticky top-20 space-y-6'>
+        <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
           <ContactCard />
 
           {categories && categories.length > 0 && (
