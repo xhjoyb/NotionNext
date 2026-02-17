@@ -56,7 +56,7 @@ export const THEME_CONFIG = {
     // 是否启用 PNG 透明背景图
     ENABLE: true,
     // PNG 背景图 URL
-    IMAGE_URL: 'https://file.notion.so/f/f/c7a5ea8e-53e3-81cc-9194-0003dc0e0ea5/79d36e87-2c7e-45f4-9247-293c789ec417/blog-mcpq-b.png?table=block&id=3095ea8e-53e3-802c-8e8a-d617379a89c5&spaceId=c7a5ea8e-53e3-81cc-9194-0003dc0e0ea5&expirationTimestamp=1771243200000&signature=ZgQjE1XDtlEwkrx1tiWzUnuHKmNTJ9ne7IHi4d5YzuU&downloadName=blog-mcpq-b.png',
+    IMAGE_URL: 'https://joyb.cc/wp-content/uploads/2026/02/20260217173643669-blog-mcpq-b.png',
     // 背景图透明度（0-1）
     OPACITY: 0.6,
     // 夜间模式透明度
