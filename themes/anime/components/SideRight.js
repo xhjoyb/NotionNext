@@ -83,11 +83,14 @@ const SideRight = props => {
           )}
         </div>
       ) : (
-        /* 非文章页面：粘性区域包含联系卡片、分类、标签、最新文章 */
-        <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
+        /* 非文章页面：联系卡片不跟随滚动，其它内容跟随 */
+        <>
+          {/* 联系卡片 - 不 sticky */}
           <ContactCard />
-
-          {categories && categories.length > 0 && (
+          
+          {/* 分类、标签、最新文章 - sticky */}
+          <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
+            {categories && categories.length > 0 && (
             <div className='anime-glass rounded-2xl p-6 anime-card'>
               <h3 className='font-bold text-gray-800 dark:text-white mb-4 flex items-center'>
                 <i className='fas fa-folder text-purple-400 mr-2'></i>
@@ -144,7 +147,8 @@ const SideRight = props => {
               </div>
             </div>
           )}
-        </div>
+          </div>
+        </>
       )}
     </aside>
   )
