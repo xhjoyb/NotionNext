@@ -1,4 +1,4 @@
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
@@ -23,9 +23,10 @@ const SideRight = props => {
       <div className='anime-glass rounded-2xl p-6 anime-card'>
         <div className='flex flex-col items-center text-center'>
           <div className='w-20 h-20 rounded-full overflow-hidden anime-glow mb-4 ring-2 ring-pink-200 dark:ring-purple-600'>
-            <LazyImage
+            <AnimeLazyImage
               src={defaultLogo || siteInfo?.icon}
               className='w-full h-full object-cover'
+              loaderSize='sm'
             />
           </div>
           <h3 className='font-bold text-lg anime-gradient-text mb-2'>
@@ -61,9 +62,10 @@ const SideRight = props => {
                     className='block group cursor-pointer'>
                     <div className='flex items-start space-x-3 p-2 rounded-lg hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-colors duration-300'>
                       <div className='w-12 h-12 rounded-lg overflow-hidden flex-shrink-0'>
-                        <LazyImage
+                        <AnimeLazyImage
                           src={latestPost?.pageCoverThumbnail}
                           className='w-full h-full object-cover'
+                          loaderSize='xs'
                         />
                       </div>
                       <div className='flex-1 min-w-0'>
@@ -123,9 +125,10 @@ const SideRight = props => {
                     className='block group cursor-pointer'>
                     <div className='flex items-start space-x-3 p-2 rounded-lg hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-colors duration-300'>
                       <div className='w-12 h-12 rounded-lg overflow-hidden flex-shrink-0'>
-                        <LazyImage
+                        <AnimeLazyImage
                           src={latestPost?.pageCoverThumbnail}
                           className='w-full h-full object-cover'
+                          loaderSize='xs'
                         />
                       </div>
                       <div className='flex-1 min-w-0'>

@@ -1,4 +1,4 @@
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/utils/formatDate'
@@ -26,9 +26,10 @@ const BlogArchiveItem = ({ archiveTitle, archivePosts }) => {
             className='block group cursor-pointer'>
             <article className='anime-glass anime-card p-4 flex items-center space-x-4'>
               <div className='w-20 h-16 rounded-lg overflow-hidden flex-shrink-0'>
-                <LazyImage
+                <AnimeLazyImage
                   src={post?.pageCoverThumbnail}
                   className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
+                  loaderSize='sm'
                 />
               </div>
               <div className='flex-1 min-w-0'>

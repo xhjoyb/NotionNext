@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
@@ -145,9 +145,10 @@ const ImageCard = ({ post }) => {
         {/* 封面图 */}
         <div className="aspect-[16/10] overflow-hidden">
           {post?.pageCoverThumbnail ? (
-            <LazyImage
+            <AnimeLazyImage
               src={post.pageCoverThumbnail}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loaderSize='lg'
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900/30 dark:to-purple-900/30 flex items-center justify-center">
@@ -185,9 +186,10 @@ const ArticleCard = ({ post, showCategory, showTitle = true, showSummary = true 
         {/* 封面图 */}
         <div className="aspect-[16/10] overflow-hidden">
           {post?.pageCoverThumbnail ? (
-            <LazyImage
+            <AnimeLazyImage
               src={post.pageCoverThumbnail}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loaderSize='lg'
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900/30 dark:to-purple-900/30 flex items-center justify-center">

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
@@ -199,11 +199,12 @@ const MagazineCard = ({ post, width, isPaused }) => {
           {/* 图片容器 */}
           <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-900">
             {post?.pageCoverThumbnail ? (
-              <LazyImage
+              <AnimeLazyImage
                 src={post.pageCoverThumbnail}
                 className={`w-full h-full object-cover transition-transform duration-700 ${
                   isPaused ? 'scale-105' : 'scale-100'
                 }`}
+                loaderSize='md'
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-800/40 dark:to-purple-800/40 flex items-center justify-center">

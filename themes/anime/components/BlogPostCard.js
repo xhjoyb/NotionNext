@@ -1,4 +1,4 @@
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/utils/formatDate'
@@ -13,9 +13,10 @@ const BlogPostCard = ({ post, showSummary = true }) => {
     <SmartLink href={`/${post?.slug}`} className='block group cursor-pointer'>
       <article className='anime-glass anime-card overflow-hidden h-full flex flex-col'>
         <div className='relative overflow-hidden aspect-[16/10]'>
-          <LazyImage
+          <AnimeLazyImage
             src={post?.pageCoverThumbnail || post?.pageCover}
             className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+            loaderSize='lg'
           />
           
 

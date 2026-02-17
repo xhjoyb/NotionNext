@@ -1,4 +1,4 @@
-import LazyImage from '@/components/LazyImage'
+import AnimeLazyImage from './AnimeLazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
@@ -120,9 +120,10 @@ const Hero = props => {
                     href={`/${post?.slug}`}
                     className='group cursor-pointer'>
                     <div className='relative overflow-hidden rounded-2xl aspect-video anime-card'>
-                      <LazyImage
+                      <AnimeLazyImage
                         src={post?.pageCoverThumbnail || siteInfo?.pageCover}
                         className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+                        loaderSize='sm'
                       />
                       <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent'></div>
                       <div className='absolute bottom-3 left-3 right-3'>
