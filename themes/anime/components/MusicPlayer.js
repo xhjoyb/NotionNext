@@ -83,8 +83,7 @@ const MusicPlayer = ({
       handleNext()
     })
 
-    audioElement.addEventListener('error', (e) => {
-      console.error('音频加载错误:', e)
+    audioElement.addEventListener('error', () => {
       setError('音频加载失败')
       setIsLoading(false)
     })
@@ -142,8 +141,7 @@ const MusicPlayer = ({
           onPlayStateChange(true)
         }
       }
-    } catch (e) {
-      console.error('播放失败:', e)
+    } catch {
       setError('播放失败，请检查音频链接')
     }
   }
@@ -160,8 +158,7 @@ const MusicPlayer = ({
     try {
       await audioRef.current.play()
       setIsPlaying(true)
-    } catch (e) {
-      console.error('播放失败:', e)
+    } catch {
       setError('播放失败，请检查音频链接')
     }
   }

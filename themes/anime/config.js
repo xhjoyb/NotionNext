@@ -157,7 +157,7 @@ export const THEME_CONFIG = {
     // 显示灯笼
     SHOW_LANTERN: true,
     // 祝福语
-    GREETING: '除夕快乐',
+    GREETING: '春节快乐',
   },
   // [春节装饰] 结束
 

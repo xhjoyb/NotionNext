@@ -39,7 +39,6 @@ const MyhkPlayer = () => {
 
       // 加载失败时也尝试加载播放器
       jqueryScript.onerror = () => {
-        console.warn('[MyhkPlayer] jQuery 加载失败，尝试直接加载播放器')
         loadMyhkPlayer()
       }
     } else {
@@ -66,8 +65,6 @@ const MyhkPlayer = () => {
     script.setAttribute('key', playerId)
     script.setAttribute('m', mode)
     document.documentElement.appendChild(script)
-
-    console.log('[MyhkPlayer] 明月浩空播放器已加载')
   }
 
   // 如果未启用，不渲染任何内容

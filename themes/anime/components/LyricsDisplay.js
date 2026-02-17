@@ -63,8 +63,7 @@ const LyricsDisplay = ({ lrcUrl, lyrics: embeddedLyrics, currentTime = 0, isPlay
         const lrcContent = await response.text()
         const lyrics = parseLyrics(lrcContent)
         setParsedLyrics(lyrics)
-      } catch (err) {
-        console.error('获取歌词失败:', err)
+      } catch {
         setParsedLyrics([])
       } finally {
         setLoading(false)
