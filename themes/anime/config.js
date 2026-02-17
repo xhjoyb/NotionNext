@@ -282,6 +282,26 @@ export const THEME_CONFIG = {
     MODE: '1'
   },
 
+  // 二次元萌化广告横幅配置（仅文章详情页显示）
+  AD_BANNER: {
+    // 是否启用广告横幅
+    ENABLE: true,
+    // 广告标题
+    TITLE: '雨云 - 云服务器首选',
+    // 广告副标题
+    SUBTITLE: '稳定 · 高速 · 性价比超高',
+    // 广告描述
+    DESCRIPTION: '使用优惠码立享折扣，开启你的云端之旅~',
+    // 推广链接
+    LINK: 'https://www.rainyun.com/zqf_',
+    // 优惠码
+    CODE: 'zqf',
+    // 特性标签
+    FEATURES: ['一元试用', '秒级开通', '24h在线客服'],
+    // 按钮文字
+    BUTTON_TEXT: '立即访问',
+  },
+
   // 音乐播放器配置（自建播放器，与明月浩空二选一）
   // 音乐列表，每首歌曲配置 lrc 字段指向 LRC 歌词文件的 URL
   MUSIC: {

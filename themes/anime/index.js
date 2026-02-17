@@ -37,6 +37,7 @@ import { Style } from './style'
 import CardConnectionLine from './components/CardConnectionLine'
 import DanmakuComments from './components/DanmakuComments'
 import KawaiiCursor from './components/KawaiiCursor'
+import KawaiiAdBanner from './components/KawaiiAdBanner'
 import { useRef } from 'react'
 
 const ThemeGlobalAnime = createContext()
@@ -389,6 +390,9 @@ const LayoutSlug = props => {
           <ShareBar post={post} />
 
           <AdSlot />
+
+          {/* 二次元萌化广告横幅 */}
+          {siteConfig('ANIME_AD_BANNER_ENABLE', getThemeConfig('AD_BANNER.ENABLE', true), CONFIG) && <KawaiiAdBanner />}
 
           <Comment frontMatter={post} />
         </div>
