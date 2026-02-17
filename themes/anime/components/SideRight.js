@@ -10,11 +10,20 @@ import KawaiiTagCloud from './KawaiiTagCloud'
 import CONFIG, { getThemeConfig } from '../config'
 import { useAnimeGlobal } from '../index'
 
+// Sticky 容器组件 - 复用逻辑
+const StickyContainer = ({ children, className = '' }) => {
+  const { stickyTop } = useAnimeGlobal() || { stickyTop: 96 }
+  return (
+    <div className={className} style={{ position: 'sticky', top: `${stickyTop}px` }}>
+      {children}
+    </div>
+  )
+}
+
 const SideRight = props => {
   const { post, tags, categories, latestPosts, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const { stickyTop } = useAnimeGlobal() || { stickyTop: 96 }
   const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
 
   const isArticlePage = post && router.route !== '/404'
@@ -45,7 +54,7 @@ const SideRight = props => {
 
       {isArticlePage ? (
         /* 文章页面：粘性区域包含目录和最新文章 */
-        <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
+        <StickyContainer className='space-y-6'>
           {post?.toc && post.toc.length > 0 && (
             <Catalog toc={post.toc} />
           )}
@@ -81,15 +90,15 @@ const SideRight = props => {
               </div>
             </div>
           )}
-        </div>
+        </StickyContainer>
       ) : (
         /* 非文章页面：联系卡片不跟随滚动，其它内容跟随 */
         <>
           {/* 联系卡片 - 不 sticky */}
           <ContactCard />
-          
+
           {/* 分类、标签、最新文章 - sticky */}
-          <div className='space-y-6' style={{ position: 'sticky', top: `${stickyTop}px` }}>
+          <StickyContainer className='space-y-6'>
             {categories && categories.length > 0 && (
             <div className='anime-glass rounded-2xl p-6 anime-card'>
               <h3 className='font-bold text-gray-800 dark:text-white mb-4 flex items-center'>
@@ -147,7 +156,7 @@ const SideRight = props => {
               </div>
             </div>
           )}
-          </div>
+          </StickyContainer>
         </>
       )}
     </aside>

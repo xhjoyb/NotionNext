@@ -3,8 +3,9 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import CONFIG, { getThemeConfig } from '../config'
+import { useScrollListener } from '../hooks/useStickyPosition'
 // TODO: [春节装饰] 2026马年春节临时装饰组件，年后移除
 // 添加时间: 2026-02-16 (除夕)
 // 移除时间: 2026-03-05 (元宵节后)
@@ -32,46 +33,41 @@ const Header = props => {
   const [openSubMenu, setOpenSubMenu] = useState(null)
   const [iconError, setIconError] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const lastScrollY = useRef(0)
   const headerRef = useRef(null)
 
   // 获取默认 Logo 配置
   const defaultLogo = getThemeConfig('NAV.DEFAULT_LOGO', '')
-  
+
   // 获取导航栏自动隐藏配置
   const autoHideOnScroll = getThemeConfig('NAV.AUTO_HIDE_ON_SCROLL', true)
 
-  // 滚动时隐藏/显示导航栏
-  useEffect(() => {
+  // 使用优化的滚动监听 hook
+  const handleScroll = useCallback((currentScrollY) => {
     // 如果禁用了自动隐藏，始终显示导航栏
     if (!autoHideOnScroll) {
       setIsHeaderVisible(true)
       return
     }
-    
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      
-      // 在顶部时始终显示
-      if (currentScrollY < 100) {
-        setIsHeaderVisible(true)
-      } else {
-        // 向下滚动隐藏，向上滚动显示
-        const shouldShow = currentScrollY < lastScrollY
-        setIsHeaderVisible(shouldShow)
-        
-        // 导航栏隐藏时关闭子菜单
-        if (!shouldShow) {
-          setOpenSubMenu(null)
-        }
+
+    // 在顶部时始终显示
+    if (currentScrollY < 100) {
+      setIsHeaderVisible(true)
+    } else {
+      // 向下滚动隐藏，向上滚动显示
+      const shouldShow = currentScrollY < lastScrollY.current
+      setIsHeaderVisible(shouldShow)
+
+      // 导航栏隐藏时关闭子菜单
+      if (!shouldShow) {
+        setOpenSubMenu(null)
       }
-      
-      setLastScrollY(currentScrollY)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY, autoHideOnScroll])
+    lastScrollY.current = currentScrollY
+  }, [autoHideOnScroll])
+
+  useScrollListener(handleScroll, true)
 
   // 点击外部关闭子菜单
   useEffect(() => {

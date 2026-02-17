@@ -244,10 +244,18 @@ const ArticleCard = ({ post, showCategory, showTitle = true, showSummary = true 
   )
 }
 
+// Sticky 包装组件
+const StickyWrapper = ({ children }) => {
+  const { stickyTop } = useAnimeGlobal() || { stickyTop: 96 }
+  return (
+    <div style={{ position: 'sticky', top: `${stickyTop}px` }}>
+      {children}
+    </div>
+  )
+}
+
 // 信息卡片组件（标题+摘要，显示在另一侧）
 const InfoCard = ({ post, align, showCategory, isSticky = false }) => {
-  const { stickyTop } = useAnimeGlobal() || { stickyTop: 96 }
-  
   const cardContent = (
     <SmartLink href={`/${post?.slug}`} className="group block">
       <div className="relative bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-lg p-6 flex flex-col justify-center transition-all duration-500 group-hover:shadow-lg group-hover:shadow-pink-200/30 dark:group-hover:shadow-pink-900/20 border-2 border-dashed border-pink-200 dark:border-pink-800/50">
@@ -287,9 +295,9 @@ const InfoCard = ({ post, align, showCategory, isSticky = false }) => {
 
   if (isSticky) {
     return (
-      <div style={{ position: 'sticky', top: `${stickyTop}px` }}>
+      <StickyWrapper>
         {cardContent}
-      </div>
+      </StickyWrapper>
     )
   }
 
