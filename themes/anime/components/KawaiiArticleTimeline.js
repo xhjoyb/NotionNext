@@ -81,28 +81,32 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
             const isLeft = index % 2 === 0
             
             return (
-              <div key={index} className="relative flex items-start mb-16 last:mb-0">
+              <div key={index} className="relative grid grid-cols-[1fr_auto_1fr] gap-8 mb-16 last:mb-0">
                 {/* 左侧区域 */}
-                <div className="w-[calc(50%-2rem)] pr-8">
+                <div className="pr-8">
                   {isLeft ? (
-                    // 左侧卡片（仅封面图，无链接）
-                    <ImageCard post={post} />
+                    // 左侧是图片卡片
+                    alternateSummary ? (
+                      <ImageCard post={post} />
+                    ) : (
+                      <ArticleCard post={post} showCategory={showCategory} />
+                    )
                   ) : alternateSummary ? (
-                    // 左侧信息卡片（标题+摘要，可跳转，卡片在右侧时）
-                    <InfoCard post={post} align="left" showCategory={showCategory} />
+                    // 左侧是信息卡片（标题+摘要）
+                    <InfoCard post={post} align="left" showCategory={showCategory} isSticky={true} />
                   ) : null}
                 </div>
 
                 {/* 中央节点 */}
-                <div className="absolute left-1/2 top-0 transform -translate-x-1/2 flex flex-col items-center">
+                <div className="flex flex-col items-center pt-0">
                   {/* 序号圆圈 */}
-                  <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center shadow-lg z-10">
+                  <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center shadow-lg z-10 flex-shrink-0">
                     <span className="text-white font-bold text-sm">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
                   {/* 日期标签 */}
-                  <div className="mt-2">
+                  <div className="mt-2 flex-shrink-0">
                     <span className="px-3 py-1 bg-white dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-400 rounded-full shadow">
                       {post?.publishDay}
                     </span>
@@ -110,13 +114,17 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
                 </div>
 
                 {/* 右侧区域 */}
-                <div className="w-[calc(50%-2rem)] pl-8 ml-auto">
+                <div className="pl-8">
                   {!isLeft ? (
-                    // 右侧卡片（仅封面图，无链接）
-                    <ImageCard post={post} />
+                    // 右侧是图片卡片
+                    alternateSummary ? (
+                      <ImageCard post={post} />
+                    ) : (
+                      <ArticleCard post={post} showCategory={showCategory} />
+                    )
                   ) : alternateSummary ? (
-                    // 右侧信息卡片（标题+摘要，可跳转，卡片在左侧时）
-                    <InfoCard post={post} align="right" showCategory={showCategory} />
+                    // 右侧是信息卡片（标题+摘要）
+                    <InfoCard post={post} align="right" showCategory={showCategory} isSticky={true} />
                   ) : null}
                 </div>
               </div>
@@ -236,10 +244,10 @@ const ArticleCard = ({ post, showCategory, showTitle = true, showSummary = true 
 }
 
 // 信息卡片组件（标题+摘要，显示在另一侧）
-const InfoCard = ({ post, align, showCategory }) => {
-  return (
-    <SmartLink href={`/${post?.slug}`} className="group block h-full">
-      <div className="relative bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-lg p-6 h-full flex flex-col justify-center transition-all duration-500 group-hover:shadow-lg group-hover:shadow-pink-200/30 dark:group-hover:shadow-pink-900/20 border-2 border-dashed border-pink-200 dark:border-pink-800/50">
+const InfoCard = ({ post, align, showCategory, isSticky = false }) => {
+  const cardContent = (
+    <SmartLink href={`/${post?.slug}`} className="group block">
+      <div className="relative bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-lg p-6 flex flex-col justify-center transition-all duration-500 group-hover:shadow-lg group-hover:shadow-pink-200/30 dark:group-hover:shadow-pink-900/20 border-2 border-dashed border-pink-200 dark:border-pink-800/50">
         {/* 装饰引号 */}
         <div className={`absolute top-2 ${align === 'left' ? 'right-2' : 'left-2'} text-4xl text-pink-200 dark:text-pink-800 font-serif opacity-50`}>"</div>
         
@@ -273,6 +281,16 @@ const InfoCard = ({ post, align, showCategory }) => {
       </div>
     </SmartLink>
   )
+
+  if (isSticky) {
+    return (
+      <div className="sticky top-24">
+        {cardContent}
+      </div>
+    )
+  }
+
+  return cardContent
 }
 
 export default KawaiiArticleTimeline
