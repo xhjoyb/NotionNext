@@ -65,8 +65,20 @@ export const THEME_CONFIG = {
 
   // 侧边栏配置
   SIDEBAR: {
-    // 是否反转（左右互换）
-    REVERSE: false,
+    // 首页侧边栏位置：'left' 或 'right'
+    INDEX_POSITION: 'left',
+    // 文章详情页侧边栏位置：'left' 或 'right'
+    POST_POSITION: 'right',
+    // 归档页侧边栏位置：'left' 或 'right'
+    ARCHIVE_POSITION: 'right',
+    // 分类页侧边栏位置：'left' 或 'right'
+    CATEGORY_POSITION: 'right',
+    // 标签页侧边栏位置：'left' 或 'right'
+    TAG_POSITION: 'right',
+    // 搜索页侧边栏位置：'left' 或 'right'
+    SEARCH_POSITION: 'right',
+    // 默认侧边栏位置（其它页面）：'left' 或 'right'
+    DEFAULT_POSITION: 'right',
   },
 
   // 动漫角色引用卡片配置

@@ -60,6 +60,41 @@ const LayoutBase = props => {
   const bgOpacity = getThemeConfig('BACKGROUND.OPACITY', 0.6)
   const bgDarkOpacity = getThemeConfig('BACKGROUND.DARK_OPACITY', 0.4)
 
+  // 侧边栏配置
+  const getSidebarPosition = () => {
+    const route = router.route
+    
+    // 文章详情页
+    if (route === '/[slug]' || route.startsWith('/article/')) {
+      return getThemeConfig('SIDEBAR.POST_POSITION', 'right')
+    }
+    // 首页
+    if (route === '/') {
+      return getThemeConfig('SIDEBAR.INDEX_POSITION', 'right')
+    }
+    // 归档页
+    if (route === '/archive' || route.startsWith('/archive/')) {
+      return getThemeConfig('SIDEBAR.ARCHIVE_POSITION', 'right')
+    }
+    // 分类页
+    if (route === '/category' || route.startsWith('/category/')) {
+      return getThemeConfig('SIDEBAR.CATEGORY_POSITION', 'right')
+    }
+    // 标签页
+    if (route === '/tag' || route.startsWith('/tag/')) {
+      return getThemeConfig('SIDEBAR.TAG_POSITION', 'right')
+    }
+    // 搜索页
+    if (route === '/search' || route.startsWith('/search/')) {
+      return getThemeConfig('SIDEBAR.SEARCH_POSITION', 'right')
+    }
+    // 默认
+    return getThemeConfig('SIDEBAR.DEFAULT_POSITION', 'right')
+  }
+  
+  const sidebarPosition = getSidebarPosition()
+  const sidebarReverse = sidebarPosition === 'left'
+
   return (
     <ThemeGlobalAnime.Provider value={{}}>
       <div
@@ -102,7 +137,7 @@ const LayoutBase = props => {
           {showHero && <Hero {...props} />}
 
           <div className={`anime-content-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${showHero ? '' : 'pt-24'}`}>
-            <div className={`flex ${fullWidth ? '' : 'lg:space-x-8'}`}>
+            <div className={`flex ${fullWidth ? '' : 'lg:gap-8'} ${sidebarReverse ? 'flex-row-reverse' : ''}`}>
               <div className={`flex-1 min-w-0 ${fullWidth ? '' : 'max-w-4xl'}`}>
                 {children}
               </div>
