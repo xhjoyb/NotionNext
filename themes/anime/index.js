@@ -90,10 +90,12 @@ const LayoutBase = props => {
         
         <Header {...props} />
 
-        {/* 萌化加载动画 */}
-        {onLoading && <KawaiiLoader fullscreen text="正在加载魔法世界..." />}
+        {/* 萌化加载动画 - 全屏遮罩 */}
+        <div className={`transition-opacity duration-300 ${onLoading ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+          {onLoading && <KawaiiLoader fullscreen text="正在加载魔法世界..." />}
+        </div>
 
-        <main className='relative'>
+        <main className={`relative transition-opacity duration-300 ${onLoading ? 'opacity-0' : 'opacity-100'}`}>
           {showHero && <Hero {...props} />}
 
           <div className={`anime-content-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${showHero ? '' : 'pt-24'}`}>
