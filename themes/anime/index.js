@@ -30,6 +30,7 @@ import Pagination from './components/Pagination'
 import SearchInput from './components/SearchInput'
 import SideRight from './components/SideRight'
 import KawaiiArticleTimeline from './components/KawaiiArticleTimeline'
+import KawaiiMagazineCarousel from './components/KawaiiMagazineCarousel'
 import CONFIG, { getThemeConfig } from './config'
 import { Style } from './style'
 import CardConnectionLine from './components/CardConnectionLine'
@@ -112,10 +113,17 @@ const LayoutBase = props => {
               )}
             </div>
 
-            {/* 萌化文章轮播 - 文章列表和侧边栏整体下方 */}
+            {/* 萌化文章时间轴 - 文章列表和侧边栏整体下方 */}
             {!fullWidth && router.route !== '/404' && latestPosts && latestPosts.length > 0 && (
               <div className='mt-8'>
                 <KawaiiArticleTimeline posts={latestPosts} isIndex={router.route === '/'} />
+              </div>
+            )}
+
+            {/* 萌化杂志轮播 - 时间轴下方 */}
+            {!fullWidth && router.route !== '/404' && latestPosts && latestPosts.length > 0 && (
+              <div className='mt-12'>
+                <KawaiiMagazineCarousel posts={latestPosts} isIndex={router.route === '/'} />
               </div>
             )}
           </div>

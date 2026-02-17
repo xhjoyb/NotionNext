@@ -231,6 +231,28 @@ export const THEME_CONFIG = {
     ONLY_ON_INDEX: true,
   },
 
+  // 萌化杂志轮播配置
+  MAGAZINE_CAROUSEL: {
+    // 是否启用
+    ENABLE: true,
+    // 最大显示文章数
+    MAX_POSTS: 6,
+    // 是否自动轮播
+    AUTO_PLAY: true,
+    // 轮播速度（毫秒，越小越快）
+    AUTO_PLAY_INTERVAL: 3000,
+    // 卡片宽度（像素）
+    CARD_WIDTH: 280,
+    // 卡片间距（像素）
+    CARD_GAP: 16,
+    // 是否只在首页显示
+    ONLY_ON_INDEX: true,
+    // 指定标签筛选（为空则显示所有文章）
+    TAG: '必看精选',
+    // 标题栏右侧动漫台词（为空则显示默认文本）
+    QUOTE: '喵~发现好东西！',
+  },
+
   // 联系卡片配置
   CONTACT: {
     // 是否显示
