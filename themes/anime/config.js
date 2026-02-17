@@ -12,7 +12,7 @@ export const THEME_CONFIG = {
     DEFAULT_LOGO: 'https://bad.joyb.cc/file/1771203602002_blog-logo.jpg',
 
     // 滚动时自动隐藏导航栏（向下滚动隐藏，向上滚动显示）
-    AUTO_HIDE_ON_SCROLL: false,
+    AUTO_HIDE_ON_SCROLL: true,
   },
 
   // 首页 Hero 配置
