@@ -475,6 +475,21 @@ export const THEME_CONFIG = {
       '坐太久要记得活动哦~',
       '眼睛累了吗？看看远处吧~'
     ],
+  },
+
+  // 瀑布流布局配置
+  MASONRY: {
+    // 是否启用瀑布流布局
+    ENABLE: true,
+    // 列间距（像素）
+    GAP: 24,
+    // 响应式列数配置
+    COLUMNS: {
+      mobile: 1,   // 移动端
+      tablet: 2,   // 平板
+      desktop: 2,  // 桌面
+      wide: 2      // 宽屏
+    }
   }
 }
 

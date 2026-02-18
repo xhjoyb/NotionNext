@@ -5,37 +5,61 @@ const Style = () => {
       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
       :root {
-        --anime-pink: #FF71CE;
-        --anime-yellow: #FFCE5C;
-        --anime-teal: #86CCCA;
-        --anime-purple: #6A7BB4;
-        --anime-coral: #FF9ECD;
-        --anime-mint: #98FF98;
-        --anime-lilac: #E6E6FA;
-        --anime-gradient-hero: linear-gradient(180deg, #FDF2F8 0%, #FCE7F3 40%, #FBCFE8 70%, #FCE7F3 100%);
-        --anime-gradient-hero-dark: linear-gradient(180deg, #2D2640 0%, #3B3255 40%, #4C4267 70%, #3B3255 100%);
-        --anime-gradient-card: linear-gradient(135deg, rgba(255, 113, 206, 0.1) 0%, rgba(106, 123, 180, 0.1) 100%);
-        --anime-glass-bg: rgba(255, 255, 255, 0.85);
-        --anime-glass-border: rgba(255, 113, 206, 0.2);
-        --anime-shadow-soft: 0 4px 20px rgba(255, 113, 206, 0.15);
-        --anime-shadow-hover: 0 8px 30px rgba(255, 113, 206, 0.25);
+        /* 现代精致配色 - 降低饱和度 */
+        --anime-pink: #EC4899;
+        --anime-pink-light: #F9A8D4;
+        --anime-pink-soft: #FCE7F3;
+        --anime-purple: #A78BFA;
+        --anime-purple-soft: #E9E5FF;
+        --anime-lavender: #C4B5FD;
+        --anime-coral: #FDA4AF;
+        --anime-mint: #A7F3D0;
+        --anime-yellow: #FDE68A;
+        --anime-teal: #5EEAD4;
+        
+        /* 背景渐变 - 更通透 */
+        --anime-gradient-hero: linear-gradient(135deg, #FDF2F8 0%, #F5F3FF 25%, #FCE7F3 50%, #FDF4FF 75%, #FDF2F8 100%);
+        --anime-gradient-hero-dark: linear-gradient(135deg, #1E1B2E 0%, #2D2640 25%, #1F2937 50%, #312E81 75%, #1E1B2E 100%);
+        --anime-gradient-card: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
+        
+        /* 玻璃拟态 - 更精致 */
+        --anime-glass-bg: rgba(255, 255, 255, 0.72);
+        --anime-glass-bg-hover: rgba(255, 255, 255, 0.85);
+        --anime-glass-border: rgba(255, 255, 255, 0.5);
+        --anime-glass-border-accent: rgba(236, 72, 153, 0.15);
+        
+        /* 阴影系统 - 更柔和 */
+        --anime-shadow-soft: 0 4px 20px rgba(236, 72, 153, 0.08);
+        --anime-shadow-medium: 0 8px 32px rgba(236, 72, 153, 0.12);
+        --anime-shadow-hover: 0 20px 50px rgba(236, 72, 153, 0.15);
         --anime-shadow-card: 
-          0 4px 6px rgba(255, 113, 206, 0.1),
-          0 10px 20px rgba(106, 123, 180, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+          0 2px 8px rgba(236, 72, 153, 0.06),
+          0 8px 24px rgba(167, 139, 250, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        
+        /* 圆角系统 */
+        --anime-border-radius-sm: 12px;
         --anime-border-radius: 20px;
+        --anime-border-radius-lg: 28px;
+        --anime-border-radius-xl: 36px;
+        
+        /* 动画曲线 */
         --anime-transition: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --anime-transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .dark {
-        --anime-glass-bg: rgba(26, 22, 37, 0.9);
-        --anime-glass-border: rgba(167, 139, 250, 0.2);
-        --anime-shadow-soft: 0 4px 20px rgba(167, 139, 250, 0.15);
-        --anime-shadow-hover: 0 8px 30px rgba(167, 139, 250, 0.25);
+        --anime-glass-bg: rgba(30, 27, 46, 0.75);
+        --anime-glass-bg-hover: rgba(30, 27, 46, 0.88);
+        --anime-glass-border: rgba(255, 255, 255, 0.1);
+        --anime-glass-border-accent: rgba(167, 139, 250, 0.25);
+        --anime-shadow-soft: 0 4px 20px rgba(167, 139, 250, 0.1);
+        --anime-shadow-medium: 0 8px 32px rgba(167, 139, 250, 0.15);
+        --anime-shadow-hover: 0 20px 50px rgba(167, 139, 250, 0.2);
         --anime-shadow-card: 
-          0 4px 6px rgba(167, 139, 250, 0.1),
-          0 10px 20px rgba(106, 123, 180, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          0 2px 8px rgba(167, 139, 250, 0.08),
+          0 8px 24px rgba(139, 92, 246, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
       #theme-anime {
@@ -61,12 +85,19 @@ const Style = () => {
 
       .anime-glass {
         background: var(--anime-glass-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 2px solid var(--anime-glass-border);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--anime-glass-border);
         box-shadow: var(--anime-shadow-card);
         will-change: transform;
         transform: translateZ(0);
+        transition: all 0.4s var(--anime-transition-smooth);
+      }
+
+      .anime-glass:hover {
+        background: var(--anime-glass-bg-hover);
+        border-color: var(--anime-glass-border-accent);
+        box-shadow: var(--anime-shadow-medium);
       }
 
       /* 减少毛玻璃效果以提升滚动性能 */
@@ -89,17 +120,47 @@ const Style = () => {
       }
 
       .anime-card {
-        transition: all 0.4s var(--anime-transition);
-        border-radius: var(--anime-border-radius);
+        transition: all 0.5s var(--anime-transition-smooth);
+        border-radius: var(--anime-border-radius-lg);
         position: relative;
         overflow: hidden;
       }
 
-
+      .anime-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+        opacity: 0.8;
+      }
 
       .anime-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-8px) scale(1.01);
         box-shadow: var(--anime-shadow-hover);
+      }
+
+      /* 瀑布流卡片样式 */
+      .masonry-card {
+        break-inside: avoid;
+        margin-bottom: 1.5rem;
+        border-radius: var(--anime-border-radius-lg);
+        overflow: hidden;
+      }
+
+      .masonry-card .card-image {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .masonry-card .card-image img,
+      .masonry-card .card-image .lazy-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
 
       .anime-btn {

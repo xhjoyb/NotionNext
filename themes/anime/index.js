@@ -24,6 +24,7 @@ import KawaiiBackToTop from './components/KawaiiBackToTop'
 import KawaiiLoader from './components/KawaiiLoader'
 import Live2DCubism3 from './components/Live2DCubism3'
 import LyricsDisplay from './components/LyricsDisplay'
+import MasonryGrid from './components/MasonryGrid'
 import MusicPlayer from './components/MusicPlayer'
 import MyhkPlayer from './components/MyhkPlayer'
 import Pagination from './components/Pagination'
@@ -221,24 +222,35 @@ const LayoutPostList = props => {
 
   // 是否启用卡片火车动画
   const enableTrainAnimation = siteConfig('ANIME_POST_CARD_TRAIN_ANIMATION', true, CONFIG)
+  
+  // 是否启用瀑布流布局
+  const enableMasonry = getThemeConfig('MASONRY.ENABLE', true)
 
   return (
     <div ref={containerRef} className='relative'>
       {/* 卡片网格火车动画 */}
-      {enableTrainAnimation && <CardConnectionLine containerRef={containerRef} />}
+      {enableTrainAnimation && !enableMasonry && <CardConnectionLine containerRef={containerRef} />}
 
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10'>
-        {posts?.map((post, index) => (
-          <div 
-            key={index} 
-            data-card
-            className='anime-slide-up'
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <BlogPostCard post={post} />
-          </div>
-        ))}
-      </div>
+      {/* 瀑布流布局 */}
+      {enableMasonry ? (
+        <div className='relative z-10'>
+          <MasonryGrid posts={posts} />
+        </div>
+      ) : (
+        /* 传统网格布局 */
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10'>
+          {posts?.map((post, index) => (
+            <div 
+              key={index} 
+              data-card
+              className='anime-slide-up'
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <BlogPostCard post={post} />
+            </div>
+          ))}
+        </div>
+      )}
 
       <Pagination page={page} totalPage={totalPage} />
     </div>

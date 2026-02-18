@@ -5,14 +5,22 @@ import formatDate from '@/lib/utils/formatDate'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
-const BlogPostCard = ({ post, showSummary = true }) => {
+const BlogPostCard = ({ post, showSummary = true, className = '', imageHeight = 'auto' }) => {
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, siteConfig('LANG'))
 
+  // 瀑布流模式下的图片高度
+  const getImageContainerClass = () => {
+    if (imageHeight === 'tall') return 'h-64 md:h-80'
+    if (imageHeight === 'wide') return 'h-40 md:h-48'
+    if (imageHeight === 'normal') return 'h-48 md:h-56'
+    return 'aspect-[16/10]' // 默认比例
+  }
+
   return (
-    <SmartLink href={`/${post?.slug}`} className='block group cursor-pointer'>
+    <SmartLink href={`/${post?.slug}`} className={`block group cursor-pointer ${className}`}>
       <article className='anime-glass anime-card overflow-hidden h-full flex flex-col'>
-        <div className='relative overflow-hidden aspect-[16/10]'>
+        <div className={`relative overflow-hidden card-image ${getImageContainerClass()}`}>
           <AnimeLazyImage
             src={post?.pageCoverThumbnail || post?.pageCover}
             className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
@@ -43,7 +51,7 @@ const BlogPostCard = ({ post, showSummary = true }) => {
         </div>
 
         <div className='p-5 flex flex-col'>
-          <h2 className='text-lg font-bold text-gray-800 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors duration-300 line-clamp-2 mb-3 leading-relaxed min-h-[3.5rem]'>
+          <h2 className='text-lg font-bold text-gray-800 dark:text-white group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors duration-300 line-clamp-2 mb-3 leading-relaxed'>
             {post?.title}
           </h2>
 
