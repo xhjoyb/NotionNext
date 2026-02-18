@@ -27,6 +27,20 @@ export const THEME_CONFIG = {
     TITLE_2: '欢迎来到我的博客',
     TITLE_3: '这里记录着我的日常与思考',
     TITLE_LINK: '/',
+
+    // 推荐阅读文章配置
+    RECOMMEND: {
+      // 筛选标签（可以是单个标签字符串或标签数组）
+      // 例如: 'Recommend' 或 ['Recommend', '精选', 'Hot']
+      TAGS: ['时光','AI'],
+      // 最大显示文章数
+      MAX_POSTS: 6,
+      // 排序方式: 'date' | 'random' | 'default'
+      // date: 按发布日期排序（最新的在前）
+      // random: 随机排序
+      // default: 保持原有顺序
+      SORT_BY: 'date',
+    },
   },
 
   // 文章卡片配置
@@ -223,7 +237,7 @@ export const THEME_CONFIG = {
     // 是否启用
     ENABLE: true,
     // 指定标签（在 Notion 中为文章设置此标签即可显示）
-    TAG: '必看精选',
+    TAG: '时光',
     // 最大显示文章数
     MAX_POSTS: 6,
     // 是否显示分类

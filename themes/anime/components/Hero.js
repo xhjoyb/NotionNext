@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import CONFIG from '../config'
+import CONFIG, { getThemeConfig } from '../config'
 
 const Hero = props => {
   const { siteInfo, latestPosts, allNavPages } = props
@@ -172,23 +172,56 @@ const FloatingShapes = () => (
 )
 
 function getTopPosts({ latestPosts, allNavPages }) {
-  const recommendTag = siteConfig('ANIME_RECOMMEND_POST_TAG', 'Recommend', CONFIG)
+  // 获取配置
+  const recommendTags = getThemeConfig('HERO.RECOMMEND.TAGS', 'Recommend')
+  const maxPosts = getThemeConfig('HERO.RECOMMEND.MAX_POSTS', 6)
+  const sortBy = getThemeConfig('HERO.RECOMMEND.SORT_BY', 'date')
+
+  // 将标签转换为数组（支持单个标签字符串或多个标签数组）
+  const tagsArray = Array.isArray(recommendTags) 
+    ? recommendTags 
+    : recommendTags ? [recommendTags] : []
+
+  if (tagsArray.length === 0) {
+    return sortPosts(latestPosts?.slice(0, maxPosts) || [], sortBy)
+  }
+
+  // 筛选包含指定标签的文章（不区分大小写）
+  let filteredPosts = (allNavPages || []).filter(post => {
+    if (!post?.tags || !Array.isArray(post.tags)) return false
+    return post.tags.some(postTag => 
+      tagsArray.some(tag => 
+        tag.toLowerCase() === postTag.toLowerCase()
+      )
+    )
+  })
+
+  // 如果没有匹配的文章，使用最新文章
+  if (filteredPosts.length === 0) {
+    filteredPosts = latestPosts || []
+  }
+
+  // 排序并截取
+  return sortPosts(filteredPosts, sortBy).slice(0, maxPosts)
+}
+
+// 排序函数
+function sortPosts(posts, sortBy) {
+  const postsCopy = [...posts]
   
-  if (!recommendTag || recommendTag === '') {
-    return latestPosts?.slice(0, 6) || []
+  switch (sortBy) {
+    case 'date':
+      return postsCopy.sort((a, b) => {
+        const dateA = a?.publishDate || a?.createdTime || 0
+        const dateB = b?.publishDate || b?.createdTime || 0
+        return dateB - dateA
+      })
+    case 'random':
+      return postsCopy.sort(() => Math.random() - 0.5)
+    case 'default':
+    default:
+      return postsCopy
   }
-
-  const sortPosts = [...(allNavPages || [])]
-  const topPosts = []
-
-  for (const post of sortPosts) {
-    if (topPosts.length >= 6) break
-    if (post?.tags?.includes(recommendTag)) {
-      topPosts.push(post)
-    }
-  }
-
-  return topPosts.length > 0 ? topPosts : latestPosts?.slice(0, 6) || []
 }
 
 export default Hero
