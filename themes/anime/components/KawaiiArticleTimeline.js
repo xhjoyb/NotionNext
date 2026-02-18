@@ -67,24 +67,52 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
 
       {/* 时间轴容器 */}
       <div className="relative">
-        {/* 中央时间线 */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-300 via-purple-300 to-pink-300 rounded-full transform -translate-x-1/2" />
-        
+        {/* 中央时间线 - 移动端改为左侧 */}
+        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-300 via-purple-300 to-pink-300 rounded-full md:transform md:-translate-x-1/2" />
+
         {/* 时间线顶部装饰 */}
-        <div className="absolute left-1/2 top-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 -translate-y-1/2 z-10" />
-        
+        <div className="absolute left-4 md:left-1/2 top-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 -translate-y-1/2 z-10" />
+
         {/* 时间线底部装饰 */}
-        <div className="absolute left-1/2 bottom-0 w-4 h-4 bg-purple-500 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 translate-y-1/2 z-10" />
+        <div className="absolute left-4 md:left-1/2 bottom-0 w-4 h-4 bg-purple-500 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 translate-y-1/2 z-10" />
 
         {/* 文章列表 */}
         <div className="relative py-8">
           {filteredPosts.map((post, index) => {
             const isLeft = index % 2 === 0
-            
+
             return (
-              <div key={index} className="relative grid grid-cols-[1fr_auto_1fr] gap-8 mb-16 last:mb-0">
+              <div key={index} className="relative mb-12 last:mb-0 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8">
+                {/* 移动端：单列布局，时间线在左侧 */}
+                <div className="md:hidden pl-12">
+                  {/* 序号圆圈 - 移动端 */}
+                  <div className="absolute left-4 top-0 w-10 h-10 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center shadow-lg z-10 transform -translate-x-1/2">
+                    <span className="text-white font-bold text-xs">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  {/* 日期标签 */}
+                  <div className="mb-3">
+                    <span className="px-3 py-1 bg-white dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-400 rounded-full shadow">
+                      {post?.publishDay}
+                    </span>
+                  </div>
+                  {/* 卡片 */}
+                  {alternateSummary ? (
+                    <>
+                      <ImageCard post={post} />
+                      <div className="mt-4">
+                        <InfoCard post={post} align="left" showCategory={showCategory} isSticky={false} />
+                      </div>
+                    </>
+                  ) : (
+                    <ArticleCard post={post} showCategory={showCategory} />
+                  )}
+                </div>
+
+                {/* 桌面端：左右交替布局 */}
                 {/* 左侧区域 */}
-                <div className="pr-8">
+                <div className="hidden md:block pr-8">
                   {isLeft ? (
                     // 左侧是图片卡片
                     alternateSummary ? (
@@ -98,8 +126,8 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
                   ) : null}
                 </div>
 
-                {/* 中央节点 */}
-                <div className="flex flex-col items-center pt-0">
+                {/* 中央节点 - 桌面端 */}
+                <div className="hidden md:flex flex-col items-center pt-0">
                   {/* 序号圆圈 */}
                   <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center shadow-lg z-10 flex-shrink-0">
                     <span className="text-white font-bold text-sm">
@@ -115,7 +143,7 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
                 </div>
 
                 {/* 右侧区域 */}
-                <div className="pl-8">
+                <div className="hidden md:block pl-8">
                   {!isLeft ? (
                     // 右侧是图片卡片
                     alternateSummary ? (
