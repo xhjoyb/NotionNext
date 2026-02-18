@@ -545,7 +545,7 @@ const LayoutCategoryIndex = props => {
             className={`block p-5 rounded-2xl transition-all duration-300 cursor-pointer anime-card
               ${router.asPath === `/category/${category.name}`
                 ? 'anime-gradient-bg text-white shadow-lg'
-                : 'anime-glass hover:shadow-lg'
+                : 'anime-glass hover:shadow-lg text-gray-800 dark:text-gray-100'
               }`}>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>

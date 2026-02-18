@@ -134,16 +134,12 @@ export const THEME_CONFIG = {
     ],
   },
 
-  // 萌化标签云配置
+  // 标签云配置
   TAG_CLOUD: {
     // 是否启用
     ENABLE: true,
     // 最大显示标签数
     MAX_TAGS: 20,
-    // 是否启用弹跳动画
-    ENABLE_BOUNCE: true,
-    // 是否启用大小区分（根据文章数量）
-    ENABLE_SIZE_VARIATION: true,
   },
 
   // 萌化加载动画配置

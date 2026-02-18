@@ -23,18 +23,18 @@ const Footer = props => {
         <div className='max-w-7xl mx-auto px-4 py-8'>
         <div className='flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0'>
           <div className='flex items-center space-x-4'>
-            <div className='w-12 h-12 rounded-full overflow-hidden anime-glow ring-2 ring-pink-200 dark:ring-purple-600 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-purple-800 dark:to-pink-800 flex items-center justify-center'>
+            <div className='w-12 h-12 rounded-full overflow-hidden anime-glow ring-2 ring-pink-200 dark:ring-purple-600 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-purple-800 dark:to-pink-800 flex items-center justify-center flex-shrink-0'>
               {defaultLogo ? (
                 <img
                   src={defaultLogo}
                   alt={siteInfo?.title}
-                  className='w-full h-full object-cover'
+                  className='w-full h-full object-cover aspect-square'
                 />
               ) : siteInfo?.icon && !iconError ? (
                 <img
                   src={siteInfo.icon}
                   alt={siteInfo?.title}
-                  className='w-full h-full object-cover'
+                  className='w-full h-full object-cover aspect-square'
                   onError={() => setIconError(true)}
                 />
               ) : (
