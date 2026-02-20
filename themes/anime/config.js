@@ -513,7 +513,7 @@ export const THEME_CONFIG = {
     // 模态框副标题
     SUBTITLE: '记录每一步成长',
     // 指定标签（文章需要包含此标签才会显示）
-    TAG: 'Python数据存储容器',
+    TAG: '标记学习状态',
     // 最大显示文章数
     MAX_POSTS: 5,
     // 是否显示日期
