@@ -31,9 +31,40 @@ export async function getStaticProps(req) {
     12,
     props?.NOTION_CONFIG
   )
+  // 获取排除配置
+  const excludeTags = siteConfig('POSTS_EXCLUDE_TAGS', '', props?.NOTION_CONFIG)
+    .split(',')
+    .map(tag => tag.trim().toLowerCase())
+    .filter(Boolean)
+  const excludeCategories = siteConfig('POSTS_EXCLUDE_CATEGORIES', '', props?.NOTION_CONFIG)
+    .split(',')
+    .map(cat => cat.trim().toLowerCase())
+    .filter(Boolean)
+
+  // 检查文章是否应该被排除
+  const shouldExcludePost = (post) => {
+    // 检查标签
+    if (excludeTags.length > 0 && post?.tags) {
+      const postTags = post.tags.map(tag => tag.toLowerCase())
+      if (excludeTags.some(tag => postTags.includes(tag))) {
+        return true
+      }
+    }
+    // 检查分类
+    if (excludeCategories.length > 0 && post?.category) {
+      if (excludeCategories.includes(post.category.toLowerCase())) {
+        return true
+      }
+    }
+    return false
+  }
+
   props.posts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
+    page => page.type === 'Post' && page.status === 'Published' && !shouldExcludePost(page)
   )
+
+  // 更新 postCount 为过滤后的数量
+  props.postCount = props.posts.length
 
   // 处理分页
   if (siteConfig('POST_LIST_STYLE') === 'scroll') {

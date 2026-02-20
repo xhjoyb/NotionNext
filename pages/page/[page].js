@@ -15,13 +15,45 @@ const Page = props => {
 
 export async function getStaticPaths({ locale }) {
   const from = 'page-paths'
-  const { postCount, NOTION_CONFIG } = await fetchGlobalAllData({ from, locale })
+  const { allPages, NOTION_CONFIG } = await fetchGlobalAllData({ from, locale })
+
+  // 获取排除配置
+  const excludeTags = siteConfig('POSTS_EXCLUDE_TAGS', '', NOTION_CONFIG)
+    .split(',')
+    .map(tag => tag.trim().toLowerCase())
+    .filter(Boolean)
+  const excludeCategories = siteConfig('POSTS_EXCLUDE_CATEGORIES', '', NOTION_CONFIG)
+    .split(',')
+    .map(cat => cat.trim().toLowerCase())
+    .filter(Boolean)
+
+  // 检查文章是否应该被排除
+  const shouldExcludePost = (post) => {
+    if (excludeTags.length > 0 && post?.tags) {
+      const postTags = post.tags.map(tag => tag.toLowerCase())
+      if (excludeTags.some(tag => postTags.includes(tag))) {
+        return true
+      }
+    }
+    if (excludeCategories.length > 0 && post?.category) {
+      if (excludeCategories.includes(post.category.toLowerCase())) {
+        return true
+      }
+    }
+    return false
+  }
+
+  // 计算过滤后的文章数
+  const filteredPostCount = allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published' && !shouldExcludePost(page)
+  ).length || 0
+
   const totalPages = Math.ceil(
-    postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
+    filteredPostCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   )
   return {
     // remove first page, we 're not gonna handle that.
-    paths: Array.from({ length: totalPages - 1 }, (_, i) => ({
+    paths: Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
       params: { page: '' + (i + 2) }
     })),
     fallback: true
@@ -38,8 +70,36 @@ export async function getStaticProps({ params: { page }, locale }) {
     props?.NOTION_CONFIG
   )
 
+  // 获取排除配置
+  const excludeTags = siteConfig('POSTS_EXCLUDE_TAGS', '', props?.NOTION_CONFIG)
+    .split(',')
+    .map(tag => tag.trim().toLowerCase())
+    .filter(Boolean)
+  const excludeCategories = siteConfig('POSTS_EXCLUDE_CATEGORIES', '', props?.NOTION_CONFIG)
+    .split(',')
+    .map(cat => cat.trim().toLowerCase())
+    .filter(Boolean)
+
+  // 检查文章是否应该被排除
+  const shouldExcludePost = (post) => {
+    // 检查标签
+    if (excludeTags.length > 0 && post?.tags) {
+      const postTags = post.tags.map(tag => tag.toLowerCase())
+      if (excludeTags.some(tag => postTags.includes(tag))) {
+        return true
+      }
+    }
+    // 检查分类
+    if (excludeCategories.length > 0 && post?.category) {
+      if (excludeCategories.includes(post.category.toLowerCase())) {
+        return true
+      }
+    }
+    return false
+  }
+
   const allPosts = allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
+    page => page.type === 'Post' && page.status === 'Published' && !shouldExcludePost(page)
   )
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
@@ -48,6 +108,9 @@ export async function getStaticProps({ params: { page }, locale }) {
     POSTS_PER_PAGE * page
   )
   props.page = page
+
+  // 更新 postCount 为过滤后的数量
+  props.postCount = allPosts.length
 
   // 处理预览
   if (siteConfig('POST_LIST_PREVIEW', false, props?.NOTION_CONFIG)) {

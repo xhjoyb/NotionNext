@@ -44,5 +44,12 @@ module.exports = {
   // 标签相关
   TAG_SORT_BY_COUNT: true, // 标签是否按照文章数量倒序排列，文章多的标签排在前。
   IS_TAG_COLOR_DISTINGUISHED:
-    process.env.NEXT_PUBLIC_IS_TAG_COLOR_DISTINGUISHED === 'true' || true // 对于名称相同的tag是否区分tag的颜色
+    process.env.NEXT_PUBLIC_IS_TAG_COLOR_DISTINGUISHED === 'true' || true, // 对于名称相同的tag是否区分tag的颜色
+
+  // 首页文章过滤配置
+  // 用于排除特定标签或分类的文章不在首页显示
+  POSTS_EXCLUDE_TAGS:
+    process.env.NEXT_PUBLIC_POSTS_EXCLUDE_TAGS || 'Hidden', // 逗号分隔的标签列表，如 'Hidden,Draft,Private'
+  POSTS_EXCLUDE_CATEGORIES:
+    process.env.NEXT_PUBLIC_POSTS_EXCLUDE_CATEGORIES || 'Python基础' // 逗号分隔的分类列表，如 'Hidden,Test'
 }
