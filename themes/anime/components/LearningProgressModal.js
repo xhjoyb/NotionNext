@@ -62,7 +62,9 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
     p?.tags?.some(t => t.toLowerCase() === '待复习')
   ).length
   const done = total - doing - review
-  const percent = total ? Math.round((done / total) * 100) : 0
+  // 进度计算：已完成=1，待复习=0.5，学习中=0
+  const completedWeight = done * 1 + review * 0.5 + doing * 0
+  const percent = total ? Math.round((completedWeight / total) * 100) : 0
 
   useEffect(() => {
     setMounted(true)
