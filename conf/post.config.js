@@ -49,7 +49,7 @@ module.exports = {
   // 首页文章过滤配置
   // 用于排除特定标签或分类的文章不在首页显示
   POSTS_EXCLUDE_TAGS:
-    process.env.NEXT_PUBLIC_POSTS_EXCLUDE_TAGS || 'Hidden', // 逗号分隔的标签列表，如 'Hidden,Draft,Private'
+    process.env.NEXT_PUBLIC_POSTS_EXCLUDE_TAGS || '', // 逗号分隔的标签列表，如 'Hidden,Draft,Private'
   POSTS_EXCLUDE_CATEGORIES:
     process.env.NEXT_PUBLIC_POSTS_EXCLUDE_CATEGORIES || 'Python基础' // 逗号分隔的分类列表，如 'Hidden,Test'
 }

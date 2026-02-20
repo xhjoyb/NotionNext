@@ -500,6 +500,39 @@ export const THEME_CONFIG = {
       desktop: 2,  // 桌面
       wide: 2      // 宽屏
     }
+  },
+
+  // 学习进度配置
+  LEARNING_PROGRESS: {
+    // 是否启用
+    ENABLE: true,
+    // 导航栏按钮文字
+    BUTTON_TEXT: '我的学习进度',
+    // 模态框标题
+    TITLE: '我的学习进度',
+    // 模态框副标题
+    SUBTITLE: '记录每一步成长',
+    // 指定标签（文章需要包含此标签才会显示）
+    TAG: 'Python数据存储容器',
+    // 最大显示文章数
+    MAX_POSTS: 5,
+    // 是否显示日期
+    SHOW_DATE: true,
+    // 是否显示总体进度条
+    SHOW_PROGRESS: true,
+    // 底部文字
+    FOOTER_TEXT: '学到吐,学到吐,学到吐',
+    // 背景音乐配置
+    MUSIC: {
+      // 是否启用背景音乐
+      ENABLE: true,
+      // 音乐文件URL（可以是本地路径或网络链接）
+      URL: 'https://blog-mcpq-music.oss-cn-guangzhou.aliyuncs.com/Agent%20Path.mp3',
+      // 音量 (0-1)
+      VOLUME: 0.8,
+      // 是否循环播放
+      LOOP: true,
+    },
   }
 }
 

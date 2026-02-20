@@ -13,6 +13,7 @@ import { useScrollListener } from '../hooks/useStickyPosition'
 // 相关配置: config.js 中的 NEW_YEAR 配置项
 import NewYearDecoration from './NewYearDecoration'
 import DanmakuToggle from './DanmakuToggle'
+import LearningProgressModal from './LearningProgressModal'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu, allNavPages } = props
@@ -29,6 +30,13 @@ const Header = props => {
       }
     }
   }
+
+  // 学习进度模态框状态
+  const [showLearningProgress, setShowLearningProgress] = useState(false)
+
+  // 是否启用学习进度功能
+  const enableLearningProgress = getThemeConfig('LEARNING_PROGRESS.ENABLE', true)
+
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [openSubMenu, setOpenSubMenu] = useState(null)
   const [iconError, setIconError] = useState(false)
@@ -214,6 +222,18 @@ const Header = props => {
               {/* 移除方法: 删除下面这行 <NewYearDecoration /> 和对应的 import */}
               <NewYearDecoration />
 
+              {/* 学习进度按钮 */}
+              {enableLearningProgress && (
+                <button
+                  onClick={() => setShowLearningProgress(true)}
+                  className='hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-pink-400 to-purple-500 text-white shadow-lg shadow-pink-200/50 dark:shadow-purple-900/30 hover:shadow-xl hover:shadow-pink-300/50 dark:hover:shadow-purple-800/40 transition-all duration-300 cursor-pointer hover:scale-105'
+                  title='学习进度'
+                  aria-label='学习进度'>
+                  <i className='fas fa-book-open'></i>
+                  <span>{getThemeConfig('LEARNING_PROGRESS.BUTTON_TEXT', '学习进度')}</span>
+                </button>
+              )}
+
               {/* 随机文章 */}
               <button
                 onClick={handleRandomPost}
@@ -293,6 +313,19 @@ const Header = props => {
                   </div>
                 ))}
                 
+                {/* 移动端学习进度 */}
+                {enableLearningProgress && (
+                  <button
+                    onClick={() => {
+                      setShowLearningProgress(true)
+                      setShowMobileMenu(false)
+                    }}
+                    className='w-full px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-purple-900/30'>
+                    <i className='fas fa-book-open text-pink-400'></i>
+                    {getThemeConfig('LEARNING_PROGRESS.BUTTON_TEXT', '学习进度')}
+                  </button>
+                )}
+
                 {/* 移动端随机文章 */}
                 <button
                   onClick={() => {
@@ -308,6 +341,13 @@ const Header = props => {
           )}
         </div>
       </div>
+
+      {/* 学习进度模态框 */}
+      <LearningProgressModal
+        isOpen={showLearningProgress}
+        onClose={() => setShowLearningProgress(false)}
+        posts={allNavPages || []}
+      />
     </header>
   )
 }
