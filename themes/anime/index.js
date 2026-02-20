@@ -45,7 +45,7 @@ const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
 
 const LayoutBase = props => {
-  const { children, post, tagOptions, categories, latestPosts, siteInfo, customNav, customMenu } = props
+  const { children, post, tagOptions, categories, latestPosts, allNavPages, siteInfo, customNav, customMenu } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
 
@@ -162,16 +162,16 @@ const LayoutBase = props => {
             </div>
 
             {/* 萌化文章时间轴 - 文章列表和侧边栏整体下方 */}
-            {!fullWidth && router.route !== '/404' && latestPosts && latestPosts.length > 0 && (
+            {!fullWidth && router.route !== '/404' && allNavPages && allNavPages.length > 0 && (
               <div className='mt-8'>
-                <KawaiiArticleTimeline posts={latestPosts} isIndex={router.route === '/'} />
+                <KawaiiArticleTimeline posts={allNavPages} isIndex={router.route === '/'} />
               </div>
             )}
 
             {/* 萌化杂志轮播 - 时间轴下方 */}
-            {!fullWidth && router.route !== '/404' && latestPosts && latestPosts.length > 0 && (
+            {!fullWidth && router.route !== '/404' && allNavPages && allNavPages.length > 0 && (
               <div className='mt-12'>
-                <KawaiiMagazineCarousel posts={latestPosts} isIndex={router.route === '/'} />
+                <KawaiiMagazineCarousel posts={allNavPages} isIndex={router.route === '/'} />
               </div>
             )}
           </div>
