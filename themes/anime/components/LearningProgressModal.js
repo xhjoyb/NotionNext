@@ -11,7 +11,17 @@ import formatDate from '@/lib/utils/formatDate'
 const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
   const [mounted, setMounted] = useState(false)
   const [show, setShow] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
   const audioRef = useRef(null)
+
+  // 处理关闭动画
+  const handleClose = () => {
+    setIsClosing(true)
+    setTimeout(() => {
+      setIsClosing(false)
+      onClose()
+    }, 500) // 等待关闭动画完成
+  }
 
   // 配置
   const title = getThemeConfig('LEARNING_PROGRESS.TITLE', '学习进度')
@@ -83,17 +93,17 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
     if (!isOpen) return
 
     let lastScrollY = window.scrollY
-    const handleScroll = () => {
+    const handleScrollClose = () => {
       const currentScrollY = window.scrollY
       // 当滚动距离超过 50px 时关闭模态框
       if (Math.abs(currentScrollY - lastScrollY) > 50) {
-        onClose()
+        handleClose()
       }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [isOpen, onClose])
+    window.addEventListener('scroll', handleScrollClose, { passive: true })
+    return () => window.removeEventListener('scroll', handleScrollClose)
+  }, [isOpen])
 
   // 背景音乐播放控制
   useEffect(() => {
@@ -137,7 +147,7 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
   if (!mounted) return null
 
   const modalContent = (
-    <div className={`lp-modal ${show ? 'open' : ''}`} onClick={onClose}>
+    <div className={`lp-modal ${show ? 'open' : ''} ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
       <style>{`
         .lp-modal {
           position: fixed;
@@ -170,21 +180,152 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
           display: flex;
           flex-direction: column;
           overflow: hidden;
-          transform: scale(0.95);
-          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          position: relative;
+          transform: scale(0) rotate(-180deg);
+          opacity: 0;
         }
         .dark .lp-box {
           background: var(--anime-glass-bg, rgba(30, 27, 46, 0.95));
           border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        /* 魔法阵展开动画 */
         .lp-modal.open .lp-box {
-          transform: scale(1);
+          animation: magicCircleExpand 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes magicCircleExpand {
+          0% {
+            transform: scale(0) rotate(-180deg);
+            opacity: 0;
+            border-radius: 50%;
+            filter: blur(20px);
+          }
+          20% {
+            transform: scale(0.3) rotate(-120deg);
+            opacity: 0.3;
+            border-radius: 45%;
+            filter: blur(15px);
+          }
+          40% {
+            transform: scale(0.6) rotate(-60deg);
+            opacity: 0.6;
+            border-radius: 35%;
+            filter: blur(8px);
+          }
+          60% {
+            transform: scale(0.9) rotate(-20deg);
+            opacity: 0.9;
+            border-radius: 28px;
+            filter: blur(3px);
+          }
+          75% {
+            transform: scale(1.05) rotate(5deg);
+            opacity: 1;
+            border-radius: 22px;
+            filter: blur(0);
+          }
+          90% {
+            transform: scale(0.98) rotate(-2deg);
+          }
+          100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+            border-radius: 20px;
+            filter: blur(0);
+          }
+        }
+        /* 关闭动画 */
+        .lp-modal.closing .lp-box {
+          animation: magicCircleCollapse 0.4s ease-in forwards;
+        }
+        @keyframes magicCircleCollapse {
+          0% {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+            border-radius: 20px;
+          }
+          50% {
+            transform: scale(1.05) rotate(10deg);
+          }
+          100% {
+            transform: scale(0) rotate(180deg);
+            opacity: 0;
+            border-radius: 50%;
+            filter: blur(20px);
+          }
+        }
+        /* 魔法阵背景装饰 */
+        .lp-box::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 200%;
+          height: 200%;
+          background: 
+            radial-gradient(circle at 30% 30%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+            conic-gradient(from 0deg, transparent 0deg, rgba(236, 72, 153, 0.05) 60deg, transparent 120deg, rgba(139, 92, 246, 0.05) 180deg, transparent 240deg, rgba(236, 72, 153, 0.05) 300deg, transparent 360deg);
+          transform: translate(-50%, -50%) scale(0) rotate(0deg);
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0;
+        }
+        .lp-modal.open .lp-box::before {
+          animation: magicCircleBg 1.2s ease-out 0.4s forwards;
+        }
+        @keyframes magicCircleBg {
+          0% {
+            transform: translate(-50%, -50%) scale(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(1) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        /* 光效扫过 */
+        .lp-box::after {
+          content: '';
+          position: absolute;
+          top: -100%;
+          left: -100%;
+          width: 50%;
+          height: 300%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transform: rotate(45deg);
+          pointer-events: none;
+          z-index: 100;
+        }
+        .lp-modal.open .lp-box::after {
+          animation: lightSweep 0.8s ease-out 0.8s forwards;
+        }
+        @keyframes lightSweep {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 200%;
+          }
         }
         .lp-top {
           background: linear-gradient(135deg, #ec4899, #8b5cf6);
           padding: 24px;
           color: white;
           flex-shrink: 0;
+          transform: translateY(-30px);
+          opacity: 0;
+        }
+        .lp-modal.open .lp-top {
+          animation: slideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards;
+        }
+        @keyframes slideDown {
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
         .lp-top-header {
           display: flex;
@@ -346,6 +487,28 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
           transition: all 0.2s;
           cursor: pointer;
           text-decoration: none;
+          transform: translateX(-50px);
+          opacity: 0;
+        }
+        /* 列表项交错入场动画 - 使用通用选择器支持任意数量 */
+        .lp-modal.open .lp-item {
+          animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .lp-modal.open .lp-item:nth-child(1) { animation-delay: 0.9s; }
+        .lp-modal.open .lp-item:nth-child(2) { animation-delay: 1.0s; }
+        .lp-modal.open .lp-item:nth-child(3) { animation-delay: 1.1s; }
+        .lp-modal.open .lp-item:nth-child(4) { animation-delay: 1.2s; }
+        .lp-modal.open .lp-item:nth-child(5) { animation-delay: 1.3s; }
+        .lp-modal.open .lp-item:nth-child(6) { animation-delay: 1.4s; }
+        .lp-modal.open .lp-item:nth-child(7) { animation-delay: 1.5s; }
+        .lp-modal.open .lp-item:nth-child(8) { animation-delay: 1.6s; }
+        .lp-modal.open .lp-item:nth-child(9) { animation-delay: 1.7s; }
+        .lp-modal.open .lp-item:nth-child(10) { animation-delay: 1.8s; }
+        @keyframes slideInRight {
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
         }
         .dark .lp-item {
           background: rgba(255, 255, 255, 0.05);
@@ -442,6 +605,17 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
           font-size: 13px;
           color: var(--anime-text-secondary, #64748b);
           flex-shrink: 0;
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        .lp-modal.open .lp-bottom {
+          animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.4s forwards;
+        }
+        @keyframes slideUp {
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
         .dark .lp-bottom {
           background: var(--anime-glass-bg, rgba(30, 27, 46, 0.95));
@@ -459,7 +633,7 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
         }
       `}</style>
 
-      <div className="lp-box" onClick={e => e.stopPropagation()}>
+      <div className="lp-box" onClick={e => e.stopPropagation()} style={{ position: 'relative', zIndex: 1 }}>
         {/* 头部 */}
         <div className="lp-top">
           <div className="lp-top-header">
@@ -468,7 +642,7 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
               <h2 className="lp-title">{title}</h2>
               <p className="lp-subtitle">{subtitle}</p>
             </div>
-            <button className="lp-x" onClick={onClose} aria-label="关闭">
+            <button className="lp-x" onClick={handleClose} aria-label="关闭">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
@@ -510,7 +684,7 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
                   key={post.id}
                   href={`/${post.slug}`}
                   className={`lp-item ${status.class}`}
-                  onClick={onClose}
+                  onClick={handleClose}
                 >
                   <div className="lp-num">{i + 1}</div>
                   <div className="lp-content">
