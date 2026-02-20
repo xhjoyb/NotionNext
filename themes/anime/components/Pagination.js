@@ -10,8 +10,15 @@ const Pagination = ({ page, totalPage }) => {
   const currentPage = page || 1
 
   const getPageUrl = (pageNum) => {
-    const basePath = router.pathname.replace('/page/[page]', '')
-    return pageNum === 1 ? basePath : `${basePath}/page/${pageNum}`
+    // 获取当前路径，移除 /page/xx 部分
+    let basePath = router.asPath.split('?')[0] // 移除查询参数
+    basePath = basePath.replace(/\/page\/\d+$/, '') // 移除 /page/数字
+    basePath = basePath.replace(/\/$/, '') // 移除末尾斜杠
+
+    if (pageNum === 1) {
+      return basePath || '/'
+    }
+    return `${basePath}/page/${pageNum}`
   }
 
   const pages = []

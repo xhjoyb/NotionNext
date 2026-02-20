@@ -217,14 +217,21 @@ const LayoutIndex = props => {
 }
 
 const LayoutPostList = props => {
-  const { posts, page, totalPage } = props
+  const { posts, postCount, page } = props
   const containerRef = useRef(null)
+  const { NOTION_CONFIG } = useGlobal()
 
   // 是否启用卡片火车动画
   const enableTrainAnimation = siteConfig('ANIME_POST_CARD_TRAIN_ANIMATION', true, CONFIG)
-  
+
   // 是否启用瀑布流布局
   const enableMasonry = getThemeConfig('MASONRY.ENABLE', true)
+
+  // 计算分页
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+  const totalPage = Math.ceil(postCount / POSTS_PER_PAGE) || 1
+  const showPagination = postCount >= POSTS_PER_PAGE
+  const currentPage = parseInt(page) || 1
 
   return (
     <div ref={containerRef} className='relative'>
@@ -240,19 +247,18 @@ const LayoutPostList = props => {
         /* 传统网格布局 */
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10'>
           {posts?.map((post, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               data-card
               className='anime-slide-up'
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+              style={{ animationDelay: `${index * 0.1}s` }}>
               <BlogPostCard post={post} />
             </div>
           ))}
         </div>
       )}
 
-      <Pagination page={page} totalPage={totalPage} />
+      {showPagination && <Pagination page={currentPage} totalPage={totalPage} />}
     </div>
   )
 }
