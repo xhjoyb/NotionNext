@@ -719,19 +719,17 @@ const Style = () => {
       }
 
       ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+        width: 6px;
+        height: 6px;
       }
 
       ::-webkit-scrollbar-track {
-        background: rgba(255, 113, 206, 0.1);
-        border-radius: 5px;
+        background: transparent;
       }
 
       ::-webkit-scrollbar-thumb {
         background: linear-gradient(180deg, var(--anime-pink), var(--anime-purple));
-        border-radius: 5px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
       }
 
       ::-webkit-scrollbar-thumb:hover {
