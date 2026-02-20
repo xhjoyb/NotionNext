@@ -851,6 +851,47 @@ const Style = () => {
         background: transparent;
         color: #FFC0CB;
       }
+
+      /* ==========================================
+       * View Transitions API 主题切换动画
+       * 浏览器原生支持的视图过渡效果
+       * ========================================== */
+      
+      /* 根元素的视图过渡名称
+       * view-transition-name: CSS 属性，为元素指定视图过渡名称
+       * 作用: 让浏览器知道哪些元素需要参与过渡动画
+       * 标注: CSS 属性
+       */
+      html {
+        view-transition-name: root;
+      }
+
+      /* 旧视图（当前状态）的过渡效果
+       * ::view-transition-old(root): 伪元素，表示过渡前的视图
+       * 作用: 控制旧视图在过渡中的动画
+       */
+      ::view-transition-old(root) {
+        animation: none;
+      }
+
+      /* 新视图（目标状态）的过渡效果
+       * ::view-transition-new(root): 伪元素，表示过渡后的视图
+       * 作用: 控制新视图在过渡中的动画
+       * animation: 使用 clip-path 实现圆形扩散效果
+       */
+      ::view-transition-new(root) {
+        animation: none;
+      }
+
+      /* 尊重用户减少动画偏好
+       * prefers-reduced-motion: 用户系统偏好设置，减少动画
+       * 作用: 当用户选择减少动画时，禁用视图过渡
+       */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          view-transition-name: none;
+        }
+      }
     `}</style>
   )
 }

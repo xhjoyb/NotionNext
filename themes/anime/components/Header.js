@@ -14,6 +14,7 @@ import { useScrollListener } from '../hooks/useStickyPosition'
 import NewYearDecoration from './NewYearDecoration'
 import DanmakuToggle from './DanmakuToggle'
 import LearningProgressModal from './LearningProgressModal'
+import ThemeToggleButton from './ThemeToggleButton'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu, allNavPages } = props
@@ -246,12 +247,7 @@ const Header = props => {
               {/* 弹幕开关 */}
               <DanmakuToggle />
 
-              <button
-                onClick={toggleDarkMode}
-                className='p-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 animate-breathe'
-                aria-label='Toggle dark mode'>
-                <i className={`fas ${isDarkMode ? 'fa-sun text-yellow-400' : 'fa-moon text-purple-400'}`}></i>
-              </button>
+              <ThemeToggleButton isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
