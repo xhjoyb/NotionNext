@@ -142,6 +142,13 @@ const Style = () => {
         box-shadow: var(--anime-shadow-hover);
       }
 
+      /* 文章详情页禁用悬浮效果 */
+      .anime-card.article-detail,
+      .anime-card.article-detail:hover {
+        transform: none;
+        box-shadow: var(--anime-shadow-card);
+      }
+
       /* 瀑布流卡片样式 */
       .masonry-card {
         break-inside: avoid;

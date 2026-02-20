@@ -391,7 +391,7 @@ const LayoutSlug = props => {
 
   return (
     <div className='min-h-screen anime-slide-up'>
-      <article className='anime-glass rounded-3xl overflow-hidden anime-card'>
+      <article className='anime-glass rounded-3xl overflow-hidden anime-card article-detail'>
         {post?.pageCover && (
           <div className='relative h-72 md:h-96 overflow-hidden'>
             <img
