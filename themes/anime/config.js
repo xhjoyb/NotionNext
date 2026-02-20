@@ -403,15 +403,15 @@ export const THEME_CONFIG = {
     ENABLE: true,
     // 模型配置文件路径（.model3.json）
     // 需要将模型文件放在 public 目录下
-    // 当前模型: 半人马 - 碧蓝航线
-    MODEL_PATH: '/live2d/model/banrenma_2/banrenma_2.model3.json',
+    // 当前模型: 吸血姬 - 阴阳师
+    MODEL_PATH: '/live2d/model/xixuegui_4/xixuegui_4.model3.json',
     // 画布宽度
-    WIDTH: 300,
+    WIDTH: 330,
     // 画布高度
     HEIGHT: 400,
     // 模型缩放比例（相对于自动计算的尺寸）
     // 1.0 = 原始大小，2.0 = 2倍大小，建议范围 0.5-3.0
-    SCALE: 1.5,
+    SCALE: 1.2,
     // 显示位置: 'right' 右下角, 'left' 左下角
     POSITION: 'right',
     // 距离底部距离（像素）
@@ -431,11 +431,13 @@ export const THEME_CONFIG = {
     // 是否自动播放 idle 动作（待机动画）
     AUTO_PLAY_IDLE: true,
     // 动作淡入时间（毫秒）
-    MOTION_FADE_IN: 500,
+    // 建议值：300-500ms，较小的值让动作切换更流畅
+    MOTION_FADE_IN: 300,
     // 动作淡出时间（毫秒）
-    MOTION_FADE_OUT: 500,
+    // 建议值：300-500ms，与淡入时间保持一致
+    MOTION_FADE_OUT: 300,
     // 表情淡入时间（毫秒）
-    EXPRESSION_FADE_IN: 500,
+    EXPRESSION_FADE_IN: 400,
     // 是否启用音效（如果模型有音效文件）
     ENABLE_SOUND: false,
     // 是否启用物理效果（头发、衣服飘动等）

@@ -224,26 +224,54 @@ const Live2DCubism3 = () => {
           const motionManager = model.internalModel?.motionManager
           const definitions = motionManager?.definitions || {}
           const groups = Object.keys(definitions)
-          
+
           // 查找 idle 动作
           const idleGroup = groups.find(g => g.toLowerCase().includes('idle'))
-          
+
           try {
             if (idleGroup) {
-              // 播放 named idle
-              model.motion(idleGroup, 0, 1)
+              // 播放 named idle，优先级设为 2 确保不会被其他动作中断
+              // 使用循环播放模式
+              model.motion(idleGroup, 0, 2)
             } else if (groups.includes('')) {
               // 从空组中查找包含 idle 的文件
               const motions = definitions['']
-              const idleIndex = motions?.findIndex(m => 
-                m.toLowerCase?.().includes('idle') || 
+              const idleIndex = motions?.findIndex(m =>
+                m.toLowerCase?.().includes('idle') ||
                 m.File?.toLowerCase?.().includes('idle')
               )
               if (idleIndex !== undefined && idleIndex >= 0) {
-                model.motion('', idleIndex, 1)
+                model.motion('', idleIndex, 2)
               } else if (motions && motions.length > 0) {
                 // 没有 idle，播放第一个动作
-                model.motion('', 0, 1)
+                model.motion('', 0, 2)
+              }
+            }
+
+            // 设置动作循环 - 监听动作结束事件，自动重新播放 idle
+            if (model.internalModel?.motionManager) {
+              const mm = model.internalModel.motionManager
+              const originalEnd = mm.onMotionEnd
+              mm.onMotionEnd = (group, index) => {
+                // 调用原始回调
+                if (originalEnd) originalEnd(group, index)
+
+                // 延迟一点再重新播放 idle，确保平滑过渡
+                setTimeout(() => {
+                  try {
+                    const currentGroup = idleGroup || ''
+                    const currentIndex = idleGroup ? 0 : (() => {
+                      const motions = definitions['']
+                      return motions?.findIndex(m =>
+                        m.toLowerCase?.().includes('idle') ||
+                        m.File?.toLowerCase?.().includes('idle')
+                      ) || 0
+                    })()
+                    model.motion(currentGroup, currentIndex, 2)
+                  } catch (e) {
+                    // 静默处理
+                  }
+                }, 100)
               }
             }
           } catch (e) {
