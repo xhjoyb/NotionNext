@@ -44,12 +44,9 @@ const AIExplanation = () => {
   const [apiKey, setApiKey] = useState('')
   const [mounted, setMounted] = useState(false)
   const [isLongText, setIsLongText] = useState(false)
-  const [showSelectedText, setShowSelectedText] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [copied, setCopied] = useState(false)
   const menuRef = useRef(null)
-  const dialogRef = useRef(null)
-  const textContentRef = useRef(null)
 
   // 文本长度限制
   const MAX_DISPLAY_LENGTH = 300
@@ -165,20 +162,27 @@ const AIExplanation = () => {
     }
   }, [])
 
+  /**
+   * 处理滚动关闭菜单
+   */
+  const handleScroll = useCallback(() => {
+    setShowMenu(false)
+  }, [])
+
   useEffect(() => {
     // 移动端不绑定事件监听器
     if (isMobile) return
 
     document.addEventListener('contextmenu', handleContextMenu)
     document.addEventListener('click', handleClickOutside)
-    document.addEventListener('scroll', () => setShowMenu(false))
+    document.addEventListener('scroll', handleScroll)
 
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu)
       document.removeEventListener('click', handleClickOutside)
-      document.removeEventListener('scroll', () => setShowMenu(false))
+      document.removeEventListener('scroll', handleScroll)
     }
-  }, [handleContextMenu, handleClickOutside, isMobile])
+  }, [handleContextMenu, handleClickOutside, handleScroll, isMobile])
 
   /**
    * 调用DeepSeek API获取解释
@@ -289,12 +293,18 @@ const AIExplanation = () => {
         }}
       >
         <div className="ai-menu-item" onClick={fetchExplanation}>
-          <span className="ai-menu-icon">✨</span>
+          <svg className="ai-menu-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          </svg>
           <span className="ai-menu-text">AI 解释</span>
           {isLongText && <span className="ai-menu-badge">长文本</span>}
         </div>
         <div className="ai-menu-item" onClick={() => setShowMenu(false)}>
-          <span className="ai-menu-icon">❌</span>
+          <svg className="ai-menu-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
           <span className="ai-menu-text">取消</span>
         </div>
 
@@ -343,8 +353,12 @@ const AIExplanation = () => {
           }
 
           .ai-menu-icon {
-            font-size: 16px;
+            color: #EC4899;
             filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
+          }
+
+          .dark .ai-menu-icon {
+            color: #A78BFA;
           }
 
           .ai-menu-badge {
@@ -404,7 +418,6 @@ const AIExplanation = () => {
         }}
       >
         <div
-          ref={dialogRef}
           className="ai-dialog"
           style={{
             animation: 'dialogBounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
@@ -502,11 +515,10 @@ const AIExplanation = () => {
                   )}
                 </span>
               </div>
-              <div 
-                ref={textContentRef}
+              <div
                 className="ai-panel-content ai-source-content"
-                dangerouslySetInnerHTML={{ 
-                  __html: selectedHtml || displayText.replace(/\n/g, '<br>') 
+                dangerouslySetInnerHTML={{
+                  __html: selectedHtml || displayText.replace(/\n/g, '<br>')
                 }}
               />
             </div>
@@ -940,17 +952,6 @@ const AIExplanation = () => {
           }
 
 
-
-          .ai-loading {
-            font-size: 12px;
-            color: #EC4899;
-            animation: pulse 1.5s ease-in-out infinite;
-          }
-
-          @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-          }
 
           .ai-loading-dots {
             display: flex;
