@@ -49,8 +49,8 @@ const AIExplanation = () => {
   const menuRef = useRef(null)
 
   // 文本长度限制
-  const MAX_DISPLAY_LENGTH = 300
-  const MAX_API_LENGTH = 2000
+  const MAX_DISPLAY_LENGTH = 4000
+  const MAX_API_LENGTH = 4000
 
   useEffect(() => {
     setMounted(true)
