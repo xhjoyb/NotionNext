@@ -15,6 +15,7 @@ import NewYearDecoration from './NewYearDecoration'
 import DanmakuToggle from './DanmakuToggle'
 import LearningProgressModal from './LearningProgressModal'
 import ThemeToggleButton from './ThemeToggleButton'
+import AIConfigModal from './AIConfigModal'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu, allNavPages } = props
@@ -34,6 +35,9 @@ const Header = props => {
 
   // 学习进度模态框状态
   const [showLearningProgress, setShowLearningProgress] = useState(false)
+
+  // AI配置模态框状态
+  const [showAIConfig, setShowAIConfig] = useState(false)
 
   // 是否启用学习进度功能
   const enableLearningProgress = getThemeConfig('LEARNING_PROGRESS.ENABLE', true)
@@ -244,6 +248,15 @@ const Header = props => {
                 <i className='fas fa-dice text-pink-400'></i>
               </button>
 
+              {/* AI配置按钮 */}
+              <button
+                onClick={() => setShowAIConfig(true)}
+                className='hidden sm:flex p-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 hover:bg-pink-50 dark:hover:bg-purple-900/30'
+                title='AI配置'
+                aria-label='AI配置'>
+                <i className='fas fa-robot text-purple-400'></i>
+              </button>
+
               {/* 弹幕开关 */}
               <DanmakuToggle />
 
@@ -332,6 +345,8 @@ const Header = props => {
                   <i className='fas fa-dice text-pink-400'></i>
                   随机文章
                 </button>
+
+
               </nav>
             </div>
           )}
@@ -344,6 +359,13 @@ const Header = props => {
         onClose={() => setShowLearningProgress(false)}
         posts={allNavPages || []}
       />
+
+      {/* AI配置模态框 */}
+      <AIConfigModal
+        isOpen={showAIConfig}
+        onClose={() => setShowAIConfig(false)}
+      />
+
     </header>
   )
 }

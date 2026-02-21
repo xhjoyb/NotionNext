@@ -39,6 +39,7 @@ import CardConnectionLine from './components/CardConnectionLine'
 import DanmakuComments from './components/DanmakuComments'
 import KawaiiCursor from './components/KawaiiCursor'
 import KawaiiAdBanner from './components/KawaiiAdBanner'
+import AIExplanation from './components/AIExplanation'
 import { useStickyPosition } from './hooks/useStickyPosition'
 
 const ThemeGlobalAnime = createContext()
@@ -457,6 +458,9 @@ const LayoutSlug = props => {
           <Comment frontMatter={post} />
         </div>
       </article>
+
+      {/* AI解释功能组件 - 仅在文章详情页显示 */}
+      <AIExplanation />
 
       {recommendPosts && recommendPosts.length > 0 && (
         <div className='mt-10 anime-slide-up'>
