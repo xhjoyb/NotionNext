@@ -16,6 +16,7 @@ import DanmakuToggle from './DanmakuToggle'
 import LearningProgressModal from './LearningProgressModal'
 import ThemeToggleButton from './ThemeToggleButton'
 import AIConfigModal from './AIConfigModal'
+import AnimeGalleryModal from './AnimeGalleryModal'
 
 const Header = props => {
   const { siteInfo, customNav, customMenu, allNavPages } = props
@@ -38,6 +39,9 @@ const Header = props => {
 
   // AI配置模态框状态
   const [showAIConfig, setShowAIConfig] = useState(false)
+
+  // 相册模态框状态
+  const [showGallery, setShowGallery] = useState(false)
 
   // 是否启用学习进度功能
   const enableLearningProgress = getThemeConfig('LEARNING_PROGRESS.ENABLE', true)
@@ -257,6 +261,15 @@ const Header = props => {
                 <i className='fas fa-robot text-purple-400'></i>
               </button>
 
+              {/* 相册按钮 */}
+              <button
+                onClick={() => setShowGallery(true)}
+                className='hidden sm:flex p-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 hover:bg-pink-50 dark:hover:bg-purple-900/30'
+                title='相册'
+                aria-label='相册'>
+                <i className='fas fa-images text-cyan-400'></i>
+              </button>
+
               {/* 弹幕开关 */}
               <DanmakuToggle />
 
@@ -346,6 +359,16 @@ const Header = props => {
                   随机文章
                 </button>
 
+                {/* 移动端相册 */}
+                <button
+                  onClick={() => {
+                    setShowGallery(true)
+                    setShowMobileMenu(false)
+                  }}
+                  className='w-full px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-purple-900/30'>
+                  <i className='fas fa-images text-cyan-400'></i>
+                  相册
+                </button>
 
               </nav>
             </div>
@@ -364,6 +387,13 @@ const Header = props => {
       <AIConfigModal
         isOpen={showAIConfig}
         onClose={() => setShowAIConfig(false)}
+      />
+
+      {/* 相册模态框 */}
+      <AnimeGalleryModal
+        isOpen={showGallery}
+        onClose={() => setShowGallery(false)}
+        isDarkMode={isDarkMode}
       />
 
     </header>

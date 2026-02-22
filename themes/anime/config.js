@@ -535,7 +535,50 @@ export const THEME_CONFIG = {
       // 是否循环播放
       LOOP: true,
     },
-  }
+  },
+
+  // 相册配置
+  GALLERY: {
+    // 是否启用相册
+    ENABLE: true,
+    // 相册标题
+    TITLE: 'ANIME GALLERY',
+    // 相册副标题（日文）
+    SUBTITLE: 'アニメギャラリー',
+    // 照片列表
+    IMAGES: [
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2024/07/20240721142542854-IMG20230502173944-scaled.jpg',
+        title: '童话般的城堡气息',
+        subtitle: '厦门方特附近的那些建筑，总带着一丝童话般的城堡气息。远远望去，仿佛每一座都有自己的故事。想必在里面工作的人，一定是幸福又惬意的吧。'
+      },
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2024/07/20240721142447624-IMG_20230306_234020-scaled.jpg',
+        title: '海风和嘈杂的引擎声',
+        subtitle: '厦门炳洲大桥公交站，伴着海风和嘈杂的引擎声，也承载着我无数个清晨的匆忙与思绪。'
+      },
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2025/02/20250226102427549-2025-2-25-1.jpg',
+        title: '香气四溢的美食',
+        subtitle: '这是我最喜欢的一道菜——香菇炒五花肉。因为喜欢，所以每次下厨我都格外用心，能把它做得香气四溢、味道恰到好处，每一口都让人满足。'
+      },
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2024/07/20240721142521100-IMG_20240206_163647.jpg',
+        title: '为自己而作的工件',
+        subtitle: '这是我亲手完成的第一个曲面工件。下课后自己跑到车间折腾出来的。过程中也遇到过失败——有一次甚至直接钻穿了工件，只因为在 UG 里把高度坐标设错了。'
+      },
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2024/07/20240721142603960-IMG20230502172804-scaled.jpg',
+        title: '平平无奇的路边',
+        subtitle: '厦门方特附近的一条普通马路.'
+      },
+      {
+        src: 'https://joyb.cc/wp-content/uploads/2025/03/20250302072521520-学校种植薄荷实验.webp',
+        title: '不同的因素产生不同的结果',
+        subtitle: '薄荷种植实验，种植那些小小的植物。我们在泥土与绿叶之间忙碌着，笑声与讨论交织，那段时光温暖而纯粹，留下了难忘的记忆。'
+      },
+    ],
+  },
 }
 
 /**

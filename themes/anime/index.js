@@ -17,7 +17,6 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostCard from './components/BlogPostCard'
 import Catalog from './components/Catalog'
 import Footer from './components/Footer'
-import Gallery from './components/Gallery'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import KawaiiBackToTop from './components/KawaiiBackToTop'
@@ -382,14 +381,6 @@ const LayoutSlug = props => {
     return <LayoutMusic {...props} />
   }
 
-  // 检测是否为相册页面（slug 为 gallery）
-  const isGalleryPage = post?.slug === 'gallery'
-
-  // 如果是相册页面，使用相册布局
-  if (isGalleryPage) {
-    return <LayoutGallery {...props} />
-  }
-
   return (
     <div className='min-h-screen anime-slide-up'>
       <article className='anime-glass rounded-3xl overflow-hidden anime-card article-detail'>
@@ -711,84 +702,11 @@ const LayoutMusic = props => {
 
 
 
-/**
- * 相册/图库页面布局
- * 用于展示图片瀑布流，支持灯箱查看
- */
-const LayoutGallery = props => {
-  const { post } = props
-  const { locale } = useGlobal()
-
-  // 从 post.blockMap 中提取图片数据
-  const extractImages = () => {
-    const images = []
-    const blockMap = post?.blockMap?.block || {}
-
-    Object.values(blockMap).forEach(block => {
-      const value = block?.value
-      if (value?.type === 'image') {
-        const src = value.properties?.source?.[0]?.[0] || value.format?.display_source
-        const caption = value.properties?.caption?.[0]?.[0]
-        if (src) {
-          images.push({
-            src,
-            alt: caption || '相册图片',
-            title: caption,
-            description: caption
-          })
-        }
-      }
-    })
-
-    return images
-  }
-
-  const images = extractImages()
-
-  return (
-    <div className='min-h-screen anime-slide-up'>
-      {/* 页面标题 */}
-      <div className='anime-glass rounded-3xl p-8 mb-8 text-center relative overflow-hidden'>
-        {/* 背景装饰 */}
-        <div className='absolute inset-0 opacity-10'>
-          <div className='absolute top-0 left-0 w-32 h-32 bg-pink-400 rounded-full blur-3xl'></div>
-          <div className='absolute bottom-0 right-0 w-40 h-40 bg-purple-400 rounded-full blur-3xl'></div>
-        </div>
-
-        <div className='relative z-10'>
-          <div className='inline-flex items-center justify-center w-20 h-20 rounded-2xl anime-gradient-bg mb-6 shadow-lg shadow-pink-500/30'>
-            <svg className='w-10 h-10 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' />
-            </svg>
-          </div>
-          <h1 className='text-3xl font-bold anime-gradient-text mb-3'>
-            {post?.title || '相册'}
-          </h1>
-          {post?.summary && (
-            <p className='text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
-              {post.summary}
-            </p>
-          )}
-          <div className='mt-4 text-sm text-gray-500 dark:text-gray-400'>
-            共 {images.length} 张图片
-          </div>
-        </div>
-      </div>
-
-      {/* 相册内容 */}
-      <div className='anime-glass rounded-3xl p-6 md:p-8'>
-        <Gallery images={images} columns={3} />
-      </div>
-    </div>
-  )
-}
-
 export {
   Layout404,
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
-  LayoutGallery,
   LayoutIndex,
   LayoutMusic,
   LayoutPostList,
