@@ -679,9 +679,11 @@ const LearningProgressModal = ({ isOpen, onClose, posts = [] }) => {
           ) : (
             filteredPosts.map((post, i) => {
               const status = getStatus(post)
+              // 使用 post.id 和索引组合作为 key，确保唯一性
+              const itemKey = post?.id ? `${post.id}-${i}` : `post-${i}`
               return (
                 <SmartLink
-                  key={post.id}
+                  key={itemKey}
                   href={`/${post.slug}`}
                   className={`lp-item ${status.class}`}
                   onClick={handleClose}

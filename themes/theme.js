@@ -3,6 +3,7 @@ import * as ThemeComponents from '@theme-components'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useEffect, useRef } from 'react'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
@@ -97,13 +98,33 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+  const timerRef = useRef(null)
+
+  // 使用 useEffect 管理定时器，避免竞态条件
+  useEffect(() => {
+    // 清理之前的定时器
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    // 设置新的定时器
+    timerRef.current = setTimeout(() => {
+      fixThemeDOM()
+    }, isDefaultTheme ? 100 : 500)
+
+    // 组件卸载时清理定时器
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+    }
+  }, [layoutName, themeQuery, isDefaultTheme])
 
   // 加载非当前默认主题
   if (!isDefaultTheme) {
     const loadThemeComponents = componentsSource => {
       const components =
         componentsSource[layoutName] || componentsSource.LayoutSlug
-      setTimeout(fixThemeDOM, 500)
       return components
     }
     return dynamic(
@@ -112,7 +133,6 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
     )
   }
 
-  setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }
 
