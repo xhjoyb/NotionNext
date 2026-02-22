@@ -1,13 +1,21 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
-import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
+// 从环境变量获取主题列表（替代已弃用的 publicRuntimeConfig）
+const getThemesFromEnv = () => {
+  try {
+    return process.env.NEXT_PUBLIC_THEMES ? JSON.parse(process.env.NEXT_PUBLIC_THEMES) : []
+  } catch {
+    return []
+  }
+}
+
 // 在next.config.js中扫描所有主题
-export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
+export const THEMES = getThemesFromEnv()
 
 /**
  * 获取主题配置

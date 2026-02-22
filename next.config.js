@@ -11,6 +11,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 // 扫描项目 /themes下的目录名
 const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
+// 将主题列表写入环境变量，替代已弃用的 publicRuntimeConfig
+process.env.NEXT_PUBLIC_THEMES = JSON.stringify(themes)
 // 检测用户开启的多语言
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
@@ -81,9 +83,7 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true
-  },
+  // 注意：eslint 配置已移至 .eslintrc.js，此处不再支持
   output: process.env.EXPORT
     ? 'export'
     : process.env.NEXT_BUILD_STANDALONE === 'true'
@@ -96,8 +96,7 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: true,
 
-  // 构建优化
-  swcMinify: true,
+  // 注意：swcMinify 在 Next.js 16 中已默认启用，无需配置
   modularizeImports: {
     '@heroicons/react/24/outline': {
       transform: '@heroicons/react/24/outline/{{member}}'
@@ -120,16 +119,16 @@ const nextConfig = {
     // 图片尺寸优化
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // 允许next/image加载的图片 域名
-    domains: [
-      'gravatar.com',
-      'www.notion.so',
-      'avatars.githubusercontent.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'p1.qhimg.com',
-      'webmention.io',
-      'ko-fi.com'
+    // 允许next/image加载的图片 域名（使用 remotePatterns 替代已弃用的 domains）
+    remotePatterns: [
+      { protocol: 'https', hostname: 'gravatar.com' },
+      { protocol: 'https', hostname: 'www.notion.so' },
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'source.unsplash.com' },
+      { protocol: 'https', hostname: 'p1.qhimg.com' },
+      { protocol: 'https', hostname: 'webmention.io' },
+      { protocol: 'https', hostname: 'ko-fi.com' }
     ],
     // 图片加载器优化
     loader: 'default',
@@ -328,6 +327,14 @@ const nextConfig = {
     // 性能优化实验性功能
     optimizePackageImports: ['@heroicons/react', 'lodash']
   },
+  // Turbopack 配置 - 兼容 webpack 的 alias 设置
+  turbopack: {
+    resolveAlias: {
+      '@': './',
+      '@theme-components': `./themes/${THEME}`
+    }
+  },
+
   exportPathMap: function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
@@ -338,10 +345,7 @@ const nextConfig = {
     delete pages['/auth']
     return pages
   },
-  publicRuntimeConfig: {
-    // 这里的配置既可以服务端获取到，也可以在浏览器端获取到
-    THEMES: themes
-  }
+  // 注意：publicRuntimeConfig 已弃用，使用 NEXT_PUBLIC_THEMES 环境变量替代
 }
 
 module.exports = process.env.ANALYZE
