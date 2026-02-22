@@ -216,28 +216,8 @@ export default function AnimeGalleryModal({ isOpen, onClose, isDarkMode = true }
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute inset-0"
+                    className="absolute inset-0 z-0"
                   >
-                    {/* 发光边框 */}
-                    <motion.div
-                      className="absolute -inset-1 rounded-2xl"
-                      style={{
-                        boxShadow: `
-                          0 0 30px ${glowColor},
-                          0 0 60px ${glowColor},
-                          inset 0 0 30px ${glowColor}
-                        `,
-                      }}
-                      animate={{
-                        boxShadow: [
-                          `0 0 20px ${glowColor}, 0 0 40px ${glowColor}`,
-                          `0 0 40px ${glowColor}, 0 0 80px ${glowColor}`,
-                          `0 0 20px ${glowColor}, 0 0 40px ${glowColor}`,
-                        ],
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-
                     {/* 图片 */}
                     <div 
                       className="relative w-full h-full rounded-2xl overflow-hidden"
@@ -284,14 +264,36 @@ export default function AnimeGalleryModal({ isOpen, onClose, isDarkMode = true }
                         </p>
                       </motion.div>
                     </div>
-
-                    {/* 角落装饰 */}
-                    <div className="absolute -top-3 -left-3 w-6 h-6 border-l-2 border-t-2" style={{ borderColor: accentColor }} />
-                    <div className="absolute -top-3 -right-3 w-6 h-6 border-r-2 border-t-2" style={{ borderColor: accentColor }} />
-                    <div className="absolute -bottom-3 -left-3 w-6 h-6 border-l-2 border-b-2" style={{ borderColor: accentColor }} />
-                    <div className="absolute -bottom-3 -right-3 w-6 h-6 border-r-2 border-b-2" style={{ borderColor: accentColor }} />
                   </motion.div>
                 </AnimatePresence>
+
+                {/* 固定的边框装饰层 - 在照片之上 */}
+                <div className="absolute inset-0 pointer-events-none z-10">
+                  {/* 发光边框 */}
+                  <motion.div
+                    className="absolute -inset-1 rounded-2xl"
+                    style={{
+                      boxShadow: `
+                        0 0 30px ${glowColor},
+                        0 0 60px ${glowColor},
+                        inset 0 0 30px ${glowColor}
+                      `,
+                    }}
+                    animate={{
+                      boxShadow: [
+                        `0 0 20px ${glowColor}, 0 0 40px ${glowColor}`,
+                        `0 0 40px ${glowColor}, 0 0 80px ${glowColor}`,
+                        `0 0 20px ${glowColor}, 0 0 40px ${glowColor}`,
+                      ],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                  />
+                  {/* 角落装饰 */}
+                  <div className="absolute -top-3 -left-3 w-6 h-6 border-l-2 border-t-2" style={{ borderColor: accentColor }} />
+                  <div className="absolute -top-3 -right-3 w-6 h-6 border-r-2 border-t-2" style={{ borderColor: accentColor }} />
+                  <div className="absolute -bottom-3 -left-3 w-6 h-6 border-l-2 border-b-2" style={{ borderColor: accentColor }} />
+                  <div className="absolute -bottom-3 -right-3 w-6 h-6 border-r-2 border-b-2" style={{ borderColor: accentColor }} />
+                </div>
               </div>
             </div>
 

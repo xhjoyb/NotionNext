@@ -3,6 +3,7 @@ import AnimeLazyImage from './AnimeLazyImage'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { useAnimeGlobal } from '../index'
+import formatDate from '@/lib/utils/formatDate'
 
 /**
  * 萌化文章时间轴组件 (KawaiiArticleTimeline)
@@ -94,7 +95,7 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
                   {/* 日期标签 */}
                   <div className="mb-3">
                     <span className="px-3 py-1 bg-white dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-400 rounded-full shadow">
-                      {post?.publishDay}
+                      {formatDate(post?.publishDate)}
                     </span>
                   </div>
                   {/* 卡片 */}
@@ -137,7 +138,7 @@ const KawaiiArticleTimeline = ({ posts = [], isIndex = false }) => {
                   {/* 日期标签 */}
                   <div className="mt-2 flex-shrink-0">
                     <span className="px-3 py-1 bg-white dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-400 rounded-full shadow">
-                      {post?.publishDay}
+                      {formatDate(post?.publishDate)}
                     </span>
                   </div>
                 </div>
