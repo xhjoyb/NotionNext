@@ -15,6 +15,13 @@ export const THEME_CONFIG = {
     AUTO_HIDE_ON_SCROLL: true,
   },
 
+  // 主题扩展菜单配置
+  // 这些菜单会追加到 Notion 配置的菜单之后
+  EXTRA_MENU: {
+    // 是否显示抖音解析菜单
+    SHOW_DOUYIN: true,
+  },
+
   // 首页 Hero 配置
   HERO: {
     // 是否启用 Banner
@@ -535,6 +542,20 @@ export const THEME_CONFIG = {
       // 是否循环播放
       LOOP: true,
     },
+  },
+
+  // 抖音解析配置
+  DOUYIN: {
+    // API 服务器地址
+    API_URL: 'https://dy-api.joyb.cc',
+    // 页面标题
+    PAGE_TITLE: '抖音解析',
+    // 页面副标题
+    PAGE_SUBTITLE: '萌化工具箱',
+    // 是否显示Hero区域
+    SHOW_HERO: true,
+    // 最大输入长度
+    MAX_INPUT_LENGTH: 2000,
   },
 
   // 相册配置

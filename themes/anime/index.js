@@ -40,6 +40,8 @@ import KawaiiCursor from './components/KawaiiCursor'
 import KawaiiAdBanner from './components/KawaiiAdBanner'
 import AIExplanation from './components/AIExplanation'
 import { useStickyPosition } from './hooks/useStickyPosition'
+import DouyinParser from './components/DouyinParser'
+import DouyinParserHero from './components/DouyinParserHero'
 
 const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
@@ -700,6 +702,39 @@ const LayoutMusic = props => {
   )
 }
 
+/**
+ * 抖音解析页面布局
+ * 二次元萌化风格的视频/图文解析工具页面
+ * 注意：此布局不使用侧边栏
+ */
+const LayoutDouyin = props => {
+  return (
+    <div className='min-h-screen anime-slide-up' id="douyin-page">
+      {/* 隐藏侧边栏的样式 */}
+      <style jsx global>{`
+        #douyin-page ~ aside,
+        #douyin-page ~ [class*="side"],
+        #douyin-page ~ [class*="Side"],
+        main:has(#douyin-page) .lg\\:block,
+        main:has(#douyin-page) aside {
+          display: none !important;
+        }
+        main:has(#douyin-page) .max-w-4xl {
+          max-width: none !important;
+        }
+      `}</style>
+      
+      {/* Hero 区域 */}
+      <DouyinParserHero />
+
+      {/* 解析工具主体 */}
+      <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16'>
+        <DouyinParser />
+      </div>
+    </div>
+  )
+}
+
 
 
 export {
@@ -707,6 +742,7 @@ export {
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDouyin,
   LayoutIndex,
   LayoutMusic,
   LayoutPostList,

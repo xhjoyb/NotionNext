@@ -103,7 +103,7 @@ const Header = props => {
     setOpenSubMenu(null)
   }, [router.pathname])
 
-  // 使用 Notion 中的自定义菜单（Menu 类型页面）
+  // Notion 配置的菜单（优先级最高）
   const notionMenuLinks = customMenu?.map(menu => ({
     name: menu.name,
     to: menu.href || menu.slug,
@@ -115,25 +115,50 @@ const Header = props => {
     }))
   })) || []
 
-  // 使用 Notion 中的自定义导航（Page 类型页面）
+  // Notion 配置的导航页面
   const notionNavLinks = customNav?.map(nav => ({
     name: nav.title,
     to: nav.slug,
     show: true
   })) || []
 
-  const defaultLinks = [
-    { name: locale.NAV.INDEX, to: '/', icon: 'fa-home', show: siteConfig('ANIME_MENU_INDEX', true, CONFIG) },
-    { name: locale.NAV.TAGS, to: '/tag', icon: 'fa-tags', show: siteConfig('ANIME_MENU_TAG', true, CONFIG) },
-    { name: locale.NAV.CATEGORY, to: '/category', icon: 'fa-folder', show: siteConfig('ANIME_MENU_CATEGORY', true, CONFIG) },
-    { name: locale.NAV.ARCHIVE, to: '/archive', icon: 'fa-archive', show: siteConfig('ANIME_MENU_ARCHIVE', true, CONFIG) },
-    { name: locale.NAV.SEARCH, to: '/search', icon: 'fa-search', show: siteConfig('ANIME_MENU_SEARCH', true, CONFIG) }
-  ]
+  // 主题扩展菜单（独立于 Notion 配置）
+  // 这些菜单会追加到 Notion 配置之后
+  const themeExtraLinks = [
+    { 
+      name: '抖音解析', 
+      to: '/douyin', 
+      icon: 'fa-video', 
+      show: getThemeConfig('EXTRA_MENU.SHOW_DOUYIN', true),
+      isExtra: true  // 标记为扩展菜单
+    }
+  ].filter(link => link.show !== false)
 
-  // 优先级：Notion Menu > Notion Nav > 默认链接
-  const links = notionMenuLinks.length > 0 
-    ? notionMenuLinks 
-    : (notionNavLinks.length > 0 ? notionNavLinks : defaultLinks.filter(link => link.show !== false))
+  // 优先级：Notion Menu > Notion Nav > 主题扩展菜单
+  let links = []
+  
+  if (notionMenuLinks.length > 0) {
+    links = [...notionMenuLinks]
+  } else if (notionNavLinks.length > 0) {
+    links = [...notionNavLinks]
+  } else {
+    // Notion 没有配置时，使用主题默认菜单
+    links = [
+      { name: '首页', to: '/', icon: 'fa-home', show: true },
+      { name: '标签', to: '/tag', icon: 'fa-tags', show: true },
+      { name: '分类', to: '/category', icon: 'fa-folder', show: true },
+      { name: '归档', to: '/archive', icon: 'fa-archive', show: true },
+      { name: '搜索', to: '/search', icon: 'fa-search', show: true }
+    ]
+  }
+  
+  // 追加主题扩展菜单（避免重复）
+  themeExtraLinks.forEach(extraLink => {
+    const exists = links.some(link => link.to === extraLink.to)
+    if (!exists) {
+      links.push(extraLink)
+    }
+  })
 
   return (
     <header
