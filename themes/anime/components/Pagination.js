@@ -41,7 +41,7 @@ const Pagination = ({ page, totalPage }) => {
       {currentPage > 1 && (
         <SmartLink
           href={getPageUrl(currentPage - 1)}
-          className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
+          className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer dark:text-white'>
           <i className='fas fa-chevron-left text-pink-500'></i>
         </SmartLink>
       )}
@@ -50,11 +50,11 @@ const Pagination = ({ page, totalPage }) => {
         <>
           <SmartLink
             href={getPageUrl(1)}
-            className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
+            className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer dark:text-white'>
             1
           </SmartLink>
           {startPage > 2 && (
-            <span className='text-gray-400'>...</span>
+            <span className='text-gray-400 dark:text-gray-500'>...</span>
           )}
         </>
       )}
@@ -66,7 +66,7 @@ const Pagination = ({ page, totalPage }) => {
           className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer
             ${pageNum === currentPage
               ? 'anime-gradient-bg text-white shadow-lg'
-              : 'anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30'
+              : 'anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 dark:text-white'
             }`}>
           {pageNum}
         </SmartLink>
@@ -75,11 +75,11 @@ const Pagination = ({ page, totalPage }) => {
       {endPage < totalPage && (
         <>
           {endPage < totalPage - 1 && (
-            <span className='text-gray-400'>...</span>
+            <span className='text-gray-400 dark:text-gray-500'>...</span>
           )}
           <SmartLink
             href={getPageUrl(totalPage)}
-            className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
+            className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer dark:text-white'>
             {totalPage}
           </SmartLink>
         </>
@@ -88,7 +88,7 @@ const Pagination = ({ page, totalPage }) => {
       {currentPage < totalPage && (
         <SmartLink
           href={getPageUrl(currentPage + 1)}
-          className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer'>
+          className='w-10 h-10 flex items-center justify-center rounded-full anime-glass hover:bg-pink-50 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer dark:text-white'>
           <i className='fas fa-chevron-right text-pink-500'></i>
         </SmartLink>
       )}
