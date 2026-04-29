@@ -6,6 +6,8 @@ import { useState } from 'react'
  */
 const LkwService = () => {
   const [activeTab, setActiveTab] = useState('shiny')
+  const [showDetailModal, setShowDetailModal] = useState(false)
+  const [selectedService, setSelectedService] = useState(null)
 
   // 服务数据
   const services = {
@@ -188,12 +190,15 @@ const LkwService = () => {
                 <span className="text-2xl font-bold text-pink-500">{service.price}</span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">{service.unit}</span>
               </div>
-              <a
-                href="#lkw-contact"
-                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium hover:shadow-lg hover:scale-105 transition-all duration-300"
+              <button
+                onClick={() => {
+                  setSelectedService(service)
+                  setShowDetailModal(true)
+                }}
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer"
               >
-                咨询详情
-              </a>
+                查看详情
+              </button>
             </div>
           </div>
         ))}
@@ -227,6 +232,70 @@ const LkwService = () => {
                 <div className="text-xs text-yellow-500">{pet.difficulty}</div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* 服务详情模态框 */}
+      {showDetailModal && selectedService && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="anime-glass rounded-2xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">{selectedService.icon}</span>
+                <h3 className="text-xl font-bold dark:text-white">{selectedService.title}</h3>
+              </div>
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <p className="text-gray-600 dark:text-gray-300 mb-4">{selectedService.description}</p>
+            
+            <div className="mb-4">
+              <span className="text-3xl font-bold text-pink-500">{selectedService.price}</span>
+              <span className="text-gray-500 dark:text-gray-400">{selectedService.unit}</span>
+            </div>
+
+            <div className="mb-6">
+              <h4 className="font-bold mb-3 dark:text-white">服务特色</h4>
+              <div className="space-y-2">
+                {selectedService.features.map((feature, index) => (
+                  <div key={index} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <span className="w-1.5 h-1.5 bg-pink-400 rounded-full mr-2 flex-shrink-0"></span>
+                    {feature}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 mb-6">
+              <h4 className="font-bold mb-2 text-purple-600 dark:text-purple-400">💡 温馨提示</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                具体价格根据精灵稀有度和当前赛季有所浮动，建议联系客服获取最新报价。
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <a
+                href="#lkw-contact"
+                onClick={() => setShowDetailModal(false)}
+                className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-medium hover:shadow-lg transition-all duration-300 text-center"
+              >
+                联系咨询
+              </a>
+              <button
+                onClick={() => setShowDetailModal(false)}
+                className="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 cursor-pointer"
+              >
+                关闭
+              </button>
+            </div>
           </div>
         </div>
       )}
