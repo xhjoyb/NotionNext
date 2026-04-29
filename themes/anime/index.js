@@ -42,10 +42,7 @@ import AIExplanation from './components/AIExplanation'
 import { useStickyPosition } from './hooks/useStickyPosition'
 import DouyinParser from './components/DouyinParser'
 import DouyinParserHero from './components/DouyinParserHero'
-import LkwService from './components/LkwService'
-import LkwHero from './components/LkwHero'
-import LkwGuide from './components/LkwGuide'
-import LkwContact from './components/LkwContact'
+import LkwPage from './components/LkwPage'
 
 const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
@@ -741,13 +738,10 @@ const LayoutDouyin = props => {
 
 /**
  * 洛克王国世界 - 异色代肝页面布局
- * 专业代肝服务展示页面
- * 注意：此布局不使用侧边栏
  */
 const LayoutLkw = props => {
   return (
-    <div className='min-h-screen anime-slide-up' id="lkw-page">
-      {/* 隐藏侧边栏的样式 */}
+    <div className='min-h-screen' id="lkw-page">
       <style jsx global>{`
         #lkw-page ~ aside,
         #lkw-page ~ [class*="side"],
@@ -760,21 +754,10 @@ const LayoutLkw = props => {
           max-width: none !important;
         }
       `}</style>
-      
-      {/* Hero 区域 */}
-      <LkwHero />
-
-      {/* 服务主体 */}
-      <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-8'>
-        <LkwService />
-        <LkwGuide />
-        <LkwContact />
-      </div>
+      <LkwPage />
     </div>
   )
 }
-
-
 
 export {
   Layout404,
