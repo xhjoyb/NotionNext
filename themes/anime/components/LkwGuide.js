@@ -2,11 +2,10 @@ import { useState } from 'react'
 
 /**
  * 洛克王国世界 - 异色代肝指南组件
- * 展示刷异色方法对比
+ * 展示刷异色方法对比 - 展开式详情设计
  */
 const LkwGuide = () => {
-  const [showDetailModal, setShowDetailModal] = useState(false)
-  const [selectedMethod, setSelectedMethod] = useState(null)
+  const [expandedMethod, setExpandedMethod] = useState(null)
 
   const methods = [
     {
@@ -65,9 +64,8 @@ const LkwGuide = () => {
     }
   ]
 
-  const handleViewDetail = (method) => {
-    setSelectedMethod(method)
-    setShowDetailModal(true)
+  const toggleExpand = (index) => {
+    setExpandedMethod(expandedMethod === index ? null : index)
   }
 
   return (
@@ -83,103 +81,104 @@ const LkwGuide = () => {
           {methods.map((method, index) => (
             <div
               key={index}
-              className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 hover:shadow-md transition-all duration-300 flex flex-col"
+              className={`bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 hover:shadow-md transition-all duration-500 flex flex-col ${
+                expandedMethod === index ? 'md:col-span-3' : ''
+              }`}
             >
-              <h3 className="font-bold text-lg mb-2 dark:text-white">{method.name}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 flex-grow">{method.description}</p>
-              <div className="flex justify-between text-sm mb-4">
-                <span className="text-yellow-500">效率: {method.efficiency}</span>
-                <span className="text-blue-500">难度: {method.difficulty}</span>
+              {/* 基础信息 */}
+              <div className="flex-1">
+                <h3 className="font-bold text-lg mb-2 dark:text-white">{method.name}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{method.description}</p>
+                <div className="flex justify-between text-sm mb-4">
+                  <span className="text-yellow-500">效率: {method.efficiency}</span>
+                  <span className="text-blue-500">难度: {method.difficulty}</span>
+                </div>
               </div>
+              
               <button
-                onClick={() => handleViewDetail(method)}
-                className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium hover:shadow-lg hover:scale-105 transition-all duration-300"
+                onClick={() => toggleExpand(index)}
+                className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center gap-1"
               >
-                查看详情
+                <span>{expandedMethod === index ? '收起详情' : '查看详情'}</span>
+                <svg 
+                  className={`w-4 h-4 transition-transform duration-300 ${expandedMethod === index ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
+
+              {/* 展开详情 */}
+              <div className={`overflow-hidden transition-all duration-500 ${
+                expandedMethod === index ? 'max-h-[500px] opacity-100 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* 操作步骤 */}
+                  <div>
+                    <h4 className="font-bold mb-3 dark:text-white flex items-center gap-2">
+                      <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 00-1-1H3zm6 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                      </svg>
+                      操作步骤
+                    </h4>
+                    <div className="space-y-2">
+                      {method.details.steps.map((step, stepIndex) => (
+                        <div key={stepIndex} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
+                          <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-bold mr-2 flex-shrink-0">
+                            {stepIndex + 1}
+                          </span>
+                          {step}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 优缺点对比 */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-bold mb-2 text-green-600 dark:text-green-400">优点</h4>
+                      <div className="space-y-1">
+                        {method.details.pros.map((pro, proIndex) => (
+                          <div key={proIndex} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-2 flex-shrink-0"></span>
+                            {pro}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold mb-2 text-red-600 dark:text-red-400">缺点</h4>
+                      <div className="space-y-1">
+                        {method.details.cons.map((con, conIndex) => (
+                          <div key={conIndex} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                            <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2 flex-shrink-0"></span>
+                            {con}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 小贴士 */}
+                  <div>
+                    <h4 className="font-bold mb-3 dark:text-white flex items-center gap-2">
+                      <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      小贴士
+                    </h4>
+                    <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{method.details.tips}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* 详情模态框 */}
-      {showDetailModal && selectedMethod && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="anime-glass rounded-2xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold dark:text-white">{selectedMethod.name}</h3>
-              <button
-                onClick={() => setShowDetailModal(false)}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{selectedMethod.description}</p>
-            
-            <div className="flex gap-4 mb-4 text-sm">
-              <span className="text-yellow-500">效率: {selectedMethod.efficiency}</span>
-              <span className="text-blue-500">难度: {selectedMethod.difficulty}</span>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-bold mb-2 dark:text-white">操作步骤</h4>
-                <div className="space-y-2">
-                  {selectedMethod.details.steps.map((step, index) => (
-                    <div key={index} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
-                      <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-bold mr-2 flex-shrink-0">
-                        {index + 1}
-                      </span>
-                      {step}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-bold mb-2 text-green-600 dark:text-green-400">优点</h4>
-                  <div className="space-y-1">
-                    {selectedMethod.details.pros.map((pro, index) => (
-                      <div key={index} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-2 flex-shrink-0"></span>
-                        {pro}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-bold mb-2 text-red-600 dark:text-red-400">缺点</h4>
-                  <div className="space-y-1">
-                    {selectedMethod.details.cons.map((con, index) => (
-                      <div key={index} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2 flex-shrink-0"></span>
-                        {con}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4">
-                <h4 className="font-bold mb-1 text-purple-600 dark:text-purple-400">小贴士</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">{selectedMethod.details.tips}</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowDetailModal(false)}
-              className="w-full mt-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-medium hover:shadow-lg transition-all duration-300"
-            >
-              知道了
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
