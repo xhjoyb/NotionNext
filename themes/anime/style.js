@@ -465,6 +465,22 @@ const Style = () => {
         animation: tag-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       }
 
+      /* 服务卡片切换动画 */
+      @keyframes slide-up {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-slide-up {
+        animation: slide-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
       /* 萌化加载动画 - 心跳效果 */
       @keyframes kawaii-heartbeat {
         0%, 100% {

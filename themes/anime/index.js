@@ -46,6 +46,7 @@ import LkwService from './components/LkwService'
 import LkwHero from './components/LkwHero'
 import LkwGuide from './components/LkwGuide'
 import LkwContact from './components/LkwContact'
+import SectionDivider from './components/SectionDivider'
 
 const ThemeGlobalAnime = createContext()
 export const useAnimeGlobal = () => useContext(ThemeGlobalAnime)
@@ -764,13 +765,19 @@ const LayoutLkw = props => {
       {/* Hero 区域 */}
       <LkwHero />
 
-      {/* 服务主体 */}
-      <div id="lkw-services" className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-8'>
+      {/* 服务主体 - 添加顶部间距 */}
+      <div id="lkw-services" className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-8'>
         <LkwService />
+
+        <SectionDivider text="刷异色方法" icon="⚔️" />
+
         <div id="lkw-guide">
           <LkwGuide />
         </div>
-        <div id="lkw-contact">
+
+        <SectionDivider text="联系咨询" icon="💬" />
+
+        <div id="lkw-contact" className="pt-8">
           <LkwContact />
         </div>
       </div>

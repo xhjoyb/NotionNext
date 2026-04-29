@@ -180,7 +180,7 @@ export const THEME_CONFIG = {
   // 除夕春节装饰配置
   NEW_YEAR: {
     // 是否启用
-    ENABLE: true,
+    ENABLE: false,
     // 显示萌化小马
     SHOW_HORSE: true,
     // 显示灯笼
@@ -542,6 +542,33 @@ export const THEME_CONFIG = {
       // 是否循环播放
       LOOP: true,
     },
+  },
+
+  // 洛克王国代肝服务配置
+  LKW: {
+    // 服务购买地址配置
+    // 如果配置了对应服务的购买链接，按钮会显示"前往购买"并跳转到该链接
+    // 如果未配置或为空字符串，按钮会显示"联系咨询"并跳转到联系区域
+    PURCHASE_URLS: {
+      // 异色精灵 - 极光千兽/绒仙子
+      shiny: 'https://m.tb.cn/h.iF49BOr?tk=yuSD5PkxLqZ',
+      // 跑图拿资源
+      daily: '',
+      // 主线及子任务
+      mainline: '',
+      // 图鉴收集
+      collection: '',
+      // PVP段位托管
+      pvp: '',
+      // 精灵养成优化
+      training: '',
+      // 家园系统托管
+      home: '',
+    },
+    // 默认按钮文字（当未配置购买地址时）
+    DEFAULT_BUTTON_TEXT: '联系咨询',
+    // 购买按钮文字（当配置了购买地址时）
+    PURCHASE_BUTTON_TEXT: '前往购买',
   },
 
   // 抖音解析配置

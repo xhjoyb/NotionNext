@@ -10,23 +10,23 @@ const LkwContact = () => {
     {
       type: 'qq',
       label: 'QQ',
-      value: '123456789',
+      value: '2812935383',
       icon: '💬',
       color: 'bg-blue-500'
     },
     {
       type: 'wechat',
       label: '微信',
-      value: 'lkw_service',
+      value: 'mcpq-cc',
       icon: '📱',
       color: 'bg-green-500'
     },
     {
-      type: 'telegram',
-      label: 'Telegram',
-      value: '@lkw_service',
-      icon: '✈️',
-      color: 'bg-blue-400'
+      type: 'email',
+      label: '邮箱',
+      value: 'zqf@mcpq.cc',
+      icon: '📧',
+      color: 'bg-orange-500'
     }
   ]
 
