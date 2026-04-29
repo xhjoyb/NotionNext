@@ -131,6 +131,13 @@ const Header = props => {
       icon: 'fa-video', 
       show: getThemeConfig('EXTRA_MENU.SHOW_DOUYIN', true),
       isExtra: true  // 标记为扩展菜单
+    },
+    { 
+      name: '洛克代肝', 
+      to: '/lkw', 
+      icon: 'fa-gamepad', 
+      show: getThemeConfig('EXTRA_MENU.SHOW_LKW', true),
+      isExtra: true  // 标记为扩展菜单
     }
   ].filter(link => link.show !== false)
 

@@ -20,6 +20,8 @@ export const THEME_CONFIG = {
   EXTRA_MENU: {
     // 是否显示抖音解析菜单
     SHOW_DOUYIN: true,
+    // 是否显示洛克王国代肝菜单
+    SHOW_LKW: true,
   },
 
   // 首页 Hero 配置
