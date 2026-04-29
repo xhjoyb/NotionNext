@@ -566,6 +566,8 @@ export const THEME_CONFIG = {
       training: '',
       // 家园系统托管
       home: '',
+      // S1赛季全套异色代肝
+      shiny_set: 'https://m.tb.cn/h.iFg5yHR?tk=ugWW5PmqX3y',
     },
     // 默认按钮文字（当未配置购买地址时）
     DEFAULT_BUTTON_TEXT: '联系咨询',
