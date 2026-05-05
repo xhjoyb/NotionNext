@@ -78,11 +78,11 @@ const LkwService = () => {
         title: '主线及子任务',
         subtitle: '剧情任务通关',
         description: '帮我完成主线及其子任务，快速推进游戏进度',
-        price: '¥20-50',
-        unit: '/章',
+        price: '¥20',
+        unit: '/4章',
         features: ['主线剧情通关', '子任务完成', 'BOSS攻略', '隐藏任务解锁'],
         details: {
-          notice: '根据当前进度和精灵练度定价，难度越高价格越高。',
+          notice: '每4章节20元，根据当前进度和精灵练度调整，难度越高耗时越长。',
           time: '每章约1-2小时，视难度而定。'
         },
         popular: false,

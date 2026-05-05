@@ -557,15 +557,15 @@ export const THEME_CONFIG = {
       // 跑图拿资源
       daily: 'https://m.tb.cn/h.iyWUewd?tk=n3KW5NuU9aY',
       // 主线及子任务
-      mainline: '',
+      mainline: 'https://m.tb.cn/h.iCZiUNU?tk=9jaY5Nux10M',
       // 图鉴收集
       collection: '',
       // PVP段位托管
-      pvp: '',
+      pvp: 'https://m.tb.cn/h.iDN7UAk?tk=UlXL5NuQrH4',
       // 精灵养成优化
       training: '',
       // 家园系统托管
-      home: '',
+      home: 'https://m.tb.cn/h.iy3cdon?tk=022O5NFbcr7',
       // S1赛季全套异色代肝
       shiny_set: 'https://m.tb.cn/h.iFg5yHR?tk=ugWW5PmqX3y',
     },
