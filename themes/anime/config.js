@@ -555,7 +555,7 @@ export const THEME_CONFIG = {
       // 异色精灵 - 极光千兽/绒仙子
       shiny: 'https://m.tb.cn/h.iF49BOr?tk=yuSD5PkxLqZ',
       // 跑图拿资源
-      daily: '',
+      daily: 'https://m.tb.cn/h.iyWUewd?tk=n3KW5NuU9aY',
       // 主线及子任务
       mainline: '',
       // 图鉴收集
